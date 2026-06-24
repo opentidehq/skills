@@ -1,0 +1,22 @@
+{
+  "name": "opentide-detection-skills",
+  "displayName": "OpenTide Detection Skills",
+  "description": "27 Agent Skills for detection engineering — OpenTide TVM/DOM/MDR authoring, KQL/SPL/FQL, platform tribal knowledge, and defensive internals.",
+  "version": "1.0.0",
+  "publisher": "OpenTideHQ",
+  "homepage": "https://github.com/OpenTideHQ/skills",
+  "repository": "https://github.com/OpenTideHQ/skills",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "opentide",
+    "detection-engineering",
+    "threat-hunting",
+    "mitre-attack",
+    "kql",
+    "splunk",
+    "sentinel"
+  ],
+  "category": "security",
+  "tags": ["detection", "security", "opentide"],
+  "skills": "./skills/"
+}

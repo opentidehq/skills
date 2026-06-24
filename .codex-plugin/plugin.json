@@ -1,0 +1,27 @@
+{
+  "name": "opentide-detection-skills",
+  "version": "1.0.0",
+  "description": "27 Agent Skills for detection engineering — OpenTide TVM/DOM/MDR authoring, KQL/SPL/FQL, platform tribal knowledge, and defensive internals.",
+  "author": {
+    "name": "OpenTideHQ"
+  },
+  "homepage": "https://github.com/OpenTideHQ/skills",
+  "repository": "https://github.com/OpenTideHQ/skills",
+  "license": "EUPL-1.2",
+  "keywords": ["opentide", "detection-engineering", "security"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "OpenTide Detection Skills",
+    "shortDescription": "Detection engineering skills for OpenTide and DetectionOps",
+    "longDescription": "Portable Agent Skills covering OpenTide object authoring (TVM, DOM, MDR), hunt-to-rule workflows, MITRE ATT&CK mapping, KQL/SPL/FQL platform knowledge, and defensive internals.",
+    "developerName": "OpenTideHQ",
+    "category": "Security",
+    "capabilities": ["Read", "Write", "Search"],
+    "websiteURL": "https://github.com/OpenTideHQ/skills",
+    "defaultPrompt": [
+      "Use opentide-threat-vector to model threat intelligence into TVM objects.",
+      "Use kusto-query-language with microsoft-sentinel for Sentinel detection rules.",
+      "Use detection-engineering to plan hunt-to-alert conversion."
+    ]
+  }
+}

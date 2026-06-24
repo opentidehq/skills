@@ -1,0 +1,21 @@
+{
+  "name": "opentide",
+  "interface": {
+    "displayName": "OpenTide Plugins"
+  },
+  "plugins": [
+    {
+      "name": "opentide-detection-skills",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
+      "category": "Security",
+      "description": "27 Agent Skills for OpenTide detection-as-code, platform query languages, and defensive internals.",
+      "version": "1.0.0"
+    }
+  ]
+}

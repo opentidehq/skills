@@ -1,0 +1,6 @@
+---
+description: OpenTide detection engineering entrypoint — follow AGENTS.md for object workflow, guardrails, and skill routing when authoring or reviewing detection content.
+alwaysApply: true
+---
+
+When working on OpenTide detection-as-code (TVM, DOM, MDR YAML objects), threat hunting, or platform-specific detection queries, read and follow **AGENTS.md** in the repository root. Activate the narrowest matching skill from `skills/` first; escalate to broader skills when coordination is required.
