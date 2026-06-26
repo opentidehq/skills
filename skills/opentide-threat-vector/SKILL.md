@@ -57,7 +57,7 @@ Guardrails: no fabrication of sightings, IOCs, or attribution beyond the evidenc
 
 | Field | Type | Notes |
 |---|---|---|
-| `name` | string | Sentence-case, action-oriented. Describe what the adversary does. Good: "Mamba 2FA phishing kit". Bad: "T1566". |
+| `name` | string | Sentence-case, action-oriented. Describe what the adversary does. Good: "Mamba 2FA phishing kit". Bad: "T1566". **Filename:** dash-case slug from `name` (e.g. `mamba-2fa-phishing-kit.yaml`); doc paths use the same `slugify()` rules. |
 | `criticality` | enum | 7 levels: `Baseline - Negligible` through `Emergency`. Derive from severity + impact + sophistication. |
 | `references` | object | `public` (numbered keys `1:`, `2:`), `internal` (alpha keys `a:`, `b:`). Add `# inline comments` for context. |
 | `metadata` | object | See below. |

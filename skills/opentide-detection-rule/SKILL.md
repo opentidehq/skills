@@ -23,7 +23,7 @@ An MDR is the **deployable artefact** — the detection rule that runs on a spec
 
 | Field | Type | Required | Notes |
 |---|---|---|---|
-| `name` | string | Yes | Verb-noun pattern. Prefix with domain for namespace clarity: `WIN`, `EMAIL`, `CLOUD`, `RBA_RR`. |
+| `name` | string | Yes | Verb-noun pattern. Prefix with domain for namespace clarity: `WIN`, `EMAIL`, `CLOUD`, `RBA_RR`. **Filename:** dash-case slug from `name` (e.g. `rba-rr-win-encoded-powershell.yaml`); doc paths use the same `slugify()` rules. |
 | `references` | object | Optional | `public` (numbered), `internal` (alpha). Same convention as TVMs. |
 | `metadata` | object | Yes | Schema: e.g. `mdr::2.1` — verify against live template. Same structure as TVM/DOM metadata. |
 | `description` | string | Yes | Structured prose. See description section below. |

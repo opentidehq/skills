@@ -11,9 +11,11 @@ Use when authoring or reviewing **Threat Vector (TVM)**, **Detection Objective (
 
 | Type | Schema tag | Typical path |
 |------|------------|--------------|
-| Threat Vector | `tvm::…` | `Objects/Threat Vectors/*.yaml` |
-| Detection Objective | `dom::…` | `Objects/Detection Objectives/*.yaml` |
-| Detection Rule | `mdr::…` | `Objects/Detection Rules/*.yaml` |
+| Threat Vector | `tvm::…` / `threat::1.0` | `objects/threats/*.yaml` (library) or `Objects/Threat Vectors/*.yaml` (legacy) |
+| Detection Objective | `dom::…` / `objective::1.0` | `objects/objectives/*.yaml` |
+| Detection Rule | `mdr::…` / `rule::1.0` | `objects/rules/*.yaml` |
+
+**Filenames:** dash-case slugs derived from the object `name` (lowercase, hyphens — `slugify()` in opentide). The `name` field stays human-readable; generated docs mirror the slug.
 
 ## Workflow
 
