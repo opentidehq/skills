@@ -23,7 +23,7 @@ A DOM bridges the gap between threat modelling (TVM) and deployable detection ru
 
 | Field | Type | Required | Notes |
 |---|---|---|---|
-| `name` | string | Yes | Verb-noun phrase describing the detection goal. Filename = `{name}.yaml`. |
+| `name` | string | Yes | Verb-noun phrase describing the detection goal. **Filename:** dash-case slug from `name` (e.g. `detect-azure-credential-abuse.yaml`); keep `name` human-readable. Doc paths use the same `slugify()` rules.
 | `references` | object | Optional | `public` (numbered), `internal` (alpha). Same convention as TVMs. |
 | `metadata` | object | Yes | Same structure as TVM metadata. Schema: e.g. `dom::1.0` — verify against live template. |
 | `objective` | object | Yes | Core detection content. |
