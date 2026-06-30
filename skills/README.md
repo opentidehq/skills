@@ -56,6 +56,7 @@ Full descriptions: [`AGENTS.md`](../AGENTS.md#skills-index-skills).
 
 1. Create or edit `skills/<skill-name>/SKILL.md`.
 2. Run `../scripts/validate-skills.sh`.
-3. Open a pull request.
+3. Run `../scripts/build-manifest.sh` and commit the updated root `manifest.json`.
+4. Open a pull request.
 
-Harness plugin manifests at the repo root reference `./skills/` automatically — no sync or copy step.
+Harness plugin manifests at the repo root reference `./skills/` automatically — no sync or copy step for those. The OpenTide CLI reads `manifest.json` for discover/show/install.

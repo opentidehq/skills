@@ -59,4 +59,7 @@ if [[ "${errors}" -gt 0 ]]; then
   exit 1
 fi
 
-echo "validated $(find "${SKILLS_DIR}" -name SKILL.md | wc -l | tr -d ' ') skills"
+skill_count="$(find "${SKILLS_DIR}" -name SKILL.md | wc -l | tr -d ' ')"
+echo "validated ${skill_count} skills"
+
+"${ROOT}/scripts/build-manifest.sh" --check

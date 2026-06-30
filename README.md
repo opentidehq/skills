@@ -1,6 +1,6 @@
 # OpenTide Skills
 
-Canonical home for reusable [Agent Skills](https://agentskills.io/specification) for detection engineering — **27 skills**, one source tree, multi-harness plugin manifests.
+Canonical home for reusable [Agent Skills](https://agentskills.io/specification) for detection engineering — **27 skills**, one source tree, multi-harness plugin manifests. The machine-readable catalogue for `opentide setup skills` is [`manifest.json`](manifest.json) at the repo root (generated from skill frontmatter).
 
 ## Architecture
 
@@ -47,10 +47,11 @@ See [docs/install.md](docs/install.md) and [docs/harnesses.md](docs/harnesses.md
 ## Contributing
 
 1. Edit skills under `skills/<skill-name>/SKILL.md`.
-2. Run `./scripts/validate-skills.sh`.
-3. Open a pull request.
+2. Run `./scripts/validate-skills.sh` (frontmatter checks and manifest drift gate).
+3. Regenerate the catalogue: `./scripts/build-manifest.sh` (commits `manifest.json`).
+4. Open a pull request.
 
-No sync step — manifests already point at `./skills/`.
+`manifest.json` is the catalogue source for `opentide setup skills discover|show|install`. Harness plugin manifests at the repo root still point at `./skills/` — no separate sync step for those.
 
 See [`skills/README.md`](skills/README.md) for authoring conventions.
 
