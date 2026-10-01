@@ -62,4 +62,57 @@ fi
 skill_count="$(find "${SKILLS_DIR}" -name SKILL.md | wc -l | tr -d ' ')"
 echo "validated ${skill_count} skills"
 
+python3 - "${ROOT}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+config_path = root / "skills.sh.json"
+try:
+    config = json.loads(config_path.read_text())
+except json.JSONDecodeError as exc:
+    print(f"ERROR: skills.sh.json is not valid JSON ({exc})")
+    sys.exit(1)
+
+skills = {path.parent.name for path in (root / "skills").glob("*/SKILL.md")}
+groupings = config.get("groupings")
+if not isinstance(groupings, list) or not groupings:
+    print("ERROR: skills.sh.json groupings must be a non-empty array")
+    sys.exit(1)
+
+errors = 0
+seen = []
+for group in groupings:
+    title = group.get("title") if isinstance(group, dict) else None
+    names = group.get("skills") if isinstance(group, dict) else None
+    if not isinstance(title, str) or not title.strip():
+        print("ERROR: skills.sh.json group is missing a title")
+        errors += 1
+        continue
+    if not isinstance(names, list) or not names:
+        print(f"ERROR: skills.sh.json group '{title}' has no skills")
+        errors += 1
+        continue
+    for name in names:
+        if name not in skills:
+            print(f"ERROR: skills.sh.json lists unknown skill '{name}' in '{title}'")
+            errors += 1
+        elif name in seen:
+            print(f"ERROR: skills.sh.json lists '{name}' more than once")
+            errors += 1
+        else:
+            seen.append(name)
+
+missing = sorted(skills - set(seen))
+if missing:
+    print("ERROR: skills missing from skills.sh.json: " + ", ".join(missing))
+    errors += 1
+
+if errors:
+    sys.exit(1)
+
+print(f"validated skills.sh.json ({len(seen)} skills in {len(groupings)} groups)")
+PY
+
 "${ROOT}/scripts/build-manifest.sh" --check

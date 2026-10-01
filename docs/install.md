@@ -22,6 +22,10 @@ npx skills add OpenTideHQ/skills
 cp AGENTS.md .
 ```
 
+`npx skills add` is also the listing path for the [skills.sh leaderboard](https://skills.sh/OpenTideHQ/skills). The repository page groups come from [`skills.sh.json`](../skills.sh.json) on the default branch, refreshed when the CLI installs from this repo.
+
+GitHub skill search (`gh skill search`) uses the repository topic `agent-skills`. Add that topic, or run `gh skill publish`, so this repository is included there as well.
+
 ## Cursor
 
 **Plugin** (skills + rules):

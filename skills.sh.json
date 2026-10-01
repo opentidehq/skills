@@ -1,0 +1,57 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "OpenTide objects",
+      "description": "Author Threat Vectors, Detection Objectives, and Detection Rules as OpenTide YAML.",
+      "skills": [
+        "opentide-threat-vector",
+        "opentide-detection-objective",
+        "opentide-detection-rule"
+      ]
+    },
+    {
+      "title": "Detection practice",
+      "description": "Hunt-to-rule lifecycle, hypothesis discipline, and MITRE ATT&CK mapping.",
+      "skills": [
+        "detection-engineering",
+        "threat-hunting",
+        "mitre-attack"
+      ]
+    },
+    {
+      "title": "Platforms",
+      "description": "Query languages and vendor telemetry for detection content on SIEM, EDR, identity, and cloud platforms.",
+      "skills": [
+        "kusto-query-language",
+        "microsoft-sentinel",
+        "microsoft-defender-endpoint",
+        "entra-id",
+        "windows-event-logs",
+        "splunk-spl-processing",
+        "crowdstrike-falcon",
+        "carbon-black-cloud",
+        "sentinelone-singularity",
+        "harfanglab",
+        "okta-identity",
+        "amazon-web-services",
+        "microsoft-azure",
+        "google-cloud-platform"
+      ]
+    },
+    {
+      "title": "Defensive internals",
+      "description": "Operating-system, directory, identity, network, and collaboration mechanics that produce detection telemetry.",
+      "skills": [
+        "windows-internals",
+        "active-directory",
+        "identity-providers",
+        "network-protocols",
+        "email-and-collaboration",
+        "linux-internals",
+        "macos-internals"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # OpenTide Skills
 
+[![skills.sh](https://skills.sh/b/OpenTideHQ/skills)](https://skills.sh/OpenTideHQ/skills)
+
 Canonical home for reusable [Agent Skills](https://agentskills.io/specification) for detection engineering — **27 skills**, one source tree, multi-harness plugin manifests. The machine-readable catalogue for `opentide setup skills` is [`manifest.json`](manifest.json) at the repo root (generated from skill frontmatter).
 
 ## Architecture
@@ -8,6 +10,7 @@ This repository is a **single plugin root**. Skills live once under `skills/`; e
 
 ```
 skills/                          # Canonical skills (only copy in git)
+skills.sh.json                   # skills.sh repository page groups
 AGENTS.md                        # Unified agents.md entrypoint
 POWER.md                         # Kiro Power (steering + activation)
 steering/                        # Kiro workflow routing (points at skills/)
@@ -28,6 +31,8 @@ Install-time caching (Claude Code, Cursor marketplace) may copy files into a loc
 npx skills add OpenTideHQ/skills
 cp AGENTS.md /path/to/your/project/
 ```
+
+That install is what lists the skills on the [skills.sh leaderboard](https://skills.sh/OpenTideHQ/skills). [`skills.sh.json`](skills.sh.json) groups the repository page (OpenTide objects, detection practice, platforms, defensive internals). skills.sh reads that file from the default branch on the next CLI install.
 
 Or copy manually into `.agents/skills/` (works with Cursor, Copilot, Codex, Kiro, Gemini CLI, and other [spec-compatible agents](https://agentskills.io/clients)).
 
