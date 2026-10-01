@@ -22,7 +22,7 @@ These read `./skills/` from the repository root at install time.
 
 | Harness | Manifest | Marketplace |
 |---------|----------|-------------|
-| Agent Plugins clients (Cursor, VS Code, Copilot, Kiro, and others) | `plugin.json`, `mcp.json` | Host marketplace, once published |
+| Agent Plugins clients (Cursor, VS Code, Copilot, Kiro, and others) | `plugin.json`, `mcp.json` | Host marketplace, once published. VS Code 1.140 uses this manifest when `$schema` is the Agent Plugins identifier. Claude Code loads the same `mcp.json` through `.claude-plugin/plugin.json`. |
 | Cursor | `.cursor-plugin/plugin.json` | `.cursor-plugin/marketplace.json` |
 | Claude Code | `.claude-plugin/plugin.json` | `.claude-plugin/marketplace.json` |
 | OpenAI Codex | `.codex-plugin/plugin.json` | `.agents/plugins/marketplace.json` |

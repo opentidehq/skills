@@ -145,10 +145,79 @@ if isinstance(mcp, dict):
 else:
     fail("mcp.json must be a JSON object")
 
+claude_plugin = load(root / ".claude-plugin" / "plugin.json")
+if isinstance(claude_plugin, dict) and claude_plugin.get("mcpServers") != "./mcp.json":
+    fail(".claude-plugin/plugin.json must set mcpServers to ./mcp.json so Claude Code loads the Agent Plugins MCP entry")
+
+cursor_market = load(root / ".cursor-plugin" / "marketplace.json")
+cursor_plugin_keys = {"name", "source", "description", "minClientVersions"}
+if isinstance(cursor_market, dict):
+    owner = cursor_market.get("owner")
+    if not isinstance(owner, dict) or not isinstance(owner.get("name"), str) or not owner["name"].strip():
+        fail(".cursor-plugin/marketplace.json requires owner.name")
+    elif set(owner) - {"name", "email"}:
+        fail(".cursor-plugin/marketplace.json owner may only contain name and email")
+    entries = cursor_market.get("plugins")
+    if not isinstance(entries, list) or not entries:
+        fail(".cursor-plugin/marketplace.json plugins must be a non-empty array")
+    else:
+        names = []
+        for entry in entries:
+            if not isinstance(entry, dict):
+                fail(".cursor-plugin/marketplace.json plugin entry must be an object")
+                continue
+            extra = sorted(set(entry) - cursor_plugin_keys)
+            if extra:
+                fail(
+                    ".cursor-plugin/marketplace.json plugin entry has fields the Cursor schema rejects: "
+                    + ", ".join(extra)
+                )
+            if isinstance(entry.get("name"), str):
+                names.append(entry["name"])
+        plugin_name = plugin.get("name") if isinstance(plugin, dict) else None
+        if plugin_name and plugin_name not in names:
+            fail(".cursor-plugin/marketplace.json must list " + str(plugin_name))
+else:
+    fail(".cursor-plugin/marketplace.json must be a JSON object")
+
+skills_schema = "https://skills.sh/schemas/skills.sh.schema.json"
+skills_config = load(root / "skills.sh.json")
+if isinstance(skills_config, dict):
+    if skills_config.get("$schema") != skills_schema:
+        fail("skills.sh.json $schema must be the skills.sh repository page identifier")
+    skill_names = {path.parent.name for path in (root / "skills").glob("*/SKILL.md")}
+    groupings = skills_config.get("groupings")
+    seen = []
+    if not isinstance(groupings, list) or not groupings:
+        fail("skills.sh.json groupings must be a non-empty array")
+    else:
+        for group in groupings:
+            title = group.get("title") if isinstance(group, dict) else None
+            names = group.get("skills") if isinstance(group, dict) else None
+            if not isinstance(title, str) or not title.strip():
+                fail("skills.sh.json group is missing a title")
+                continue
+            if not isinstance(names, list) or not names:
+                fail(f"skills.sh.json group '{title}' has no skills")
+                continue
+            for name in names:
+                if name not in skill_names:
+                    fail(f"skills.sh.json lists unknown skill '{name}' in '{title}'")
+                elif name in seen:
+                    fail(f"skills.sh.json lists '{name}' more than once")
+                else:
+                    seen.append(name)
+        missing = sorted(skill_names - set(seen))
+        if missing:
+            fail("skills missing from skills.sh.json: " + ", ".join(missing))
+else:
+    fail("skills.sh.json must be a JSON object")
+
 if errors:
     sys.exit(1)
 
 print("validated plugin.json and mcp.json")
+print(f"validated skills.sh.json ({len(seen)} skills)")
 PY
 
 "${ROOT}/scripts/build-manifest.sh" --check

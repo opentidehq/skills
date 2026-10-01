@@ -22,6 +22,10 @@ npx skills add OpenTideHQ/skills
 cp AGENTS.md .
 ```
 
+`npx skills add` is also the listing path for the [skills.sh leaderboard](https://skills.sh/OpenTideHQ/skills). The repository page groups come from [`skills.sh.json`](../skills.sh.json) on the default branch, refreshed when the CLI installs from this repo.
+
+GitHub skill search (`gh skill search`) uses the repository topic `agent-skills`. Add that topic, or run `gh skill publish`, so this repository is included there as well.
+
 ## Agent Plugins
 
 Root [`plugin.json`](../plugin.json) and [`mcp.json`](../mcp.json) follow [Agent Plugins 1.0.0](https://agent-plugins.org/specification). Clients discover skills from `skills/` and MCP servers only from `mcp.json`. The OpenTide server is:
@@ -33,20 +37,23 @@ Root [`plugin.json`](../plugin.json) and [`mcp.json`](../mcp.json) follow [Agent
 }
 ```
 
-Install the server with `pip install 'opentide[mcp]'` so `opentide-mcp` is on `PATH`. The manifest does not set `OPENTIDE_REPO_ROOT`. See the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md) when the process working directory is not the detection content repository.
+Install the server with `pip install 'opentide[mcp]'` so `opentide-mcp` is on `PATH`. When the client starts that process in this skills repository, point it at the detection content repository using the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md).
+
+Claude Code reads MCP servers from the harness manifest. [`.claude-plugin/plugin.json`](../.claude-plugin/plugin.json) sets `"mcpServers": "./mcp.json"` so it uses the same Agent Plugins entry. VS Code 1.140 selects the root `plugin.json` when `$schema` is the Agent Plugins 1.0.0 identifier, then loads `skills/` and `mcp.json`.
 
 ## Cursor
 
-**Plugin** (skills + rules):
+In Cursor chat:
 
-```bash
-git clone https://github.com/OpenTideHQ/skills.git
-# Load repo root as a local plugin, or install from marketplace when published
+```text
+/add-plugin OpenTideHQ/skills
 ```
 
 Manifest: [`.cursor-plugin/plugin.json`](../.cursor-plugin/plugin.json) → `"skills": "./skills/"`
 
 Marketplace: [`.cursor-plugin/marketplace.json`](../.cursor-plugin/marketplace.json)
+
+The public Cursor Marketplace listing is a separate submission at [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
 
 ## Claude Code
 
@@ -59,22 +66,36 @@ Manifest: [`.claude-plugin/plugin.json`](../.claude-plugin/plugin.json)
 
 Skills are namespaced: `/opentide-detection-skills:<skill-name>`
 
+Check the package with `claude plugin validate .` before a community catalogue submission at [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit).
+
 ## GitHub Copilot (VS Code / CLI)
 
-Uses the [OpenPlugin](https://code.visualstudio.com/docs/copilot/customization/agent-plugins) manifest at [`.plugin/plugin.json`](../.plugin/plugin.json).
+**VS Code** — Command Palette → **Chat: Install Plugin From Source** → `OpenTideHQ/skills`. Enable `chat.plugins.enabled`.
 
-Install via VS Code **Extensions → Agent Plugins** when the marketplace is registered, or point Copilot CLI at this repository.
+**Copilot CLI:**
+
+```bash
+copilot plugin marketplace add OpenTideHQ/skills
+copilot plugin install opentide-detection-skills@opentide
+```
+
+The legacy manifest is [`.plugin/plugin.json`](../.plugin/plugin.json). Copilot CLI reads the marketplace at [`.claude-plugin/marketplace.json`](../.claude-plugin/marketplace.json). A listing in the default Awesome Copilot marketplace is a pull request to [github/awesome-copilot](https://github.com/github/awesome-copilot).
 
 ## OpenAI Codex
 
-Repo marketplace: [`.agents/plugins/marketplace.json`](../.agents/plugins/marketplace.json)
+Open this repository in Codex CLI, then:
 
 ```text
 /plugins
-# Install opentide-detection-skills from the opentide marketplace
 ```
 
+Install **opentide-detection-skills** from the **opentide** marketplace.
+
+Repo marketplace: [`.agents/plugins/marketplace.json`](../.agents/plugins/marketplace.json)
+
 Manifest: [`.codex-plugin/plugin.json`](../.codex-plugin/plugin.json)
+
+The shared ChatGPT and Codex public directory uses the submission flow in the [Codex plugins documentation](https://developers.openai.com/codex/plugins).
 
 ## Kiro
 

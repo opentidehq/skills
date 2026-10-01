@@ -14,5 +14,6 @@
     "threat-hunting",
     "mitre-attack"
   ],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "mcpServers": "./mcp.json"
 }

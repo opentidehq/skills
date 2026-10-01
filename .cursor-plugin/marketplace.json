@@ -1,5 +1,8 @@
 {
   "name": "opentide",
+  "owner": {
+    "name": "OpenTideHQ"
+  },
   "metadata": {
     "description": "OpenTide detection engineering skills for Cursor"
   },
@@ -7,8 +10,7 @@
     {
       "name": "opentide-detection-skills",
       "source": ".",
-      "description": "27 Agent Skills for OpenTide detection-as-code, platform query languages, and defensive internals.",
-      "version": "1.0.0"
+      "description": "27 Agent Skills for OpenTide detection-as-code, platform query languages, and defensive internals."
     }
   ]
 }
