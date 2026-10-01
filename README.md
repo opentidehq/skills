@@ -59,16 +59,16 @@ Install-time caching may copy files into a local plugin cache on the user's mach
 
 ## Still to publish
 
-These installs work from GitHub today. A public catalogue listing is a separate submission:
+These installs work from GitHub today. The remaining catalogue submissions are tracked in [#19](https://github.com/OpenTideHQ/skills/issues/19).
 
-| Catalogue | What is left | Issue |
-| --- | --- | --- |
-| [Cursor Marketplace](https://cursor.com/marketplace/publish) | Submit this repository. Listing is manually reviewed. The plugin icon is `docs/opentide-icon.svg`. | [#6](https://github.com/OpenTideHQ/skills/issues/6) |
-| [Claude community](https://platform.claude.com/plugins/submit) | Run `claude plugin validate .`, then submit. The official Claude catalogue is invite-only. | [#7](https://github.com/OpenTideHQ/skills/issues/7) |
-| [Awesome Copilot](https://github.com/github/awesome-copilot) | Open a pull request using that repository's contributing guide. | [#8](https://github.com/OpenTideHQ/skills/issues/8) |
-| [ChatGPT / Codex directory](https://developers.openai.com/codex/plugins) | Submit the plugin for the shared public directory. | [#9](https://github.com/OpenTideHQ/skills/issues/9) |
-| [Kiro Powers](https://kiro.dev/powers) | GitHub import works now. A curated registry listing still needs the Kiro submission path. | [#10](https://github.com/OpenTideHQ/skills/issues/10) |
-| GitHub skill search | Add the repository topic `agent-skills`, then `gh skill publish`. | [#11](https://github.com/OpenTideHQ/skills/issues/11) |
+| Catalogue | What is left |
+| --- | --- |
+| [Cursor Marketplace](https://cursor.com/marketplace/publish) | Submit this repository. Listing is manually reviewed. The plugin icon is `docs/opentide-icon.svg`. |
+| [Claude community](https://platform.claude.com/plugins/submit) | Run `claude plugin validate .`, then submit. The official Claude catalogue is invite-only. |
+| [Awesome Copilot](https://github.com/github/awesome-copilot) | Open a pull request using that repository's contributing guide. |
+| [ChatGPT / Codex directory](https://developers.openai.com/codex/plugins) | Submit the plugin for the shared public directory. |
+| [Kiro Powers](https://kiro.dev/powers) | GitHub import works now. A curated registry listing still needs the Kiro submission path. |
+| GitHub skill search | Add the repository topic `agent-skills`, then `gh skill publish`. |
 
 The engine task for `opentide setup` installing this plugin is [opentide#431](https://github.com/OpenTideHQ/opentide/issues/431).
 
