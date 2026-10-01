@@ -22,6 +22,19 @@ npx skills add OpenTideHQ/skills
 cp AGENTS.md .
 ```
 
+## Agent Plugins
+
+Root [`plugin.json`](../plugin.json) and [`mcp.json`](../mcp.json) follow [Agent Plugins 1.0.0](https://agent-plugins.org/specification). Clients discover skills from `skills/` and MCP servers only from `mcp.json`. The OpenTide server is:
+
+```json
+{
+  "type": "stdio",
+  "command": "opentide-mcp"
+}
+```
+
+Install the server with `pip install 'opentide[mcp]'` so `opentide-mcp` is on `PATH`. The manifest does not set `OPENTIDE_REPO_ROOT`. See the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md) when the process working directory is not the detection content repository.
+
 ## Cursor
 
 **Plugin** (skills + rules):
