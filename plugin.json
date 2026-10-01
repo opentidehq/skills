@@ -1,0 +1,27 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "opentide-detection-skills",
+  "version": "1.0.0",
+  "description": "Detection engineering skills for OpenTide — TVM, DOM, and MDR authoring, hunt-to-rule workflows, MITRE ATT&CK, platform query languages, and defensive internals — with the OpenTide MCP server.",
+  "author": {
+    "name": "OpenTideHQ",
+    "url": "https://github.com/OpenTideHQ"
+  },
+  "homepage": "https://github.com/OpenTideHQ/skills",
+  "repository": "https://github.com/OpenTideHQ/skills",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "opentide",
+    "detection",
+    "detection-engineering",
+    "detectionops",
+    "hunting",
+    "threat-hunting",
+    "mitre",
+    "mitre-attack",
+    "kql",
+    "splunk",
+    "sentinel",
+    "edr"
+  ]
+}

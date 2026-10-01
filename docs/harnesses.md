@@ -6,10 +6,11 @@ OpenTide Skills targets **one canonical `skills/` tree** and layers harness-spec
 
 | Standard | Format | Maintainer | This repo |
 |----------|--------|------------|-----------|
+| [Agent Plugins](https://agent-plugins.org/specification) | Root `plugin.json` + `mcp.json` | agent-plugins.org | **Yes** — portable install |
 | [Agent Skills](https://agentskills.io/specification) | `skills/<name>/SKILL.md` | agentskills.io / Anthropic | **Canonical** — `skills/` |
 | [AGENTS.md](https://agents.md/) | Root `AGENTS.md` | AAIF / community | **Yes** — `AGENTS.md` |
-| [MCP](https://modelcontextprotocol.io/) | `mcp.json`, tool servers | AAIF | Not bundled in this repo |
-| **Kiro Power** | `POWER.md` + `steering/` | AWS Kiro | **Yes** — `POWER.md`, `steering/` |
+| [MCP](https://modelcontextprotocol.io/) | Root `mcp.json` (`opentide-mcp`) | AAIF / OpenTide | **Yes** — stdio server entry |
+| **Kiro Power** | `plugin.json` (preferred) or `POWER.md` + `steering/` | AWS Kiro | **Yes** — both |
 | **Cursor plugin** | `.cursor-plugin/plugin.json` | Cursor | **Yes** |
 | **Claude Code plugin** | `.claude-plugin/plugin.json` | Anthropic | **Yes** |
 | **Codex plugin** | `.codex-plugin/plugin.json` | OpenAI | **Yes** |
@@ -21,11 +22,12 @@ These read `./skills/` from the repository root at install time.
 
 | Harness | Manifest | Marketplace |
 |---------|----------|-------------|
+| Agent Plugins clients (Cursor, VS Code, Copilot, Kiro, and others) | `plugin.json`, `mcp.json` | Host marketplace, once published. VS Code 1.140 uses this manifest when `$schema` is the Agent Plugins identifier. Claude Code loads the same `mcp.json` through `.claude-plugin/plugin.json`. |
 | Cursor | `.cursor-plugin/plugin.json` | `.cursor-plugin/marketplace.json` |
 | Claude Code | `.claude-plugin/plugin.json` | `.claude-plugin/marketplace.json` |
 | OpenAI Codex | `.codex-plugin/plugin.json` | `.agents/plugins/marketplace.json` |
 | GitHub Copilot / VS Code | `.plugin/plugin.json` | VS Code / Copilot marketplaces |
-| Kiro | `POWER.md` | [kiro.dev/powers](https://kiro.dev/powers) (community) or GitHub import |
+| Kiro | `plugin.json` (preferred) or `POWER.md` | [kiro.dev/powers](https://kiro.dev/powers) or GitHub import |
 
 ## Tier 2 — Agent Skills native (no extra manifest)
 
@@ -83,11 +85,10 @@ Install the power: Powers panel → **Import power from GitHub** → `https://gi
 |--------|--------|
 | Per-harness copied `skills/` trees | Duplication; install cache handles distribution |
 | `.windsurf/` / `.trae/` rule mirrors | Tier 2 skills install covers most cases |
-| Separate Gemini/Antigravity manifest | No stable cross-repo `plugin.json` — use `.agents/skills/` |
-| `mcp.json` in this repo | MCP servers are not bundled here |
+| Separate Gemini/Antigravity manifest | Root `plugin.json` plus `.agents/skills/` covers those clients |
+| A second copy of the OpenTide MCP server | `mcp.json` launches the published `opentide-mcp` binary; this repo does not vendor the server |
 
 ## Future candidates
 
-- **Guided MCP Power** — optional `mcp.json` for validate/generate tooling
 - **Windsurf rule pack** — generated from SKILL.md if community requests it
 - **OpenCode / Factory marketplace entry** — when publish paths stabilise
