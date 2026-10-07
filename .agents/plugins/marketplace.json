@@ -1,7 +1,7 @@
 {
   "name": "opentide",
   "interface": {
-    "displayName": "OpenTide Plugins"
+    "displayName": "opentide plugins"
   },
   "plugins": [
     {
@@ -14,7 +14,7 @@
         "installation": "AVAILABLE"
       },
       "category": "Security",
-      "description": "27 Agent Skills for OpenTide detection-as-code, platform query languages, and defensive internals.",
+      "description": "Detection skills for opentide repositories. Agents model threats, define what to detect, and write the rules and queries, with the platform and internals context each detection depends on.",
       "version": "1.0.0"
     }
   ]

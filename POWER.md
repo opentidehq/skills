@@ -1,7 +1,7 @@
 ---
 name: "opentide-detection"
-displayName: "OpenTide Detection Engineering"
-description: "Detection-as-code expertise for OpenTide — TVM/DOM/MDR authoring, threat hunting, MITRE ATT&CK mapping, KQL/SPL/FQL platform knowledge, and defensive internals across Sentinel, Defender, Splunk, CrowdStrike, and more."
+displayName: "opentide detection engineering"
+description: "Detection skills for opentide repositories. Agents model threats, define what to detect, and write the rules and queries, with the platform and internals context each detection depends on."
 keywords:
   - opentide
   - detection engineering
@@ -33,9 +33,9 @@ keywords:
 author: "OpenTideHQ"
 ---
 
-# OpenTide Detection Engineering
+# opentide detection engineering
 
-Knowledge Base Power for OpenTide detection-as-code work. This repository bundles **27 portable Agent Skills** (`skills/`) and cross-cutting agent instructions (`AGENTS.md`) — steering files route you to the right `SKILL.md` on demand.
+Knowledge Base Power for opentide detection-as-code work. Steering files route you to the right skill in `skills/` on demand. Cross-cutting instructions live in `AGENTS.md`.
 
 ## Onboarding
 
@@ -103,7 +103,7 @@ Full rules are in `AGENTS.md`. Non-negotiable:
 ## Repository layout
 
 ```
-skills/           # 27 Agent Skills (canonical, agentskills.io)
+skills/           # Agent Skills (canonical, agentskills.io)
 AGENTS.md         # Cross-harness entrypoint (agents.md standard)
 POWER.md          # This Kiro Power
 steering/         # Workflow routing (this power)
