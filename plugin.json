@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "opentide-detection-skills",
   "version": "1.0.0",
-  "description": "Detection engineering skills for OpenTide — TVM, DOM, and MDR authoring, hunt-to-rule workflows, MITRE ATT&CK, platform query languages, and defensive internals — with the OpenTide MCP server.",
+  "description": "Detection skills for opentide repositories. Agents model threats, define what to detect, and write the rules and queries, with the platform and internals context each detection depends on.",
   "author": {
     "name": "OpenTideHQ",
     "url": "https://github.com/OpenTideHQ"

@@ -1,12 +1,12 @@
-# OpenTide Skills
+# opentide skills
 
 <p align="center">
-  <img src="docs/opentide-logo.svg" alt="OpenTide" width="280">
+  <img src="docs/opentide-logo.svg" alt="opentide" width="280">
 </p>
 
 [![skills.sh](https://skills.sh/b/OpenTideHQ/skills)](https://skills.sh/OpenTideHQ/skills)
 
-Canonical home for reusable [Agent Skills](https://agentskills.io/specification) for detection engineering — **27 skills**, one plugin (`opentide-detection-skills`). The machine-readable catalogue for `opentide setup skills` is [`manifest.json`](manifest.json).
+Canonical home for opentide detection skills. The plugin `opentide-detection-skills` teaches agents to model threats, define what to detect, and write the rules and queries. The machine-readable catalogue for `opentide setup skills` is [`manifest.json`](manifest.json).
 
 ## Install
 
