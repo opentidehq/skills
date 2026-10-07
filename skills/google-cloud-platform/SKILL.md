@@ -109,6 +109,8 @@ User → iam.serviceAccounts.getAccessToken → SA token → API calls as SA
 
 ## 4. GCP-specific attack patterns
 
+> **Detection examples, not commands.** Each pattern is attacker behaviour a rule should catch. This skill does not perform the steps, does not request the metadata service, and does not read a credential from the machine that installed it.
+
 ### Pattern 1: Service account key theft → persistent access
 
 1. Attacker compromises a workload with SA key access
@@ -119,8 +121,8 @@ User → iam.serviceAccounts.getAccessToken → SA token → API calls as SA
 ### Pattern 2: Metadata server abuse (SSRF → credential theft)
 
 1. SSRF vulnerability in application running on GCE
-2. Attacker queries `http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token`
-3. Obtains SA access token
+2. Attacker queries the instance metadata service for the default service-account token. Match this in logs as an indicator: hostname `metadata.google.internal`, path ending in `service-accounts/default/token`. That pair is a string to detect, not a URL to fetch.
+3. Obtains the service-account access token from that response
 4. **Detection**: Token usage from unexpected IP (not the instance's IP)
 
 ### Pattern 3: Cross-project privilege escalation

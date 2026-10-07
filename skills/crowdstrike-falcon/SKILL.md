@@ -22,6 +22,8 @@ This skill encodes operational context for authoring detection content destined 
 
 Confirm which surface the content targets before authoring. The same intent (e.g. "alert on suspicious PowerShell") looks very different as an IOA, an Event Search scheduled query, an NG-SIEM correlation rule, or a Fusion workflow.
 
+The rows above name Falcon product surfaces to author against. None of them is a command this skill runs, and this skill does not open a shell.
+
 ---
 
 ## 2. Sensor coverage — gaps to declare

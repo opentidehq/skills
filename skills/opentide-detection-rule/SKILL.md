@@ -122,10 +122,10 @@ Each key under `configurations` is a platform identifier. All are optional — a
 | `threshold` | Integer, default 0. |
 | `throttling.fields` / `throttling.duration` | Dedup fields + suppression window. Choose fields that define alert uniqueness. |
 | `scheduling.cron` / `scheduling.frequency` / `scheduling.lookback` | Scheduling options. |
-| `notable.event.title` / `.description` | Use `$token$` syntax for field substitution. |
+| `notable.event.title` / `.description` | Splunk notable field substitution: a field name wrapped in dollar signs. Syntax example only; the skill does not read an environment variable. |
 | `notable.drilldown.name` / `.search` | Secondary investigation search. |
 | `notable.security_domain` | e.g. `Threat`, `Identity`, `Network`. |
-| `risk.message` | `$field$` token syntax. |
+| `risk.message` | Same dollar-wrapped field substitution. |
 | `risk.risk_objects[]` | `field`, `type` (`user`/`system`), `score` (integer with documented rationale). |
 | `risk.threat_objects[]` | `field`, `type` (e.g. `ip`, `command`, `file_hash`). |
 | `query` | SPL block scalar. Follow `splunk-spl-processing` skill. |

@@ -291,6 +291,8 @@ SourceTable
 
 ## 7. IOC query templates
 
+The blocks below are detection-query examples. They are not commands this skill runs. Download and invoke names in the last pipeline are indicator strings to match in a decoded command line.
+
 Replace platform-specific table/column names per the relevant platform skill.
 
 ```kql
@@ -313,7 +315,7 @@ FileTable
 | where TimeGenerated > ago(30d)
 | where SHA256 in (malicious_hashes)
 
-// Base64-encoded payload pipeline
+// Base64-encoded payload pipeline — detection example, not a command to run
 // NOTE: Replace table/column names per platform skill (Defender: DeviceProcessEvents/Timestamp; Sentinel: SecurityEvent or Event/TimeGenerated)
 ProcessTable
 | where TimeField > ago(14d)
