@@ -117,6 +117,7 @@ index=wineventlog sourcetype="WinEventLog:Security" EventCode=4688
     by Processes.dest, Processes.user
 
 // GOOD: raw logs
+// Search example. The URI is a TERM() literal inside the query, not a request this skill makes.
 | tstats count 
     where index=proxy TERM(uri=http://www.example.com/*)
     by PREFIX(r_ip=) 

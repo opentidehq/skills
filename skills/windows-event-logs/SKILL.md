@@ -152,12 +152,12 @@ Sysmon provides richer telemetry than native Security events but requires deploy
 | **Module logging** | 4103 | PowerShell Operational | GPO: `Turn on Module Logging` (specify modules) |
 | **Transcription** | — | File-based | GPO: `Turn on PowerShell Transcription` |
 
-**ScriptBlock logging (4104)** is the highest-value PowerShell telemetry:
+**ScriptBlock logging (4104)** is the highest-value PowerShell telemetry. Loader names in this list are strings that show up in the logged script; this skill does not run them.
 - Captures the **deobfuscated** script content (after PowerShell's own parsing)
 - Captures scripts loaded via `-EncodedCommand`, `Invoke-Expression`, `Add-Type`
 - Warning level 3 = suspicious (automatic for known-bad patterns)
 
-**Detection patterns**:
+**Detection patterns** (indicator strings to look for in 4104 script text; not commands this skill runs):
 - Base64-decoded content containing `WebClient`, `DownloadString`, `IEX`
 - AMSI bypass attempts (`AmsiUtils`, `amsiInitFailed`)
 - Reflection-based .NET calls (`[System.Reflection.Assembly]::Load`)

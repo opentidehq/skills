@@ -227,6 +227,7 @@ Every query MUST end with explicit `project` or `summarize`.
 | where ProcessCommandLine matches regex @"(?i)invoke-(web|rest)request"
 
 // GOOD: pre-filter with indexed term, then regex for precision
+// Indicator strings in a detection example, not commands to run
 | where ProcessCommandLine has_any ("Invoke-WebRequest", "Invoke-RestMethod")
 | where ProcessCommandLine matches regex @"(?i)invoke-(web|rest)request"
 ```

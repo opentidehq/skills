@@ -14,7 +14,7 @@ Author and review SPL for Splunk Enterprise / Enterprise Security. The disciplin
 
 > **Pair with**: `windows-event-logs` (EventCode mapping), `detection-engineering` (hunt→rule lifecycle), `opentide-detection-rule` (`configurations.splunk`), `kusto-query-language` (conceptual KQL translation).
 
-> **Distilled from**: Analysis of 2009 production detections, 234 macros, and 104 lookups in [splunk/security_content](https://github.com/splunk/security_content) (ESCU v5.26+).
+> **Distilled from**: Analysis of 2009 production detections, 234 macros, and 104 lookups in the Splunk ESCU corpus `splunk/security_content` (v5.26+). Source citation only — this skill does not contact that project and does not read a credential.
 
 ---
 
@@ -212,6 +212,8 @@ index=wineventlog sourcetype="WinEventLog:Security" EventCode=4688 earliest=-7d@
 
 ## 8. IOC query templates
 
+The blocks in this section are detection-query examples. They are not commands this skill runs. Strings such as download or invoke aliases are indicator text to match inside a decoded command line.
+
 Replace index/sourcetype with tenant Layer 1 macros.
 
 ```spl
@@ -231,6 +233,7 @@ Replace index/sourcetype with tenant Layer 1 macros.
 | table _time, dest, user, file_name, sha256, process
 
 // Base64-encoded PowerShell pipeline
+// Detection example: the match is an indicator in decoded command-line text, not a command to run
 `win_security_logs` EventCode=4688 earliest=-14d
 | where match(CommandLine, "(?i)(-enc|-encodedcommand|-e )")
 | rex field=CommandLine "(?i)-e(?:nc|ncodedcommand)?\s+(?<EncodedBlock>[^\s]+)"
@@ -331,7 +334,7 @@ When SPL is wired into `configurations.splunk` in an OpenTide MDR object, coordi
 | `threshold` | Integer match count before alert |
 | `throttling.fields` / `throttling.duration` | Entity dedup — mirror ES throttling |
 | `scheduling.cron` / `frequency` / `lookback` | Align to ingestion lag and `_index_earliest` where needed |
-| `notable.event.title` / `.description` | `$token$` field substitution |
+| `notable.event.title` / `.description` | Splunk notable field substitution: a field name wrapped in dollar signs. Syntax example only — not an environment variable, and this skill does not read one. |
 | `notable.drilldown.name` / `.search` | Secondary investigation search |
 | `risk.risk_objects[]` | `field`, `type`, `score` — document score rationale (AP-S10) |
 | `risk.threat_objects[]` | `field`, `type` (e.g. `ip`, `file_hash`) |
