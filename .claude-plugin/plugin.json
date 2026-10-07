@@ -8,6 +8,7 @@
   "homepage": "https://github.com/OpenTideHQ/skills",
   "repository": "https://github.com/OpenTideHQ/skills",
   "license": "EUPL-1.2",
+  "icon": ".claude-plugin/icon.png",
   "keywords": [
     "opentide",
     "detection-engineering",
