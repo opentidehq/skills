@@ -10,7 +10,7 @@ Canonical home for opentide detection skills. The plugin `opentide-detection-ski
 
 ## Install
 
-Install the OpenTide MCP server once. The plugin starts it as `opentide-mcp` on `PATH`.
+Install the OpenTide MCP server once. The plugin starts it as `opentide mcp start` on `PATH`.
 
 ```bash
 pip install 'opentide[mcp]'
@@ -30,7 +30,7 @@ Then use the command for your agent. Each one installs this repository.
 
 Copy [`AGENTS.md`](AGENTS.md) into a detection project when the agent reads project instructions from the workspace root.
 
-VS Code needs `chat.plugins.enabled`. A conforming client starts `opentide-mcp` in this plugin root. Point the server at the detection content repository when that working directory is this skills repository. See the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md).
+VS Code needs `chat.plugins.enabled`. A conforming client starts `opentide mcp start` in this plugin root. Point the server at the detection content repository when that working directory is this skills repository. See the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md).
 
 [`skills.sh.json`](skills.sh.json) groups the [skills.sh repository page](https://skills.sh/OpenTideHQ/skills). skills.sh reads that file from the default branch on the next `npx skills add`.
 
@@ -42,7 +42,7 @@ Skills live once under `skills/`. Harness manifests at the repository root point
 
 ```
 plugin.json                      # Agent Plugins 1.0.0 manifest
-mcp.json                         # OpenTide MCP server (opentide-mcp, stdio)
+mcp.json                         # OpenTide MCP server (opentide mcp start, stdio)
 skills.sh.json                   # skills.sh repository page groups
 skills/                          # Canonical skills (only copy in git)
 AGENTS.md                        # Unified agents.md entrypoint

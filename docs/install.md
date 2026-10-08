@@ -33,11 +33,12 @@ Root [`plugin.json`](../plugin.json) and [`mcp.json`](../mcp.json) follow [Agent
 ```json
 {
   "type": "stdio",
-  "command": "opentide-mcp"
+  "command": "opentide",
+  "args": ["mcp", "start"]
 }
 ```
 
-Install the server with `pip install 'opentide[mcp]'` so `opentide-mcp` is on `PATH`. When the client starts that process in this skills repository, point it at the detection content repository using the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md).
+Install the server with `pip install 'opentide[mcp]'` so `opentide` is on `PATH`. When the client starts that process in this skills repository, point it at the detection content repository using the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md).
 
 Claude Code reads MCP servers from the harness manifest. [`.claude-plugin/plugin.json`](../.claude-plugin/plugin.json) sets `"mcpServers": "./mcp.json"` so it uses the same Agent Plugins entry. VS Code 1.140 selects the root `plugin.json` when `$schema` is the Agent Plugins 1.0.0 identifier, then loads `skills/` and `mcp.json`.
 
