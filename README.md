@@ -6,11 +6,11 @@
 
 [![skills.sh](https://skills.sh/b/OpenTideHQ/skills)](https://skills.sh/OpenTideHQ/skills)
 
-Canonical home for opentide detection skills. The plugin `opentide-detection-skills` teaches agents to model threats, define what to detect, and write the rules and queries. The machine-readable catalogue for `opentide setup skills` is [`manifest.json`](manifest.json).
+Canonical home for opentide detection skills. The plugin `opentide` teaches agents to model threats, define what to detect, and write the rules and queries. The machine-readable catalogue for `opentide setup skills` is [`manifest.json`](manifest.json).
 
 ## Install
 
-Install the OpenTide MCP server once. The plugin starts it as `opentide-mcp` on `PATH`.
+Install the OpenTide MCP server once. The plugin starts it as `opentide mcp start` on `PATH`.
 
 ```bash
 pip install 'opentide[mcp]'
@@ -22,15 +22,15 @@ Then use the command for your agent. Each one installs this repository.
 | --- | --- | --- |
 | <img src="docs/marketplace-skills-sh.png" width="36" height="36" alt="skills.sh"> | **skills.sh** | `npx skills add OpenTideHQ/skills` |
 | <img src="docs/marketplace-cursor.svg" width="36" height="36" alt="Cursor"> | **Cursor** | `/add-plugin OpenTideHQ/skills` |
-| <img src="docs/marketplace-claude.svg" width="36" height="36" alt="Claude Code"> | **Claude Code** | `/plugin marketplace add OpenTideHQ/skills` then `/plugin install opentide-detection-skills@opentide` |
+| <img src="docs/marketplace-claude.svg" width="36" height="36" alt="Claude Code"> | **Claude Code** | `/plugin marketplace add OpenTideHQ/skills` then `/plugin install opentide@opentide` |
 | <img src="docs/marketplace-vscode.svg" width="36" height="36" alt="Visual Studio Code"> | **VS Code** | Command Palette → **Chat: Install Plugin From Source** → `OpenTideHQ/skills` |
-| <img src="docs/marketplace-copilot.svg" width="36" height="36" alt="GitHub Copilot"> | **Copilot CLI** | `copilot plugin marketplace add OpenTideHQ/skills` then `copilot plugin install opentide-detection-skills@opentide` |
-| <img src="docs/marketplace-codex.svg" width="36" height="36" alt="OpenAI Codex"> | **Codex** | In this repo, run `/plugins` and install **opentide-detection-skills** |
+| <img src="docs/marketplace-copilot.svg" width="36" height="36" alt="GitHub Copilot"> | **Copilot CLI** | `copilot plugin marketplace add OpenTideHQ/skills` then `copilot plugin install opentide@opentide` |
+| <img src="docs/marketplace-codex.svg" width="36" height="36" alt="OpenAI Codex"> | **Codex** | In this repo, run `/plugins` and install **opentide** |
 | <img src="docs/marketplace-kiro.svg" width="36" height="36" alt="Kiro"> | **Kiro** | Powers → **Add Custom Power** → **Import from GitHub** → `https://github.com/OpenTideHQ/skills` |
 
 Copy [`AGENTS.md`](AGENTS.md) into a detection project when the agent reads project instructions from the workspace root.
 
-VS Code needs `chat.plugins.enabled`. A conforming client starts `opentide-mcp` in this plugin root. Point the server at the detection content repository when that working directory is this skills repository. See the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md).
+VS Code needs `chat.plugins.enabled`. A conforming client starts `opentide mcp start` in this plugin root. Point the server at the detection content repository when that working directory is this skills repository. See the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md).
 
 [`skills.sh.json`](skills.sh.json) groups the [skills.sh repository page](https://skills.sh/OpenTideHQ/skills). skills.sh reads that file from the default branch on the next `npx skills add`.
 
@@ -42,7 +42,7 @@ Skills live once under `skills/`. Harness manifests at the repository root point
 
 ```
 plugin.json                      # Agent Plugins 1.0.0 manifest
-mcp.json                         # OpenTide MCP server (opentide-mcp, stdio)
+mcp.json                         # OpenTide MCP server (opentide mcp start, stdio)
 skills.sh.json                   # skills.sh repository page groups
 skills/                          # Canonical skills (only copy in git)
 AGENTS.md                        # Unified agents.md entrypoint

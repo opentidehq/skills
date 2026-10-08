@@ -3,7 +3,8 @@
   "mcpServers": {
     "opentide": {
       "type": "stdio",
-      "command": "opentide-mcp"
+      "command": "opentide",
+      "args": ["mcp", "start"]
     }
   }
 }

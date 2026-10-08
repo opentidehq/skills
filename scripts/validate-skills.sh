@@ -138,8 +138,15 @@ if isinstance(mcp, dict):
         server = servers["opentide"]
         if not isinstance(server, dict):
             fail("mcp.json opentide entry must be an object")
-        elif server.get("type") != "stdio" or server.get("command") != "opentide-mcp":
-            fail("mcp.json opentide server must be stdio command opentide-mcp")
+        elif (
+            server.get("type") != "stdio"
+            or server.get("command") != "opentide"
+            or server.get("args") != ["mcp", "start"]
+        ):
+            fail(
+                'mcp.json opentide server must be stdio command opentide '
+                'with args ["mcp", "start"]'
+            )
         elif set(server) - {"type", "command", "args", "env", "cwd"}:
             fail("mcp.json opentide server has unknown fields")
 else:
