@@ -1,6 +1,6 @@
 {
-  "name": "opentide-detection-skills",
-  "displayName": "opentide detection skills",
+  "name": "opentide",
+  "displayName": "opentide",
   "description": "Detection skills for opentide repositories. Agents model threats, define what to detect, and write the rules and queries, with the platform and internals context each detection depends on.",
   "version": "1.0.0",
   "publisher": "OpenTideHQ",

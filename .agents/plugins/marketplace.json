@@ -5,7 +5,7 @@
   },
   "plugins": [
     {
-      "name": "opentide-detection-skills",
+      "name": "opentide",
       "source": {
         "source": "local",
         "path": "./"

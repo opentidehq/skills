@@ -6,7 +6,7 @@
 
 [![skills.sh](https://skills.sh/b/OpenTideHQ/skills)](https://skills.sh/OpenTideHQ/skills)
 
-Canonical home for opentide detection skills. The plugin `opentide-detection-skills` teaches agents to model threats, define what to detect, and write the rules and queries. The machine-readable catalogue for `opentide setup skills` is [`manifest.json`](manifest.json).
+Canonical home for opentide detection skills. The plugin `opentide` teaches agents to model threats, define what to detect, and write the rules and queries. The machine-readable catalogue for `opentide setup skills` is [`manifest.json`](manifest.json).
 
 ## Install
 
@@ -22,10 +22,10 @@ Then use the command for your agent. Each one installs this repository.
 | --- | --- | --- |
 | <img src="docs/marketplace-skills-sh.png" width="36" height="36" alt="skills.sh"> | **skills.sh** | `npx skills add OpenTideHQ/skills` |
 | <img src="docs/marketplace-cursor.svg" width="36" height="36" alt="Cursor"> | **Cursor** | `/add-plugin OpenTideHQ/skills` |
-| <img src="docs/marketplace-claude.svg" width="36" height="36" alt="Claude Code"> | **Claude Code** | `/plugin marketplace add OpenTideHQ/skills` then `/plugin install opentide-detection-skills@opentide` |
+| <img src="docs/marketplace-claude.svg" width="36" height="36" alt="Claude Code"> | **Claude Code** | `/plugin marketplace add OpenTideHQ/skills` then `/plugin install opentide@opentide` |
 | <img src="docs/marketplace-vscode.svg" width="36" height="36" alt="Visual Studio Code"> | **VS Code** | Command Palette → **Chat: Install Plugin From Source** → `OpenTideHQ/skills` |
-| <img src="docs/marketplace-copilot.svg" width="36" height="36" alt="GitHub Copilot"> | **Copilot CLI** | `copilot plugin marketplace add OpenTideHQ/skills` then `copilot plugin install opentide-detection-skills@opentide` |
-| <img src="docs/marketplace-codex.svg" width="36" height="36" alt="OpenAI Codex"> | **Codex** | In this repo, run `/plugins` and install **opentide-detection-skills** |
+| <img src="docs/marketplace-copilot.svg" width="36" height="36" alt="GitHub Copilot"> | **Copilot CLI** | `copilot plugin marketplace add OpenTideHQ/skills` then `copilot plugin install opentide@opentide` |
+| <img src="docs/marketplace-codex.svg" width="36" height="36" alt="OpenAI Codex"> | **Codex** | In this repo, run `/plugins` and install **opentide** |
 | <img src="docs/marketplace-kiro.svg" width="36" height="36" alt="Kiro"> | **Kiro** | Powers → **Add Custom Power** → **Import from GitHub** → `https://github.com/OpenTideHQ/skills` |
 
 Copy [`AGENTS.md`](AGENTS.md) into a detection project when the agent reads project instructions from the workspace root.

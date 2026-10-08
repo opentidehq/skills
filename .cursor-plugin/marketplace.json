@@ -8,7 +8,7 @@
   },
   "plugins": [
     {
-      "name": "opentide-detection-skills",
+      "name": "opentide",
       "source": ".",
       "description": "Detection skills for opentide repositories. Agents model threats, define what to detect, and write the rules and queries, with the platform and internals context each detection depends on."
     }

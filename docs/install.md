@@ -60,12 +60,12 @@ The public Cursor Marketplace listing is a separate submission at [cursor.com/ma
 
 ```text
 /plugin marketplace add OpenTideHQ/skills
-/plugin install opentide-detection-skills@opentide
+/plugin install opentide@opentide
 ```
 
 Manifest: [`.claude-plugin/plugin.json`](../.claude-plugin/plugin.json)
 
-Skills are namespaced: `/opentide-detection-skills:<skill-name>`
+Skills are namespaced: `/opentide:<skill-name>`
 
 Check the package with `claude plugin validate .` before a community catalogue submission at [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit).
 
@@ -77,7 +77,7 @@ Check the package with `claude plugin validate .` before a community catalogue s
 
 ```bash
 copilot plugin marketplace add OpenTideHQ/skills
-copilot plugin install opentide-detection-skills@opentide
+copilot plugin install opentide@opentide
 ```
 
 The legacy manifest is [`.plugin/plugin.json`](../.plugin/plugin.json). Copilot CLI reads the marketplace at [`.claude-plugin/marketplace.json`](../.claude-plugin/marketplace.json). A listing in the default Awesome Copilot marketplace is a pull request to [github/awesome-copilot](https://github.com/github/awesome-copilot).
@@ -90,7 +90,7 @@ Open this repository in Codex CLI, then:
 /plugins
 ```
 
-Install **opentide-detection-skills** from the **opentide** marketplace.
+Install **opentide** from the **opentide** marketplace.
 
 Repo marketplace: [`.agents/plugins/marketplace.json`](../.agents/plugins/marketplace.json)
 
