@@ -80,7 +80,7 @@ copilot plugin marketplace add OpenTideHQ/skills
 copilot plugin install opentide@opentide
 ```
 
-The legacy manifest is [`.plugin/plugin.json`](../.plugin/plugin.json). Copilot CLI reads the marketplace at [`.claude-plugin/marketplace.json`](../.claude-plugin/marketplace.json). A listing in the default Awesome Copilot marketplace is a pull request to [github/awesome-copilot](https://github.com/github/awesome-copilot).
+Copilot CLI reads the root [`plugin.json`](../plugin.json) and discovers `skills/` from it — no harness-specific manifest is needed. It reads the marketplace at [`.claude-plugin/marketplace.json`](../.claude-plugin/marketplace.json). A listing in the default Awesome Copilot marketplace is an [External plugin submission issue](https://github.com/github/awesome-copilot/issues/new?template=external-plugin.yml) against [github/awesome-copilot](https://github.com/github/awesome-copilot), which requires an immutable release tag or commit SHA. Pull requests editing `plugins/external.json` directly are rejected.
 
 ## OpenAI Codex
 

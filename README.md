@@ -51,7 +51,6 @@ steering/                        # Kiro workflow routing (points at skills/)
 .cursor-plugin/plugin.json       # Cursor compatibility manifest
 .claude-plugin/plugin.json       # Claude Code manifest (mcpServers → ./mcp.json)
 .codex-plugin/plugin.json        # OpenAI Codex compatibility manifest
-.plugin/plugin.json              # Legacy OpenPlugin compatibility manifest
 rules/                           # Cursor rules (optional)
 ```
 

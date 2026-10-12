@@ -14,7 +14,7 @@ OpenTide Skills targets **one canonical `skills/` tree** and layers harness-spec
 | **Cursor plugin** | `.cursor-plugin/plugin.json` | Cursor | **Yes** |
 | **Claude Code plugin** | `.claude-plugin/plugin.json` | Anthropic | **Yes** |
 | **Codex plugin** | `.codex-plugin/plugin.json` | OpenAI | **Yes** |
-| **Copilot / OpenPlugin** | `.plugin/plugin.json` | GitHub / VS Code | **Yes** |
+| **Copilot / OpenPlugin** | Root `plugin.json` | GitHub / VS Code | **Yes** |
 
 ## Tier 1 — Native plugin manifest (in this repo)
 
@@ -26,7 +26,7 @@ These read `./skills/` from the repository root at install time.
 | Cursor | `.cursor-plugin/plugin.json` | `.cursor-plugin/marketplace.json` |
 | Claude Code | `.claude-plugin/plugin.json` | `.claude-plugin/marketplace.json` |
 | OpenAI Codex | `.codex-plugin/plugin.json` | `.agents/plugins/marketplace.json` |
-| GitHub Copilot / VS Code | `.plugin/plugin.json` | VS Code / Copilot marketplaces |
+| GitHub Copilot / VS Code | `plugin.json` | VS Code / Copilot marketplaces |
 | Kiro | `plugin.json` (preferred) or `POWER.md` | [kiro.dev/powers](https://kiro.dev/powers) or GitHub import |
 
 ## Tier 2 — Agent Skills native (no extra manifest)
