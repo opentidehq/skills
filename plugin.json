@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "opentide",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Detection skills for opentide repositories. Agents model threats, define what to detect, and write the rules and queries, with the platform and internals context each detection depends on.",
   "author": {
     "name": "OpenTideHQ",
@@ -23,5 +23,35 @@
     "splunk",
     "sentinel",
     "edr"
-  ]
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "opentide",
+        "shortDescription": "Detection skills for OpenTide",
+        "longDescription": "Detection engineering for OpenTide repositories. opentide teaches an agent the detection-as-code lifecycle: turn threat intelligence into threat vectors, decompose a threat into detection objectives whose signals specify what to look for, then author detection rules and the platform queries that implement them.\n\nIt carries the platform knowledge each step depends on — KQL for Microsoft Sentinel and Defender for Endpoint, SPL for Splunk, and the telemetry models for CrowdStrike Falcon, SentinelOne, Carbon Black Cloud and HarfangLab — alongside the defensive internals a detection rests on: Windows event logs and internals, Linux and macOS internals, Active Directory, Entra ID, Okta, AWS, Azure, GCP, email and network protocols, and MITRE ATT&CK mapping.\n\nThe object skills deliberately do not hard-code the OpenTide schema. They resolve the structure, templates and controlled vocabularies from whatever engine version is installed, so guidance does not drift as the specification moves.\n\nIntended for detection engineers and threat hunters working in an OpenTide content repository. It does not deploy anything by itself, and it is not a substitute for reviewing generated detection logic before it reaches a production platform.",
+        "developerName": "OpenTideHQ",
+        "category": "Security",
+        "capabilities": [
+          "Model threats as OpenTide threat vectors",
+          "Decompose threats into detection objectives and signals",
+          "Author detection rules and platform configurations",
+          "Write and review KQL, SPL and vendor query syntax",
+          "Map detections to MITRE ATT&CK",
+          "Model log source coverage and detection gaps"
+        ],
+        "websiteURL": "https://opentide.org",
+        "supportURL": "https://github.com/OpenTideHQ/skills/issues",
+        "privacyPolicyURL": "https://opentide.org/legal/privacy/",
+        "termsOfServiceURL": "https://opentide.org/legal/terms/",
+        "defaultPrompt": [
+          "Turn this threat report into an OpenTide threat vector.",
+          "Draft detection objectives for this threat vector.",
+          "Write the Sentinel configuration for this detection rule."
+        ],
+        "logo": "./assets/icon.png",
+        "composerIcon": "./assets/icon.png"
+      }
+    }
+  }
 }
