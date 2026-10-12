@@ -1,6 +1,6 @@
 ---
-name: opentide-detection-objective
-description: Authors OpenTide Detection Objective (DOM) YAML -- priorities, compositions, ATT&CK cross-links, signal contracts with methodology/severity/effort/entities/data requirements, and traceability toward linked Threat Vectors. Covers signal decomposition principles, composition strategies, data availability modelling, entity taxonomy, and anti-patterns distilled from production corpora. Use whenever creating or refactoring files under Detection Objectives or structuring coverage intents before Detection Rules attach.
+name: opentide-objective
+description: Authors OpenTide Detection Objective objects — decomposing a threat into discrete detection opportunities, writing signals as analyst-facing alert specifications, modelling data availability honestly, choosing a composition strategy, and linking upstream to threat vectors and downstream to detection rules. Covers signal decomposition quality, entity correlation, and anti-patterns distilled from production corpora. Resolves object structure and vocabularies from the installed engine instead of pinning fields. Use when structuring coverage intent, or before detection rules attach to an objective.
 ---
 
 # OpenTide Detection Objective (DOM)
@@ -9,81 +9,97 @@ A DOM bridges the gap between threat modelling (TVM) and deployable detection ru
 
 ---
 
-## Preconditions
+## Resolve the schema before authoring
 
-1. Load **`Schemas/Templates`** for DOM (e.g. `dom::1.0` — always check the live template for the current version) and authoritative JSON schemas.
-2. Identify related **TVM UUIDs**. Update rather than duplicate when coverage shifts.
-3. Review existing DOMs in the corpus to avoid overlapping coverage.
+Do not author from memory, and do not expect a field list in this skill. A
+Detection Objective's structure is versioned, ships with the engine, and changes without
+this skill changing. Resolve it from the installed version every time.
 
----
+Two fields look like versions and mean different things. Confusing them is the
+most common authoring mistake:
 
-## Complete field reference
+| Field | Means | Where it comes from |
+|---|---|---|
+| `metadata.schema` | the structural revision, `{family}::{major}.{minor}` | the template you resolve below |
+| `metadata.version` | the content revision of this one object | you, on meaningful change; git holds the real history |
 
-### Top-level
+Never select a schema file using `metadata.version`. An object on content
+version 4 can still declare the first structural revision.
 
-| Field | Type | Required | Notes |
-|---|---|---|---|
-| `name` | string | Yes | Verb-noun phrase describing the detection goal. **Filename:** dash-case slug from `name` (e.g. `detect-azure-credential-abuse.yaml`); keep `name` human-readable. Doc paths use the same `slugify()` rules.
-| `references` | object | Optional | `public` (numbered), `internal` (alpha). Same convention as TVMs. |
-| `metadata` | object | Yes | Same structure as TVM metadata. Schema: e.g. `dom::1.0` — verify against live template. |
-| `objective` | object | Yes | Core detection content. |
+Resolve the live structure in this order, stopping at the first that answers:
 
-### `objective` fields
+1. **MCP resources**, when the OpenTide MCP server is connected.
+   `opentide://schemas/objective` returns the JSON Schema, resolved to the
+   highest registered revision. `opentide://templates/objective` returns the
+   authoring template. `opentide://vocabularies` lists the controlled
+   vocabularies and `opentide://vocabularies/{name}` returns the allowed
+   values of one -- read these instead of guessing at an enum, because members
+   get added.
+2. **Generated artefacts in the repository**, when no server is connected.
+   `.opentide/schemas/` and `.opentide/templates/` hold one file per registered
+   revision; take the one matching the declared `metadata.schema`.
+3. **Generate them**, when neither exists: `opentide generate schemas` and
+   `opentide generate templates`, or `opentide generate` for both. An empty
+   schema or template list means this step has not been run -- that is the
+   cause, not a missing object type.
 
-| Field | Type | Required | Notes |
-|---|---|---|---|
-| `priority` | enum | Yes | `Low`, `Medium`, `High`, `Critical`. Align with TVM criticality. |
-| `type` | enum | Yes | `Threat` (requires `threats` array) or `Supportive` (infrastructure/methodology objectives). |
-| `threats` | array[UUID] | Conditional | TVM UUIDs. Required when `type: Threat`. A single DOM can cover many TVMs. |
-| `att&ck` | array[string] | Optional | Override TVM-inherited techniques. Only populate when the DOM narrows ATT&CK scope. |
-| `investment` | string | Optional | Broader effort assessment than signal-level `effort`. |
-| `description` | string | Yes | High-level narrative: what are we detecting, why it matters, which platforms are relevant. 3-5 sentences. NOT a signal-level technical spec. |
-| `composition` | object | Yes | How signals relate. See composition section. |
-| `signals` | array | Yes | At least one signal. See signal section. |
+Then read a neighbouring object of the same family for local convention, and
+`opentide --json info objectives` to see what already exists before adding
+something that overlaps.
 
----
+Repository layout is not fixed either. A CoreTide-era corpus uses different
+family names and directories than a current one, and `opentide migrate objects`
+is what moves it forward -- the repository owner's decision, not one to take
+mid-task. Derive paths from the template you just resolved rather than assuming
+either layout.
+
+## Why there is no field table here
+
+Required and optional status, enum members, controlled vocabularies and
+deprecations all move with the schema revision. A copy of them here would go
+stale without anything failing loudly, which is worse than having no copy at
+all.
+
+What this skill carries is the part that does not move: when a Detection Objective is the
+right object to reach for, how to decide what belongs in it, and what separates
+a good one from a passable one.
+
+For *what fields exist*, read the schema. For *is this valid*, run
+`opentide validate`, or `opentide lint` for style, or the `validate_rule` and
+`validation_report` MCP tools for a single object. A validator error outranks
+anything written in this skill.
 
 ## Signals — the core of a DOM
 
 Each signal represents a **distinct detection opportunity** — a specific observable that, when triggered, indicates the threat behaviour described by the parent DOM.
 
-### Signal fields
+### What a signal has to carry
 
-| Field | Type | Required | Notes |
-|---|---|---|---|
-| `name` | string | Yes | Write as an **alert title** an analyst would see. "SAM database dump detection", not "Signal 1". |
-| `uuid` | UUIDv4 | Yes | Unique per signal. Referenced by MDR `configurations.*` blocks. |
-| `description` | string | Yes | Detailed technical spec: specific log fields, Event IDs, registry paths, API calls, tuning considerations. This is the **MDR specification**. |
-| `severity` | enum | Yes | `Low`, `Medium`, `High`, `Critical`. Maps to expected alert severity. |
-| `effort` | number (1-10) | Recommended | Implementation difficulty. 1 = trivial pattern match; 10 = complex ML pipeline. |
-| `methodology` | string | Yes | Detection approach: `Pattern Matching`, `Event Search`, `Anomaly Detection`, `Threshold`, `Correlation`. |
-| `data` | object | Yes | Data availability modelling. See below. |
-| `entities` | array[string] | Yes | Entity types the signal correlates on. Format: `domain::type`. |
-| `detectors` | array | Optional | Existing vendor detections covering this signal. |
-| `examples` | array | Optional | Community detection examples (Sigma rules, KQL queries, SPL searches). |
+Field names, required status and allowed values come from the schema you
+resolved, not from here. What matters is what each part is *for*, because a
+validator cannot tell you whether you filled it in well.
 
-### Signal `data` block
+- **The name is an alert title.** An analyst reads it at 3am with no context.
+  "SAM database dump detected", never "Signal 1".
+- **The description is the rule specification.** It is the handover to whoever
+  writes the query: specific log fields, event identifiers, registry paths or
+  API calls, and the tuning that will be needed. Vagueness here becomes a bad
+  rule two steps later.
+- **Severity is the severity an analyst should act on**, not how interesting
+  the behaviour is to read about.
+- **Effort is implementation cost**, and it exists so work can be sequenced. A
+  trivial pattern match and a correlation pipeline are not the same investment.
+- **Methodology is the detection approach**, and it constrains which platforms
+  can host the signal at all.
+- **Data availability is an honest statement about the estate.** Claiming
+  coverage that does not exist is how an objective ends up specifying
+  undetectable signals. `Unknown` is a legitimate answer; a wrong `Complete` is
+  not.
+- **Entities are what the signal correlates on.** List every one it genuinely
+  pivots on, because they drive alert grouping and incident correlation
+  downstream. Domain and type values are a controlled vocabulary -- read it
+  rather than inventing a pair that looks reasonable.
 
-| Field | Type | Required | Notes |
-|---|---|---|---|
-| `availability` | enum | Yes | `Complete` (logs collected and validated), `Partial` (gaps exist), `Unknown` (not assessed). |
-| `requirements` | string | Yes | Separate "Data collection" (agent/connector) from "Data sources" (table/event type). |
-| `logsources` | array | Optional | Specific log source identifiers. |
-
-### Entity taxonomy
-
-Entities follow `domain::type` format:
-
-| Domain | Types |
-|---|---|
-| `host` | `Process`, `File`, `Command Line`, `Registry Key/Value`, `Account`, `Domain`, `Service` |
-| `cloud` | `Authentication`, `Resource`, `Application`, `Tenant` |
-| `network` | `IP Address`, `Network Connection`, `DNS`, `URL` |
-| `email` | `Message`, `Attachment`, `Sender` |
-
-Include **all** entity types the signal correlates on — multiple entities enable better alert grouping and incident correlation.
-
----
 
 ## Signal decomposition — the most important design decision
 
@@ -187,8 +203,8 @@ The `composition` block models how signals relate to each other:
 
 ## Collaboration with neighbouring skills
 
-- Upstream **`opentide-threat-vector`** for threat fidelity.
-- Downstream **`opentide-detection-rule`** for executable bodies.
+- Upstream **`opentide-threat`** for threat fidelity.
+- Downstream **`opentide-rule`** for executable bodies.
 - **`mitre-attack`** for ATT&CK technique precision.
 - **Platform/query skills** validate technical feasibility (`kusto-query-language`, `splunk-spl-processing`, etc.) according to tooling each signal references.
 - **`windows-event-logs`** for Event ID prerequisites and audit policy requirements.

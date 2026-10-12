@@ -33,9 +33,9 @@ The `name` must match the parent directory name (lowercase, hyphens, max 64 char
 ### OpenTide content authoring
 | Skill | Purpose |
 |---|---|
-| `opentide-threat-vector` | TVM authoring |
-| `opentide-detection-objective` | DOM authoring |
-| `opentide-detection-rule` | MDR authoring |
+| `opentide-threat` | TVM authoring |
+| `opentide-objective` | DOM authoring |
+| `opentide-rule` | MDR authoring |
 
 ### Detection-engineering practice
 | Skill | Purpose |

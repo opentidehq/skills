@@ -362,7 +362,7 @@ When HarfangLab content lives in `configurations.harfanglab`:
 - **MITRE mapping** in `tags` + MDR `description`.
 - **Sensor / OS coverage** declared.
 - **Expected whitelist patterns** documented in `falsepositives`.
-- Coordinate with `opentide-detection-rule` for placement and `detection-engineering` for lifecycle.
+- Coordinate with `opentide-rule` for placement and `detection-engineering` for lifecycle.
 
 ---
 

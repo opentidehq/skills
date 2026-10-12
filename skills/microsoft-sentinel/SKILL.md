@@ -363,4 +363,4 @@ When KQL is wired into a `configurations.sentinel` block in an OpenTide MDR obje
 - **Description and tuning narrative** belong in the MDR `description` and `response.procedure` fields, not buried in inline comments.
 - **Severity, response actions, playbook URIs** belong in `response.alert_severity` / `response.playbook` per MDR schema.
 - **Inline KQL** still carries the mandatory header block, comment discipline, and FP engineering described above.
-- Coordinate with `opentide-detection-rule` for the structural placement and `detection-engineering` for hunt-to-rule conversion discipline.
+- Coordinate with `opentide-rule` for the structural placement and `detection-engineering` for hunt-to-rule conversion discipline.

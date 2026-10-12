@@ -7,15 +7,15 @@ description: Detection engineering lifecycle across the OpenTide TVM → DOM →
 
 This skill governs **how** detection content moves through its lifecycle. It pairs OpenTide's object lineage (Threat Vector → Detection Objective → Detection Rule) with the practical mechanics of converting validated hunting queries into production-grade detection rules on the platforms CoreTide deploys to.
 
-> Always pair with: language skills (`kusto-query-language`, `splunk-spl-processing`), platform skills (`microsoft-sentinel`, `microsoft-defender-endpoint`, `crowdstrike-falcon`, `carbon-black-cloud`, `sentinelone-singularity`, `harfanglab`), and the OpenTide object skills (`opentide-threat-vector`, `opentide-detection-objective`, `opentide-detection-rule`).
+> Always pair with: language skills (`kusto-query-language`, `splunk-spl-processing`), platform skills (`microsoft-sentinel`, `microsoft-defender-endpoint`, `crowdstrike-falcon`, `carbon-black-cloud`, `sentinelone-singularity`, `harfanglab`), and the OpenTide object skills (`opentide-threat`, `opentide-objective`, `opentide-rule`).
 
 ---
 
 ## 1. OpenTide sequencing
 
-1. **Evidence / threat modelling** — `opentide-threat-vector` (TVM YAML, Phase A intel structuring + Phase B authoring).
-2. **Detection intent & signals** — `opentide-detection-objective` (DOM YAML, signals, data contracts, methodology).
-3. **Deployable artefacts** — `opentide-detection-rule` (MDR YAML, plus platform-specific `configurations.*` blocks).
+1. **Evidence / threat modelling** — `opentide-threat` (TVM YAML, Phase A intel structuring + Phase B authoring).
+2. **Detection intent & signals** — `opentide-objective` (DOM YAML, signals, data contracts, methodology).
+3. **Deployable artefacts** — `opentide-rule` (MDR YAML, plus platform-specific `configurations.*` blocks).
 
 **Default rule**: one object type per change request unless explicitly running an end-to-end vertical slice (drill, pilot deployment, framework-bootstrap).
 
@@ -387,5 +387,5 @@ Map detections to attack simulation frameworks for continuous validation:
 - `microsoft-defender-endpoint/SKILL.md` (+ `references/Anti-Patterns.md`)
 - `splunk-spl-processing/SKILL.md`
 - `crowdstrike-falcon/SKILL.md`, `carbon-black-cloud/SKILL.md`, `sentinelone-singularity/SKILL.md`, `harfanglab/SKILL.md`
-- `opentide-threat-vector/SKILL.md`, `opentide-detection-objective/SKILL.md`, `opentide-detection-rule/SKILL.md`
+- `opentide-threat/SKILL.md`, `opentide-objective/SKILL.md`, `opentide-rule/SKILL.md`
 - `threat-hunting/SKILL.md` — hypothesis discipline (ABLE) and hunt quality scoring

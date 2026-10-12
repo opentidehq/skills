@@ -151,9 +151,9 @@ Unless explicitly commissioned:
 ### OpenTide content authoring
 | Skill | Purpose |
 |---|---|
-| `opentide-threat-vector` | TVM authoring — Phase A intelligence structuring + Phase B schema-backed YAML |
-| `opentide-detection-objective` | DOM authoring — signals, methodology, data contracts |
-| `opentide-detection-rule` | MDR authoring + platform `configurations.*` bridging |
+| `opentide-threat` | TVM authoring — Phase A intelligence structuring + Phase B schema-backed YAML |
+| `opentide-objective` | DOM authoring — signals, methodology, data contracts |
+| `opentide-rule` | MDR authoring + platform `configurations.*` bridging |
 
 ### Detection-engineering practice
 | Skill | Purpose |
