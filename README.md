@@ -85,6 +85,20 @@ See [`skills/README.md`](skills/README.md) for authoring conventions.
 
 The OpenTide mark is copied from [OpenTideHQ/.github](https://github.com/OpenTideHQ/.github/tree/main/assets/svg) (`logo-normal.svg`, `icon-normal.svg`). Marketplace marks in this README identify install targets and belong to their respective owners.
 
+## Privacy
+
+This plugin distributes instructions, not a service. The skills, steering files, and manifests here are text your agent reads on your own machine. There is no telemetry, no analytics, and no callback: installing or using this plugin sends nothing to OpenTideHQ, and we collect, store, and process no data about you, your repositories, or your detections.
+
+The MCP server declared in [`mcp.json`](mcp.json) is stdio. It runs locally, against repositories you already control. When a skill has your agent query a security platform, that request goes straight from your environment to that vendor under credentials you configured yourself — this plugin is not an intermediary and adds no collection of its own. Each vendor's own terms govern that traffic.
+
+## Support
+
+| Need | Where |
+| --- | --- |
+| Bug, question, or a skill you want added | [GitHub issues](https://github.com/OpenTideHQ/skills/issues) |
+| Security disclosure | `digit-ec-opentide@ec.europa.eu` — please do not open a public issue |
+| Maintainer | OpenTideHQ · [opentide.org](https://opentide.org) |
+
 ## License
 
 Licensed under the [European Union Public Licence v. 1.2](LICENSE) (EUPL-1.2).
