@@ -4,63 +4,104 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILLS_DIR="${ROOT}/skills"
-errors=0
 
-name_pattern='^[a-z0-9]([a-z0-9-]*[a-z0-9])?$'
-
-while IFS= read -r skill_md; do
-  skill_dir="$(dirname "${skill_md}")"
-  dir_name="$(basename "${skill_dir}")"
-
-  if ! head -n 1 "${skill_md}" | grep -q '^---$'; then
-    echo "ERROR: missing frontmatter in ${skill_md}"
-    errors=$((errors + 1))
-    continue
+# Frontmatter is parsed as real YAML, not scraped with a regex. A description
+# containing an unquoted ": " is valid to a line-oriented reader and invalid
+# YAML, so `gh skill publish` and downstream marketplace linters reject a skill
+# this script used to pass. Prefer an interpreter that has PyYAML.
+PY_BIN="python3"
+for candidate in python3.12 python3.13 python3.11 python3; do
+  if command -v "${candidate}" >/dev/null 2>&1 && "${candidate}" -c 'import yaml' 2>/dev/null; then
+    PY_BIN="${candidate}"
+    break
   fi
+done
 
-  name="$(awk '/^---$/{if(++n==2) exit} n==1 && /^name:/{sub(/^name:[[:space:]]*/,""); print; exit}' "${skill_md}")"
-  description="$(awk '/^---$/{if(++n==2) exit} n==1 && /^description:/{sub(/^description:[[:space:]]*/,""); print; exit}' "${skill_md}")"
+"${PY_BIN}" - "${SKILLS_DIR}" <<'PY'
+import re
+import sys
+from pathlib import Path
 
-  if [[ -z "${name}" ]]; then
-    echo "ERROR: missing name in ${skill_md}"
-    errors=$((errors + 1))
-    continue
-  fi
+try:
+    import yaml
+except ImportError:  # pragma: no cover - depends on the host interpreter
+    yaml = None
 
-  if [[ -z "${description}" ]]; then
-    echo "ERROR: missing description in ${skill_md}"
-    errors=$((errors + 1))
-    continue
-  fi
+NAME_RE = re.compile(r"^[a-z0-9]([a-z0-9-]*[a-z0-9])?$")
+FM_RE = re.compile(r"\A---\n(.*?)\n---\n", re.S)
+# A top-level `key: value` whose value is unquoted and itself contains ": ".
+HAZARD_RE = re.compile(r"^[A-Za-z0-9_-]+:[ \t]+(?![\"'|>])(?P<v>.*: .*)$")
 
-  if [[ "${name}" != "${dir_name}" ]]; then
-    echo "ERROR: name '${name}' does not match directory '${dir_name}' (${skill_md})"
-    errors=$((errors + 1))
-  fi
+skills_dir = Path(sys.argv[1])
+errors = []
 
-  if [[ ! "${name}" =~ ${name_pattern} ]]; then
-    echo "ERROR: invalid name '${name}' in ${skill_md}"
-    errors=$((errors + 1))
-  fi
+paths = sorted(skills_dir.glob("*/SKILL.md"))
+for path in paths:
+    where = path.relative_to(skills_dir.parent)
+    text = path.read_text(encoding="utf-8")
 
-  if [[ ${#name} -gt 64 ]]; then
-    echo "ERROR: name too long in ${skill_md}"
-    errors=$((errors + 1))
-  fi
+    match = FM_RE.match(text)
+    if not match:
+        errors.append(f"{where}: missing or malformed frontmatter block")
+        continue
+    block = match.group(1)
 
-  if [[ ${#description} -gt 1024 ]]; then
-    echo "ERROR: description too long in ${skill_md}"
-    errors=$((errors + 1))
-  fi
-done < <(find "${SKILLS_DIR}" -name SKILL.md | sort)
+    if yaml is not None:
+        try:
+            data = yaml.safe_load(block)
+        except yaml.YAMLError as exc:
+            errors.append(f"{where}: frontmatter is not valid YAML: {str(exc).splitlines()[0]}")
+            continue
+        if not isinstance(data, dict):
+            errors.append(f"{where}: frontmatter parsed as {type(data).__name__}, expected a mapping")
+            continue
+    else:
+        # No PyYAML: still catch the failure mode a regex reader misses.
+        for line in block.splitlines():
+            if HAZARD_RE.match(line):
+                errors.append(
+                    f"{where}: frontmatter value contains an unquoted ': ' and will "
+                    f"fail a YAML parse — quote the value"
+                )
+                break
+        data = {}
+        for line in block.splitlines():
+            if ":" in line and not line.startswith((" ", "\t", "#")):
+                k, _, v = line.partition(":")
+                data[k.strip()] = v.strip()
 
-if [[ "${errors}" -gt 0 ]]; then
-  echo "validation failed with ${errors} error(s)"
-  exit 1
-fi
+    name = data.get("name")
+    description = data.get("description")
 
-skill_count="$(find "${SKILLS_DIR}" -name SKILL.md | wc -l | tr -d ' ')"
-echo "validated ${skill_count} skills"
+    if not name:
+        errors.append(f"{where}: missing name")
+    elif not isinstance(name, str):
+        errors.append(f"{where}: name must be a string, got {type(name).__name__}")
+    else:
+        if name != path.parent.name:
+            errors.append(f"{where}: name '{name}' does not match directory '{path.parent.name}'")
+        if not NAME_RE.match(name):
+            errors.append(f"{where}: invalid name '{name}'")
+        if len(name) > 64:
+            errors.append(f"{where}: name too long ({len(name)} > 64)")
+
+    if not description:
+        errors.append(f"{where}: missing description")
+    elif not isinstance(description, str):
+        errors.append(f"{where}: description must be a string, got {type(description).__name__}")
+    elif len(description) > 1024:
+        errors.append(f"{where}: description too long ({len(description)} > 1024)")
+
+if errors:
+    for err in errors:
+        print(f"ERROR: {err}")
+    print(f"validation failed with {len(errors)} error(s)")
+    sys.exit(1)
+
+if yaml is None:
+    print("WARNING: PyYAML unavailable — frontmatter checked structurally, not parsed")
+print(f"validated {len(paths)} skills")
+PY
 
 python3 - "${ROOT}" <<'PY'
 import json
