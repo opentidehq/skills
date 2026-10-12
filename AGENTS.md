@@ -154,6 +154,7 @@ Unless explicitly commissioned:
 | `opentide-threat` | TVM authoring — Phase A intelligence structuring + Phase B schema-backed YAML |
 | `opentide-objective` | DOM authoring — signals, methodology, data contracts |
 | `opentide-rule` | MDR authoring + platform `configurations.*` bridging |
+| `opentide-visibility` | Visibility configuration — assets, collected log sources, external detectors; upstream of DOM data claims |
 
 ### Detection-engineering practice
 | Skill | Purpose |

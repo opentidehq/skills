@@ -36,6 +36,7 @@ The `name` must match the parent directory name (lowercase, hyphens, max 64 char
 | `opentide-threat` | TVM authoring |
 | `opentide-objective` | DOM authoring |
 | `opentide-rule` | MDR authoring |
+| `opentide-visibility` | Visibility configuration — log sources, assets, external detectors |
 
 ### Detection-engineering practice
 | Skill | Purpose |

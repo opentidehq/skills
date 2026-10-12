@@ -9,6 +9,7 @@ All paths are relative to this repository root. Each skill is a `skills/<name>/S
 | `opentide-threat` | TVM from intelligence, TTP modelling, chaining |
 | `opentide-objective` | DOM signals, methodology, data contracts |
 | `opentide-rule` | MDR platform `configurations.*`, deployment payloads |
+| `opentide-visibility` | Declaring collected log sources, assets, external detectors; grounding DOM data availability |
 
 ## Practice
 
