@@ -1,6 +1,6 @@
 ---
 name: opentide-visibility
-description: Models the detection estate in the OpenTide visibility configuration — which assets generate logs, which log sources are actually collected and on which system, and which external vendor detections already cover ground. This configuration is upstream of Detection Objectives: the allowed values for a signal's log sources are injected into the generated schema from here, so a source that is not declared cannot be referenced. Covers honest coverage claims, the regenerate-after-change cycle, and the placeholder trap. Use when auditing or declaring log source coverage, when a signal cannot reference a log source, when data availability claims need grounding, or when onboarding a new telemetry source.
+description: Models the detection estate in the OpenTide visibility configuration — which assets generate logs, which log sources are actually collected and on which system, and which external vendor detections already cover ground. This configuration is upstream of Detection Objectives, because the allowed values for a signal's log sources are injected into the generated schema from here, so a source that is not declared cannot be referenced. Covers honest coverage claims, the regenerate-after-change cycle, and the placeholder trap. Use when auditing or declaring log source coverage, when a signal cannot reference a log source, when data availability claims need grounding, or when onboarding a new telemetry source.
 ---
 
 # OpenTide visibility — modelling the detection estate
