@@ -94,7 +94,11 @@ validator cannot tell you whether you filled it in well.
 - **Data availability is an honest statement about the estate.** Claiming
   coverage that does not exist is how an objective ends up specifying
   undetectable signals. `Unknown` is a legitimate answer; a wrong `Complete` is
-  not.
+  not. The repository's visibility configuration is what makes this claim
+  checkable rather than an opinion — see **`opentide-visibility`**. The allowed
+  log-source values here are injected into the generated schema from that
+  configuration, so a source it does not declare cannot be referenced; declare
+  it there and regenerate rather than working around the field.
 - **Entities are what the signal correlates on.** List every one it genuinely
   pivots on, because they drive alert grouping and incident correlation
   downstream. Domain and type values are a controlled vocabulary -- read it
@@ -204,6 +208,7 @@ The `composition` block models how signals relate to each other:
 ## Collaboration with neighbouring skills
 
 - Upstream **`opentide-threat`** for threat fidelity.
+- Upstream **`opentide-visibility`** for what telemetry actually exists — it constrains the log sources a signal may reference, and grounds every data-availability claim.
 - Downstream **`opentide-rule`** for executable bodies.
 - **`mitre-attack`** for ATT&CK technique precision.
 - **Platform/query skills** validate technical feasibility (`kusto-query-language`, `splunk-spl-processing`, etc.) according to tooling each signal references.

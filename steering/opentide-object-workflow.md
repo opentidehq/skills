@@ -34,6 +34,7 @@ Use when authoring or reviewing **Threat Vector (TVM)**, **Detection Objective (
 | TVM | `skills/opentide-threat/SKILL.md` |
 | DOM | `skills/opentide-objective/SKILL.md` |
 | MDR | `skills/opentide-rule/SKILL.md` |
+| Visibility configuration (upstream of DOM data claims) | `skills/opentide-visibility/SKILL.md` |
 | ATT&CK fields | `skills/mitre-attack/SKILL.md` |
 
 ## Platform keys (MDR `configurations.*`)
