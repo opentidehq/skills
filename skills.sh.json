@@ -6,9 +6,9 @@
       "title": "OpenTide objects",
       "description": "Author Threat Vectors, Detection Objectives, and Detection Rules as OpenTide YAML.",
       "skills": [
-        "opentide-threat-vector",
-        "opentide-detection-objective",
-        "opentide-detection-rule"
+        "opentide-threat",
+        "opentide-objective",
+        "opentide-rule"
       ]
     },
     {

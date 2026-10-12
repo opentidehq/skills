@@ -2,7 +2,7 @@
   "version": 1,
   "source": "OpenTideHQ/skills",
   "ref": "main",
-  "generated_at": "2026-06-30T09:40:11Z",
+  "generated_at": "2026-10-12T11:24:39Z",
   "skills": [
     {
       "slug": "active-directory",
@@ -100,19 +100,19 @@
       "description": "Okta identity platform detection guidance — System Log event schema (eventType taxonomy, actor/target/outcome structure), session token mechanics, authentication flows (FastPass, FIDO2, delegated auth), admin API abuse patterns, ThreatInsight signals, Okta-to-Entra federation trust chains, and Okta-specific attack patterns (cross-tenant impersonation, HAR file session theft, MFA factor reset abuse, inbound federation hijacking). Use for identity-focused detections targeting Okta telemetry ingested into SIEMs."
     },
     {
-      "slug": "opentide-detection-objective",
-      "name": "opentide-detection-objective",
-      "description": "Authors OpenTide Detection Objective (DOM) YAML -- priorities, compositions, ATT&CK cross-links, signal contracts with methodology/severity/effort/entities/data requirements, and traceability toward linked Threat Vectors. Covers signal decomposition principles, composition strategies, data availability modelling, entity taxonomy, and anti-patterns distilled from production corpora. Use whenever creating or refactoring files under Detection Objectives or structuring coverage intents before Detection Rules attach."
+      "slug": "opentide-objective",
+      "name": "opentide-objective",
+      "description": "Authors OpenTide Detection Objective objects — decomposing a threat into discrete detection opportunities, writing signals as analyst-facing alert specifications, modelling data availability honestly, choosing a composition strategy, and linking upstream to threat vectors and downstream to detection rules. Covers signal decomposition quality, entity correlation, and anti-patterns distilled from production corpora. Resolves object structure and vocabularies from the installed engine instead of pinning fields. Use when structuring coverage intent, or before detection rules attach to an objective."
     },
     {
-      "slug": "opentide-detection-rule",
-      "name": "opentide-detection-rule",
-      "description": "Authors OpenTide Detection Rule (MDR) YAML -- descriptions, response metadata, playbook hooks, analytic references -- and wires platform-specific configurations (Sentinel KQL, SPL, Defender advanced hunting, Falcon queries, SentinelOne rules, CBC watchlists, HarfangLab content) keyed per CoreTide deployment manifests. Covers structured description patterns, response procedure authoring, per-platform configuration schemas (sentinel, splunk, defender_for_endpoint, carbon_black_cloud), entity/risk mapping, exclusion discipline, and anti-patterns distilled from production corpora. Use when producing deployable artefacts or updating existing rules under Detection Rules folders."
+      "slug": "opentide-rule",
+      "name": "opentide-rule",
+      "description": "Authors OpenTide Detection Rule objects — structured descriptions, response procedures an analyst can actually follow, exclusion discipline, and per-platform configurations wired to the signals they implement. Covers platform capability differences, signal traceability, and anti-patterns distilled from production corpora. Resolves object structure and platform keys from the installed engine instead of pinning fields. Pair with the relevant platform and query-language skills for syntax. Use when producing deployable detection content or updating existing rules."
     },
     {
-      "slug": "opentide-threat-vector",
-      "name": "opentide-threat-vector",
-      "description": "Structures threat intelligence into evidence-backed behavioural atoms and authors OpenTide Threat Vector (TVM) YAML (tvm schemas), including metadata, terrain, chaining, ATT&CK, UUIDs. Covers Phase A intelligence structuring (source hygiene, atomisation, gap analysis) and Phase B schema-backed YAML authoring (field-level guidance, quality patterns, anti-patterns distilled from production corpora). Use whenever work involves converting CTI into TVMs, creating or refactoring files under Threat Vectors, or when the user provides reports, feeds, or narratives before detection objectives exist."
+      "slug": "opentide-threat",
+      "name": "opentide-threat",
+      "description": "Converts threat intelligence into OpenTide Threat Vector objects — source hygiene, atomising reports into discrete adversary behaviours, gap analysis before modelling, then schema-backed YAML authoring. Covers terrain as preconditions rather than narrative, chaining between vectors, ATT&CK mapping, actor attribution, structured descriptions, and anti-patterns distilled from production corpora. Resolves object structure, vocabularies and repository layout from the installed engine instead of pinning fields. Use when turning reports, feeds or narratives into threat vectors, or refactoring existing ones, before detection objectives exist."
     },
     {
       "slug": "sentinelone-singularity",
@@ -122,7 +122,7 @@
     {
       "slug": "splunk-spl-processing",
       "name": "splunk-spl-processing",
-      "description": "Splunk Enterprise and Enterprise Security SPL authoring for detection engineering — index/sourcetype/time discipline, tstats/CIM acceleration, ESCU macro layers, ES correlation searches, notables, and RBA. Use when authoring or reviewing SPL, configurations.splunk MDR blocks, ES correlation searches, or translating KQL hypotheses to Splunk. Pair with detection-engineering and opentide-detection-rule."
+      "description": "Splunk Enterprise and Enterprise Security SPL authoring for detection engineering — index/sourcetype/time discipline, tstats/CIM acceleration, ESCU macro layers, ES correlation searches, notables, and RBA. Use when authoring or reviewing SPL, configurations.splunk MDR blocks, ES correlation searches, or translating KQL hypotheses to Splunk. Pair with detection-engineering and opentide-rule."
     },
     {
       "slug": "threat-hunting",

@@ -347,4 +347,4 @@ When KQL is wired into a `configurations.defender_for_endpoint` block in an Open
 
 - Description, tuning narrative, alert severity, response actions belong in the MDR `description` and `response.*` fields per MDR schema.
 - Inline KQL still carries the mandatory header block, comment discipline, and FP engineering above.
-- Coordinate with `opentide-detection-rule` for structural placement and `detection-engineering` for hunt-to-rule conversion discipline.
+- Coordinate with `opentide-rule` for structural placement and `detection-engineering` for hunt-to-rule conversion discipline.

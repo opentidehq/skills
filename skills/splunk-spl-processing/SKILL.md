@@ -5,14 +5,14 @@ description: >-
   index/sourcetype/time discipline, tstats/CIM acceleration, ESCU macro layers, ES
   correlation searches, notables, and RBA. Use when authoring or reviewing SPL,
   configurations.splunk MDR blocks, ES correlation searches, or translating KQL
-  hypotheses to Splunk. Pair with detection-engineering and opentide-detection-rule.
+  hypotheses to Splunk. Pair with detection-engineering and opentide-rule.
 ---
 
 # Splunk SPL — detection engineering
 
 Author and review SPL for Splunk Enterprise / Enterprise Security. The discipline here mirrors the rigour applied to KQL in `kusto-query-language` — filter early, structure deliberately, and document every assumption.
 
-> **Pair with**: `windows-event-logs` (EventCode mapping), `detection-engineering` (hunt→rule lifecycle), `opentide-detection-rule` (`configurations.splunk`), `kusto-query-language` (conceptual KQL translation).
+> **Pair with**: `windows-event-logs` (EventCode mapping), `detection-engineering` (hunt→rule lifecycle), `opentide-rule` (`configurations.splunk`), `kusto-query-language` (conceptual KQL translation).
 
 > **Distilled from**: Analysis of 2009 production detections, 234 macros, and 104 lookups in the Splunk ESCU corpus `splunk/security_content` (v5.26+). Source citation only — this skill does not contact that project and does not read a credential.
 
@@ -326,7 +326,7 @@ Apply the same header structure used in KQL (Hunt, Source, MITRE, Platform). Wit
 
 ## 13. Mapping into OpenTide MDR
 
-When SPL is wired into `configurations.splunk` in an OpenTide MDR object, coordinate with `opentide-detection-rule` for schema fields:
+When SPL is wired into `configurations.splunk` in an OpenTide MDR object, coordinate with `opentide-rule` for schema fields:
 
 | MDR field | SPL / ES alignment |
 |---|---|

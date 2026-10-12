@@ -1,13 +1,13 @@
 ---
-name: opentide-threat-vector
-description: Structures threat intelligence into evidence-backed behavioural atoms and authors OpenTide Threat Vector (TVM) YAML (tvm schemas), including metadata, terrain, chaining, ATT&CK, UUIDs. Covers Phase A intelligence structuring (source hygiene, atomisation, gap analysis) and Phase B schema-backed YAML authoring (field-level guidance, quality patterns, anti-patterns distilled from production corpora). Use whenever work involves converting CTI into TVMs, creating or refactoring files under Threat Vectors, or when the user provides reports, feeds, or narratives before detection objectives exist.
+name: opentide-threat
+description: Converts threat intelligence into OpenTide Threat Vector objects — source hygiene, atomising reports into discrete adversary behaviours, gap analysis before modelling, then schema-backed YAML authoring. Covers terrain as preconditions rather than narrative, chaining between vectors, ATT&CK mapping, actor attribution, structured descriptions, and anti-patterns distilled from production corpora. Resolves object structure, vocabularies and repository layout from the installed engine instead of pinning fields. Use when turning reports, feeds or narratives into threat vectors, or refactoring existing ones, before detection objectives exist.
 ---
 
 # OpenTide Threat Vector (TVM)
 
 ## Why one skill handles both "intel" and "YAML"
 
-Splitting "TI analysis" and "TVM authoring" into sibling skills creates ambiguous triggers. Threat Vector work is fundamentally **intel -> structured hypothesis -> validated TVM YAML** — keep upstream triage inside this skill under **Phase A**, then transition to **Phase B**. One deliverable lineage from signal intake to `tvm::` artefacts.
+Splitting "TI analysis" and "TVM authoring" into sibling skills creates ambiguous triggers. Threat Vector work is fundamentally **intel -> structured hypothesis -> validated YAML** — keep upstream triage inside this skill under **Phase A**, then transition to **Phase B**. One deliverable lineage from intelligence intake to a validated threat vector object.
 
 ---
 
@@ -46,57 +46,65 @@ Guardrails: no fabrication of sightings, IOCs, or attribution beyond the evidenc
 
 ## Phase B — TVM YAML authoring
 
-### Preconditions
+### Resolve the schema before authoring
 
-1. Load live **`Schemas/Templates`** for TVM and the tenant's tvm schema revision (e.g. `tvm::2.1` — always check the live template for the current version).
-2. Confirm **`Objects/Threat Vectors/`** conventions in the corpus you edit.
+Do not author from memory, and do not expect a field list in this skill. A
+Threat Vector's structure is versioned, ships with the engine, and changes without
+this skill changing. Resolve it from the installed version every time.
 
-### Complete field reference
+Two fields look like versions and mean different things. Confusing them is the
+most common authoring mistake:
 
-#### Top-level (all required)
-
-| Field | Type | Notes |
+| Field | Means | Where it comes from |
 |---|---|---|
-| `name` | string | Sentence-case, action-oriented. Describe what the adversary does. Good: "Mamba 2FA phishing kit". Bad: "T1566". **Filename:** dash-case slug from `name` (e.g. `mamba-2fa-phishing-kit.yaml`); doc paths use the same `slugify()` rules. |
-| `criticality` | enum | 7 levels: `Baseline - Negligible` through `Emergency`. Derive from severity + impact + sophistication. |
-| `references` | object | `public` (numbered keys `1:`, `2:`), `internal` (alpha keys `a:`, `b:`). Add `# inline comments` for context. |
-| `metadata` | object | See below. |
-| `threat` | object | All technical threat content. |
+| `metadata.schema` | the structural revision, `{family}::{major}.{minor}` | the template you resolve below |
+| `metadata.version` | the content revision of this one object | you, on meaningful change; git holds the real history |
 
-#### `metadata` fields
+Never select a schema file using `metadata.version`. An object on content
+version 4 can still declare the first structural revision.
 
-| Field | Required | Notes |
-|---|---|---|
-| `uuid` | Yes | Fresh UUIDv4 for every new TVM. Never reuse. |
-| `schema` | Yes | e.g. `tvm::2.1` — always verify against the live template. |
-| `version` | Yes | Start at `1`, increment on each revision. |
-| `created` / `modified` | Yes | `YYYY-MM-DD` format. |
-| `tlp` | Yes | Lowercase: `clear`, `green`, `amber`, `amber+strict`, `red`. |
-| `author` | Recommended | Email address. |
-| `contributors` | Optional | Array of email addresses. |
-| `organisation` | Required in 2.1 | `uuid` + `name` sub-fields. |
+Resolve the live structure in this order, stopping at the first that answers:
 
-#### `threat` fields
+1. **MCP resources**, when the OpenTide MCP server is connected.
+   `opentide://schemas/threat` returns the JSON Schema, resolved to the
+   highest registered revision. `opentide://templates/threat` returns the
+   authoring template. `opentide://vocabularies` lists the controlled
+   vocabularies and `opentide://vocabularies/{name}` returns the allowed
+   values of one -- read these instead of guessing at an enum, because members
+   get added.
+2. **Generated artefacts in the repository**, when no server is connected.
+   `.opentide/schemas/` and `.opentide/templates/` hold one file per registered
+   revision; take the one matching the declared `metadata.schema`.
+3. **Generate them**, when neither exists: `opentide generate schemas` and
+   `opentide generate templates`, or `opentide generate` for both. An empty
+   schema or template list means this step has not been run -- that is the
+   cause, not a missing object type.
 
-| Field | Required | Guidance |
-|---|---|---|
-| `actors` | Recommended | Use `att&ck::G####` or `misp::UUID` format. Add `# alias list` comment. Include `sighting` narrative + `references` array when evidence exists. |
-| `killchain` | Optional | Align with ATT&CK tactic names or Unified Kill Chain phases. |
-| `att&ck` | Yes (practice) | Sub-techniques when specific. Always add `# Technique Name` comment. 1-5 techniques typical. Don't mix Enterprise and ICS matrices. |
-| `chaining` | Recommended | See chaining section below. |
-| `cve` | When applicable | Array of CVE identifiers. |
-| `misp` | When applicable | Array of MISP event UUIDs with `# comments`. |
-| `surface` | Yes (practice) | Hierarchical `Category::Subcategory::Detail` from controlled vocabulary. Be specific: `OS::Windows::Desktop` not just `OS::Windows`. |
-| `terrain` | Yes (practice) | **Preconditions only.** See terrain section below. |
-| `severity` | Yes (practice) | Exact enum: `Localised incident` through `National cyber emergency`. |
-| `leverage` | Yes (practice) | 2-4 values from the 20-value vocabulary. Don't shotgun. |
-| `impact` | Yes (practice) | 2-4 values from the 19-value vocabulary. Don't shotgun. |
-| `viability` | Yes (practice) | Exact enum: `Almost no chance` through `Almost certain`, plus `Environment dependent`. |
-| `description` | Yes (practice) | YAML `\|` block scalar. Use `##` markdown headings for structure. Reference sources with `ref [1]` notation. |
+Then read a neighbouring object of the same family for local convention, and
+`opentide --json info threats` to see what already exists before adding
+something that overlaps.
 
-**Deprecated fields** (do not use): `threat.domains`, `threat.targets`, `threat.platforms` — replaced by `surface`.
+Repository layout is not fixed either. A CoreTide-era corpus uses different
+family names and directories than a current one, and `opentide migrate objects`
+is what moves it forward -- the repository owner's decision, not one to take
+mid-task. Derive paths from the template you just resolved rather than assuming
+either layout.
 
----
+### Why there is no field table here
+
+Required and optional status, enum members, controlled vocabularies and
+deprecations all move with the schema revision. A copy of them here would go
+stale without anything failing loudly, which is worse than having no copy at
+all.
+
+What this skill carries is the part that does not move: when a Threat Vector is the
+right object to reach for, how to decide what belongs in it, and what separates
+a good one from a passable one.
+
+For *what fields exist*, read the schema. For *is this valid*, run
+`opentide validate`, or `opentide lint` for style, or the `validate_rule` and
+`validation_report` MCP tools for a single object. A validator error outranks
+anything written in this skill.
 
 ### Terrain — the most misunderstood field
 
@@ -247,7 +255,7 @@ actors:
 | Next step after TVM | Skill |
 |---------------------|-------|
 | Map ATT&CK techniques precisely | `mitre-attack` |
-| Define detection intent / signals | `opentide-detection-objective` |
-| Implement deployable artefacts | `opentide-detection-rule` + platform skills |
+| Define detection intent / signals | `opentide-objective` |
+| Implement deployable artefacts | `opentide-rule` + platform skills |
 
 Never edit schemas, Templates, or engine configuration files unless explicitly directed.

@@ -328,11 +328,11 @@ A `VALIDATED` hunt with confirmed TPs and tuned filters becomes a candidate dete
 
 ### Hunt findings → TVM updates
 
-Confirmed hunts feed TVM `chaining` and `terrain` evidence. Use `opentide-threat-vector` to lock the structured updates.
+Confirmed hunts feed TVM `chaining` and `terrain` evidence. Use `opentide-threat` to lock the structured updates.
 
 ### Hunt gaps → DOM signals & data requirements
 
-`PARTIAL_COVERAGE` and `BLIND_SPOT` outcomes drive new DOM `signals` or `data_requirements` entries. Use `opentide-detection-objective` to author or refactor DOMs.
+`PARTIAL_COVERAGE` and `BLIND_SPOT` outcomes drive new DOM `signals` or `data_requirements` entries. Use `opentide-objective` to author or refactor DOMs.
 
 ---
 
@@ -354,5 +354,5 @@ Confirmed hunts feed TVM `chaining` and `terrain` evidence. Use `opentide-threat
 - `kusto-query-language/references/Hypothesis-Anti-Patterns.md` (AP-H1–H5).
 - `detection-engineering/` for hunt-to-rule conversion (7-step process).
 - Platform skills for query authoring and table references: `microsoft-sentinel/`, `microsoft-defender-endpoint/`, `splunk-spl-processing/`, `crowdstrike-falcon/`, `carbon-black-cloud/`, `sentinelone-singularity/`, `harfanglab/`.
-- OpenTide content skills: `opentide-threat-vector/`, `opentide-detection-objective/`, `opentide-detection-rule/`.
+- OpenTide content skills: `opentide-threat/`, `opentide-objective/`, `opentide-rule/`.
 - `mitre-attack/` for technique selection and coverage analysis.

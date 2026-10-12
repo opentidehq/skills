@@ -369,7 +369,7 @@ When SentinelOne content lives in `configurations.sentinel_one`:
 - **MITRE mapping** populated in both rule metadata and MDR `description`.
 - **Sensor / SKU coverage** declared (endpoint vs CWS vs Identity).
 - **Expected exclusion patterns** documented to support SOC engineer maintenance.
-- Coordinate with `opentide-detection-rule` for placement and `detection-engineering` for lifecycle.
+- Coordinate with `opentide-rule` for placement and `detection-engineering` for lifecycle.
 
 ---
 

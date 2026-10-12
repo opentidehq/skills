@@ -77,9 +77,9 @@ Load steering on demand — do not read everything upfront.
 
 | User mentions | Read first |
 |---------------|------------|
-| Threat intelligence → TVM | `skills/opentide-threat-vector/SKILL.md` |
-| Detection objective / signals | `skills/opentide-detection-objective/SKILL.md` |
-| Detection rule / platform config | `skills/opentide-detection-rule/SKILL.md` |
+| Threat intelligence → TVM | `skills/opentide-threat/SKILL.md` |
+| Detection objective / signals | `skills/opentide-objective/SKILL.md` |
+| Detection rule / platform config | `skills/opentide-rule/SKILL.md` |
 | KQL (any Microsoft surface) | `skills/kusto-query-language/SKILL.md` + platform skill |
 | Sentinel / Log Analytics | `skills/microsoft-sentinel/SKILL.md` |
 | Defender Advanced Hunting | `skills/microsoft-defender-endpoint/SKILL.md` |

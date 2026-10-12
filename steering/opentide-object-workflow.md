@@ -31,9 +31,9 @@ Use when authoring or reviewing **Threat Vector (TVM)**, **Detection Objective (
 
 | Phase | Skill path |
 |-------|------------|
-| TVM | `skills/opentide-threat-vector/SKILL.md` |
-| DOM | `skills/opentide-detection-objective/SKILL.md` |
-| MDR | `skills/opentide-detection-rule/SKILL.md` |
+| TVM | `skills/opentide-threat/SKILL.md` |
+| DOM | `skills/opentide-objective/SKILL.md` |
+| MDR | `skills/opentide-rule/SKILL.md` |
 | ATT&CK fields | `skills/mitre-attack/SKILL.md` |
 
 ## Platform keys (MDR `configurations.*`)

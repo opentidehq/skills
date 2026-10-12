@@ -322,7 +322,7 @@ When Falcon content lives in `configurations.crowdstrike` blocks:
 - **Identify the surface** (Event Search / NG-SIEM / Custom IOA / Custom IOC / Fusion) in the configuration block — they are not interchangeable.
 - **Detection prose, severity, MITRE mapping, response procedure** → MDR `description` and `response.*` fields per MDR schema.
 - **Sensor coverage gaps** declared explicitly so reviewers can assess platform fitness.
-- Coordinate with `opentide-detection-rule` for placement and `detection-engineering` for the lifecycle bar.
+- Coordinate with `opentide-rule` for placement and `detection-engineering` for the lifecycle bar.
 
 ---
 

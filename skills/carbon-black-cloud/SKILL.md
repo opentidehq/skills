@@ -260,7 +260,7 @@ When CBC content lives in `configurations.carbon_black_cloud`:
 - **Identify the surface** (Watchlist Report / Scheduled Search / API IOC) in the configuration block.
 - **Watchlist Report metadata** (title, description, severity, MITRE tags) populated; the MDR `description` mirrors / extends with operational context.
 - **Sensor tier requirement** declared (Endpoint Standard vs Enterprise EDR) so reviewers can assess fitness.
-- Coordinate with `opentide-detection-rule` for placement and `detection-engineering` for lifecycle.
+- Coordinate with `opentide-rule` for placement and `detection-engineering` for lifecycle.
 
 ---
 
