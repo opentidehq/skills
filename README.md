@@ -13,7 +13,7 @@ Canonical home for opentide detection skills. The plugin `opentide` teaches agen
 Install the OpenTide MCP server once. The plugin starts it as `opentide mcp start` on `PATH`.
 
 ```bash
-pip install 'opentide[mcp]'
+pip install opentide
 ```
 
 Then use the command for your agent. Each one installs this repository.
