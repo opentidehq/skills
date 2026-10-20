@@ -2,7 +2,7 @@
 
 All paths are relative to this repository root. Each skill is a `skills/<name>/SKILL.md` file ([agentskills.io](https://agentskills.io/specification)).
 
-## OpenTide authoring
+## opentide authoring
 
 | Skill | When to load |
 |-------|--------------|

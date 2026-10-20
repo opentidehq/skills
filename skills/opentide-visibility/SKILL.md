@@ -1,9 +1,9 @@
 ---
 name: opentide-visibility
-description: Models the detection estate in the OpenTide visibility configuration — which assets generate logs, which log sources are actually collected and on which system, and which external vendor detections already cover ground. This configuration is upstream of Detection Objectives, because the allowed values for a signal's log sources are injected into the generated schema from here, so a source that is not declared cannot be referenced. Covers honest coverage claims, the regenerate-after-change cycle, and the placeholder trap. Use when auditing or declaring log source coverage, when a signal cannot reference a log source, when data availability claims need grounding, or when onboarding a new telemetry source.
+description: Models the detection estate in the opentide visibility configuration — which assets generate logs, which log sources are actually collected and on which system, and which external vendor detections already cover ground. This configuration is upstream of Detection Objectives, because the allowed values for a signal's log sources are injected into the generated schema from here, so a source that is not declared cannot be referenced. Covers honest coverage claims, the regenerate-after-change cycle, and the placeholder trap. Use when auditing or declaring log source coverage, when a signal cannot reference a log source, when data availability claims need grounding, or when onboarding a new telemetry source.
 ---
 
-# OpenTide visibility — modelling the detection estate
+# opentide visibility — modelling the detection estate
 
 Visibility is the repository's answer to **"what telemetry do we actually have?"**. Everything downstream that claims coverage is only as honest as this file.
 
@@ -30,7 +30,7 @@ So the ordering is: **declare the estate, regenerate, then author objectives aga
 
 Do not author from memory, and do not expect a field list in this skill. This configuration is versioned, it is generated from a code-first model in the engine, and it changes without this skill changing.
 
-1. **MCP resources**, when the OpenTide MCP server is connected — read the schema and template resources for the visibility family the same way you would for any other, and `opentide://vocabularies/{name}` for any controlled field.
+1. **MCP resources**, when the opentide MCP server is connected — read the schema and template resources for the visibility family the same way you would for any other, and `opentide://vocabularies/{name}` for any controlled field.
 2. **Generated artefacts**, when no server is connected — `.opentide/schemas/` holds one schema file per registered revision. Take the one matching the declared revision.
 3. **Generate them**, when neither exists: `opentide generate schemas`.
 

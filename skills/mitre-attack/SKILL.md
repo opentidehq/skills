@@ -1,11 +1,11 @@
 ---
 name: mitre-attack
-description: MITRE ATT&CK mapping discipline and technique reference for OpenTide TVM, DOM, and MDR objects — technique vs sub-technique selection, tactic assignment, multi-technique chaining, version pinning, revocation handling, coverage gap analysis, platform matrix awareness, and a locally searchable technique index. Use when populating threat.att&ck fields in TVMs, mapping DOM signals to techniques, tagging MDR rules, assessing detection coverage against the ATT&CK matrix, or looking up technique IDs and descriptions.
+description: MITRE ATT&CK mapping discipline and technique reference for opentide TVM, DOM, and MDR objects — technique vs sub-technique selection, tactic assignment, multi-technique chaining, version pinning, revocation handling, coverage gap analysis, platform matrix awareness, and a locally searchable technique index. Use when populating threat.att&ck fields in TVMs, mapping DOM signals to techniques, tagging MDR rules, assessing detection coverage against the ATT&CK matrix, or looking up technique IDs and descriptions.
 ---
 
 # MITRE ATT&CK — mapping discipline + technique reference
 
-This skill encodes the discipline of mapping adversary behaviour to ATT&CK and back, plus a locally searchable technique index. Every OpenTide object type carries ATT&CK references; getting them right is a quality gate.
+This skill encodes the discipline of mapping adversary behaviour to ATT&CK and back, plus a locally searchable technique index. Every opentide object type carries ATT&CK references; getting them right is a quality gate.
 
 **Current baseline**: ATT&CK **v19** (April 2026, Enterprise domain: 15 tactics, 222 techniques, 475 sub-techniques).
 
@@ -70,7 +70,7 @@ A single TVM or MDR may reference multiple techniques when the intelligence docu
 
 ### Version pinning
 
-- OpenTide content should reference ATT&CK technique IDs without version suffixes (e.g. `T1059.001`, not `T1059.001 v2.0`).
+- opentide content should reference ATT&CK technique IDs without version suffixes (e.g. `T1059.001`, not `T1059.001 v2.0`).
 - The **repository-level** ATT&CK version is declared in the content repo's metadata or schema configuration. Individual objects inherit this.
 - When ATT&CK releases a new version, review objects whose mapped techniques had **major version changes** or **revocations**.
 
@@ -80,7 +80,7 @@ ATT&CK periodically revokes techniques, replacing them with new IDs. v19 example
 - `Impair Defenses` → revoked, replaced by `Disable or Modify Tools` (T1685)
 - `Disable or Modify System Firewall` → revoked, replaced by T1686
 
-**Handling revocations in OpenTide:**
+**Handling revocations in opentide:**
 1. Search the content repo for the revoked technique ID.
 2. Update to the replacement technique ID.
 3. Review the description — the replacement may have a narrower or broader scope.
@@ -92,7 +92,7 @@ Deprecated techniques have no replacement. Remove the mapping and document the g
 
 ---
 
-## 5. Mapping in OpenTide objects
+## 5. Mapping in opentide objects
 
 ### TVM (Threat Vector)
 

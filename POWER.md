@@ -30,7 +30,7 @@ keywords:
   - tvm
   - mdr
   - yaml
-author: "OpenTideHQ"
+author: "opentidehq"
 ---
 
 # opentide detection engineering
@@ -54,14 +54,14 @@ Skills follow the open [agentskills.io](https://agentskills.io/specification) fo
 To register them in Kiro IDE:
 
 1. **Agent Steering & Skills** → **Import a skill**
-2. GitHub URL per skill, e.g. `https://github.com/OpenTideHQ/skills/tree/main/skills/kusto-query-language`
+2. GitHub URL per skill, e.g. `https://github.com/opentidehq/skills/tree/main/skills/kusto-query-language`
 3. Or copy `skills/*` into the project's `.kiro/skills/`
 
 The power works without importing every skill — steering routes you to read the relevant `SKILL.md` from this repo when needed.
 
 ### Step 4: Validation CLI (optional)
 
-If an OpenTide validation CLI is available in the workspace, use it to check objects before commit.
+If an opentide validation CLI is available in the workspace, use it to check objects before commit.
 
 ## When to load steering files
 

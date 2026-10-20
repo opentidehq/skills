@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "source": "OpenTideHQ/skills",
+  "source": "opentidehq/skills",
   "ref": "main",
   "generated_at": "2026-10-12T11:41:23Z",
   "skills": [
@@ -17,17 +17,17 @@
     {
       "slug": "carbon-black-cloud",
       "name": "carbon-black-cloud",
-      "description": "VMware Carbon Black Cloud Enterprise EDR authoring guidance — distinguishes process search query syntax (CBC search language) from watchlist feeds, scheduled searches, and live response. Covers indicator vs IOC discipline, watchlist subscription model, alert override / interrupt, sensor capability boundaries, and entity identifier alignment for cross-platform correlation. Use for carbon_black_cloud-keyed configurations in OpenTide MDR objects."
+      "description": "VMware Carbon Black Cloud Enterprise EDR authoring guidance — distinguishes process search query syntax (CBC search language) from watchlist feeds, scheduled searches, and live response. Covers indicator vs IOC discipline, watchlist subscription model, alert override / interrupt, sensor capability boundaries, and entity identifier alignment for cross-platform correlation. Use for carbon_black_cloud-keyed configurations in opentide MDR objects."
     },
     {
       "slug": "crowdstrike-falcon",
       "name": "crowdstrike-falcon",
-      "description": "CrowdStrike Falcon detection engineering — distinguishes Falcon Insight (Event Search / EAM) from Falcon Next-Gen SIEM (LogScale / CQL), covers Falcon Query Language idioms, Custom IOA / IOC discipline, Correlation Rules (detection-as-code), Falcon Fusion workflow automation, sensor coverage gaps across Windows / macOS / Linux, SIEM ingestion patterns, real-time response guardrails, and entity-identifier alignment for cross-platform correlation. Distilled from CrowdStrike/falconpy SDK samples and API documentation. Use when authoring or reviewing CrowdStrike-keyed configurations in OpenTide MDR objects."
+      "description": "CrowdStrike Falcon detection engineering — distinguishes Falcon Insight (Event Search / EAM) from Falcon Next-Gen SIEM (LogScale / CQL), covers Falcon Query Language idioms, Custom IOA / IOC discipline, Correlation Rules (detection-as-code), Falcon Fusion workflow automation, sensor coverage gaps across Windows / macOS / Linux, SIEM ingestion patterns, real-time response guardrails, and entity-identifier alignment for cross-platform correlation. Distilled from CrowdStrike/falconpy SDK samples and API documentation. Use when authoring or reviewing CrowdStrike-keyed configurations in opentide MDR objects."
     },
     {
       "slug": "detection-engineering",
       "name": "detection-engineering",
-      "description": "Detection engineering lifecycle across the OpenTide TVM → DOM → MDR sequence and the operational practice of converting validated hunting queries into production detection rules. Encodes hunting-vs-detection trade-offs, hunt-to-rule conversion (7-step process with FP reduction, entity mapping, NRT compliance, response actions), platform pairing matrix (Microsoft KQL split, Splunk SPL, vendor consoles), maturity progression, PR scope discipline, and quality bars. Use when planning multi-phase detection work, sequencing object types in OpenTide content repos, reviewing PR scope, or operationalising hunts into MDR objects."
+      "description": "Detection engineering lifecycle across the opentide TVM → DOM → MDR sequence and the operational practice of converting validated hunting queries into production detection rules. Encodes hunting-vs-detection trade-offs, hunt-to-rule conversion (7-step process with FP reduction, entity mapping, NRT compliance, response actions), platform pairing matrix (Microsoft KQL split, Splunk SPL, vendor consoles), maturity progression, PR scope discipline, and quality bars. Use when planning multi-phase detection work, sequencing object types in opentide content repos, reviewing PR scope, or operationalising hunts into MDR objects."
     },
     {
       "slug": "email-and-collaboration",
@@ -47,7 +47,7 @@
     {
       "slug": "harfanglab",
       "name": "harfanglab",
-      "description": "HarfangLab orb / EDR detection engineering — Sigma rule authoring in CoreTide's validated YAML schema (selections array, modifiers, conditional field validation), RHQL hunt query language, YARA file/memory scanning (CoreTide structure with imports, meta.context, auto-routing), full logsource category catalogue (39 Windows, 12 Linux, 6 macOS), 21 Sigma modifiers, maturity/confidence/action lifecycle, exclusion discipline, and SIEM ingestion patterns. Distilled from CoreTide HarfangLab sub-schema and SigmaHQ (3132 rules). Use for harfanglab-keyed configurations in OpenTide MDR objects."
+      "description": "HarfangLab orb / EDR detection engineering — Sigma rule authoring in CoreTide's validated YAML schema (selections array, modifiers, conditional field validation), RHQL hunt query language, YARA file/memory scanning (CoreTide structure with imports, meta.context, auto-routing), full logsource category catalogue (39 Windows, 12 Linux, 6 macOS), 21 Sigma modifiers, maturity/confidence/action lifecycle, exclusion discipline, and SIEM ingestion patterns. Distilled from CoreTide HarfangLab sub-schema and SigmaHQ (3132 rules). Use for harfanglab-keyed configurations in opentide MDR objects."
     },
     {
       "slug": "identity-providers",
@@ -77,17 +77,17 @@
     {
       "slug": "microsoft-defender-endpoint",
       "name": "microsoft-defender-endpoint",
-      "description": "Microsoft Defender for Endpoint (MDE) Advanced Hunting authoring guidance — Device*/Email*/Identity* table schemas, Timestamp discipline, ProcessUniqueId vs PID for temporal joins, FileProfile() prevalence enrichment with null handling, AdditionalFields parsing, mandatory output columns for custom detection rules (Timestamp/DeviceId/ReportId), NRT single-table/no-comment constraints, retention boundaries, named-pipe and DGA detection patterns. Always pair with kusto-query-language for language-level optimisation. Use for configurations.defender_for_endpoint blocks in OpenTide MDR objects and Defender-first hypotheses."
+      "description": "Microsoft Defender for Endpoint (MDE) Advanced Hunting authoring guidance — Device*/Email*/Identity* table schemas, Timestamp discipline, ProcessUniqueId vs PID for temporal joins, FileProfile() prevalence enrichment with null handling, AdditionalFields parsing, mandatory output columns for custom detection rules (Timestamp/DeviceId/ReportId), NRT single-table/no-comment constraints, retention boundaries, named-pipe and DGA detection patterns. Always pair with kusto-query-language for language-level optimisation. Use for configurations.defender_for_endpoint blocks in opentide MDR objects and Defender-first hypotheses."
     },
     {
       "slug": "microsoft-sentinel",
       "name": "microsoft-sentinel",
-      "description": "Microsoft Sentinel (Azure Log Analytics) hunting, analytic-rule, and detection authoring guidance — table-domain decision matrix, identity/cloud workload schemas (SigninLogs, AuditLogs, AzureActivity, OfficeActivity, CommonSecurityLog), TimeGenerated discipline, ResultType code patterns, NRT vs scheduled rule constraints, watchlists, ASIM caveats, materialise+arg_max+coalesce TI patterns, row_window_session sessionisation, BehaviorAnalytics/IdentityInfo enrichment. Always pair with kusto-query-language for language-level optimisation. Use for configurations.sentinel blocks in OpenTide MDR objects and Sentinel-first hypotheses."
+      "description": "Microsoft Sentinel (Azure Log Analytics) hunting, analytic-rule, and detection authoring guidance — table-domain decision matrix, identity/cloud workload schemas (SigninLogs, AuditLogs, AzureActivity, OfficeActivity, CommonSecurityLog), TimeGenerated discipline, ResultType code patterns, NRT vs scheduled rule constraints, watchlists, ASIM caveats, materialise+arg_max+coalesce TI patterns, row_window_session sessionisation, BehaviorAnalytics/IdentityInfo enrichment. Always pair with kusto-query-language for language-level optimisation. Use for configurations.sentinel blocks in opentide MDR objects and Sentinel-first hypotheses."
     },
     {
       "slug": "mitre-attack",
       "name": "mitre-attack",
-      "description": "MITRE ATT&CK mapping discipline and technique reference for OpenTide TVM, DOM, and MDR objects — technique vs sub-technique selection, tactic assignment, multi-technique chaining, version pinning, revocation handling, coverage gap analysis, platform matrix awareness, and a locally searchable technique index. Use when populating threat.att&ck fields in TVMs, mapping DOM signals to techniques, tagging MDR rules, assessing detection coverage against the ATT&CK matrix, or looking up technique IDs and descriptions."
+      "description": "MITRE ATT&CK mapping discipline and technique reference for opentide TVM, DOM, and MDR objects — technique vs sub-technique selection, tactic assignment, multi-technique chaining, version pinning, revocation handling, coverage gap analysis, platform matrix awareness, and a locally searchable technique index. Use when populating threat.att&ck fields in TVMs, mapping DOM signals to techniques, tagging MDR rules, assessing detection coverage against the ATT&CK matrix, or looking up technique IDs and descriptions."
     },
     {
       "slug": "network-protocols",
@@ -102,27 +102,27 @@
     {
       "slug": "opentide-objective",
       "name": "opentide-objective",
-      "description": "Authors OpenTide Detection Objective objects — decomposing a threat into discrete detection opportunities, writing signals as analyst-facing alert specifications, modelling data availability honestly, choosing a composition strategy, and linking upstream to threat vectors and downstream to detection rules. Covers signal decomposition quality, entity correlation, and anti-patterns distilled from production corpora. Resolves object structure and vocabularies from the installed engine instead of pinning fields. Use when structuring coverage intent, or before detection rules attach to an objective."
+      "description": "Authors opentide Detection Objective objects — decomposing a threat into discrete detection opportunities, writing signals as analyst-facing alert specifications, modelling data availability honestly, choosing a composition strategy, and linking upstream to threat vectors and downstream to detection rules. Covers signal decomposition quality, entity correlation, and anti-patterns distilled from production corpora. Resolves object structure and vocabularies from the installed engine instead of pinning fields. Use when structuring coverage intent, or before detection rules attach to an objective."
     },
     {
       "slug": "opentide-rule",
       "name": "opentide-rule",
-      "description": "Authors OpenTide Detection Rule objects — structured descriptions, response procedures an analyst can actually follow, exclusion discipline, and per-platform configurations wired to the signals they implement. Covers platform capability differences, signal traceability, and anti-patterns distilled from production corpora. Resolves object structure and platform keys from the installed engine instead of pinning fields. Pair with the relevant platform and query-language skills for syntax. Use when producing deployable detection content or updating existing rules."
+      "description": "Authors opentide Detection Rule objects — structured descriptions, response procedures an analyst can actually follow, exclusion discipline, and per-platform configurations wired to the signals they implement. Covers platform capability differences, signal traceability, and anti-patterns distilled from production corpora. Resolves object structure and platform keys from the installed engine instead of pinning fields. Pair with the relevant platform and query-language skills for syntax. Use when producing deployable detection content or updating existing rules."
     },
     {
       "slug": "opentide-threat",
       "name": "opentide-threat",
-      "description": "Converts threat intelligence into OpenTide Threat Vector objects — source hygiene, atomising reports into discrete adversary behaviours, gap analysis before modelling, then schema-backed YAML authoring. Covers terrain as preconditions rather than narrative, chaining between vectors, ATT&CK mapping, actor attribution, structured descriptions, and anti-patterns distilled from production corpora. Resolves object structure, vocabularies and repository layout from the installed engine instead of pinning fields. Use when turning reports, feeds or narratives into threat vectors, or refactoring existing ones, before detection objectives exist."
+      "description": "Converts threat intelligence into opentide Threat Vector objects — source hygiene, atomising reports into discrete adversary behaviours, gap analysis before modelling, then schema-backed YAML authoring. Covers terrain as preconditions rather than narrative, chaining between vectors, ATT&CK mapping, actor attribution, structured descriptions, and anti-patterns distilled from production corpora. Resolves object structure, vocabularies and repository layout from the installed engine instead of pinning fields. Use when turning reports, feeds or narratives into threat vectors, or refactoring existing ones, before detection objectives exist."
     },
     {
       "slug": "opentide-visibility",
       "name": "opentide-visibility",
-      "description": "Models the detection estate in the OpenTide visibility configuration — which assets generate logs, which log sources are actually collected and on which system, and which external vendor detections already cover ground. This configuration is upstream of Detection Objectives, because the allowed values for a signal's log sources are injected into the generated schema from here, so a source that is not declared cannot be referenced. Covers honest coverage claims, the regenerate-after-change cycle, and the placeholder trap. Use when auditing or declaring log source coverage, when a signal cannot reference a log source, when data availability claims need grounding, or when onboarding a new telemetry source."
+      "description": "Models the detection estate in the opentide visibility configuration — which assets generate logs, which log sources are actually collected and on which system, and which external vendor detections already cover ground. This configuration is upstream of Detection Objectives, because the allowed values for a signal's log sources are injected into the generated schema from here, so a source that is not declared cannot be referenced. Covers honest coverage claims, the regenerate-after-change cycle, and the placeholder trap. Use when auditing or declaring log source coverage, when a signal cannot reference a log source, when data availability claims need grounding, or when onboarding a new telemetry source."
     },
     {
       "slug": "sentinelone-singularity",
       "name": "sentinelone-singularity",
-      "description": "SentinelOne Singularity detection engineering — explicit distinction from Microsoft Sentinel, surface map across STAR Custom Logic (sensor-side behavioural rules), Deep Visibility (DVQL), Singularity Data Lake / PowerQuery (SDL alert configuration, scheduled queries, geo/math functions), exclusions and policies, Storyline ID-based correlation, AI Engine policy modes (detect / protect), SIEM ingestion patterns, and entity alignment for cross-platform correlation. Distilled from Sentinel-One/ai-siem community detection library. Use for sentinel_one-keyed configurations in OpenTide MDR objects — never confuse with microsoft-sentinel."
+      "description": "SentinelOne Singularity detection engineering — explicit distinction from Microsoft Sentinel, surface map across STAR Custom Logic (sensor-side behavioural rules), Deep Visibility (DVQL), Singularity Data Lake / PowerQuery (SDL alert configuration, scheduled queries, geo/math functions), exclusions and policies, Storyline ID-based correlation, AI Engine policy modes (detect / protect), SIEM ingestion patterns, and entity alignment for cross-platform correlation. Distilled from Sentinel-One/ai-siem community detection library. Use for sentinel_one-keyed configurations in opentide MDR objects — never confuse with microsoft-sentinel."
     },
     {
       "slug": "splunk-spl-processing",
@@ -132,7 +132,7 @@
     {
       "slug": "threat-hunting",
       "name": "threat-hunting",
-      "description": "Threat hunting hypothesis discipline using the ABLE framework (Actor, Behaviour, Location, Evidence), hypothesis quality scoring (confidence, relevance, priority, effort, scope), evidence-platform decision matrix, hypothesis archetypes (baseline anomaly, frequency-based, behavioural sequence), data-gap analysis, anti-pattern checks, and the bridge from validated hunts into OpenTide TVM/DOM/MDR objects. Use when generating hunt leads from intelligence, scoring hunting hypotheses, decomposing behaviour into observable telemetry, or feeding hunt outcomes back into Threat Vectors and Detection Objectives."
+      "description": "Threat hunting hypothesis discipline using the ABLE framework (Actor, Behaviour, Location, Evidence), hypothesis quality scoring (confidence, relevance, priority, effort, scope), evidence-platform decision matrix, hypothesis archetypes (baseline anomaly, frequency-based, behavioural sequence), data-gap analysis, anti-pattern checks, and the bridge from validated hunts into opentide TVM/DOM/MDR objects. Use when generating hunt leads from intelligence, scoring hunting hypotheses, decomposing behaviour into observable telemetry, or feeding hunt outcomes back into Threat Vectors and Detection Objectives."
     },
     {
       "slug": "windows-event-logs",

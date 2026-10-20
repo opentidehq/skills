@@ -4,13 +4,13 @@
   <img src="docs/opentide-logo.svg" alt="opentide" width="280">
 </p>
 
-[![skills.sh](https://skills.sh/b/OpenTideHQ/skills)](https://skills.sh/OpenTideHQ/skills)
+[![skills.sh](https://skills.sh/b/opentidehq/skills)](https://skills.sh/opentidehq/skills)
 
 Canonical home for opentide detection skills. The plugin `opentide` teaches agents to model threats, define what to detect, and write the rules and queries. The machine-readable catalogue for `opentide setup skills` is [`manifest.json`](manifest.json).
 
 ## Install
 
-Install the OpenTide MCP server once. The plugin starts it as `opentide mcp start` on `PATH`.
+Install the opentide MCP server once. The plugin starts it as `opentide mcp start` on `PATH`.
 
 ```bash
 pip install opentide
@@ -20,19 +20,19 @@ Then use the command for your agent. Each one installs this repository.
 
 | | Agent | Command |
 | --- | --- | --- |
-| <img src="docs/marketplace-skills-sh.png" width="36" height="36" alt="skills.sh"> | **skills.sh** | `npx skills add OpenTideHQ/skills` |
-| <img src="docs/marketplace-cursor.svg" width="36" height="36" alt="Cursor"> | **Cursor** | `/add-plugin OpenTideHQ/skills` |
-| <img src="docs/marketplace-claude.svg" width="36" height="36" alt="Claude Code"> | **Claude Code** | `/plugin marketplace add OpenTideHQ/skills` then `/plugin install opentide@opentide` |
-| <img src="docs/marketplace-vscode.svg" width="36" height="36" alt="Visual Studio Code"> | **VS Code** | Command Palette → **Chat: Install Plugin From Source** → `OpenTideHQ/skills` |
-| <img src="docs/marketplace-copilot.svg" width="36" height="36" alt="GitHub Copilot"> | **Copilot CLI** | `copilot plugin marketplace add OpenTideHQ/skills` then `copilot plugin install opentide@opentide` |
+| <img src="docs/marketplace-skills-sh.png" width="36" height="36" alt="skills.sh"> | **skills.sh** | `npx skills add opentidehq/skills` |
+| <img src="docs/marketplace-cursor.svg" width="36" height="36" alt="Cursor"> | **Cursor** | `/add-plugin opentidehq/skills` |
+| <img src="docs/marketplace-claude.svg" width="36" height="36" alt="Claude Code"> | **Claude Code** | `/plugin marketplace add opentidehq/skills` then `/plugin install opentide@opentide` |
+| <img src="docs/marketplace-vscode.svg" width="36" height="36" alt="Visual Studio Code"> | **VS Code** | Command Palette → **Chat: Install Plugin From Source** → `opentidehq/skills` |
+| <img src="docs/marketplace-copilot.svg" width="36" height="36" alt="GitHub Copilot"> | **Copilot CLI** | `copilot plugin marketplace add opentidehq/skills` then `copilot plugin install opentide@opentide` |
 | <img src="docs/marketplace-codex.svg" width="36" height="36" alt="OpenAI Codex"> | **Codex** | In this repo, run `/plugins` and install **opentide** |
-| <img src="docs/marketplace-kiro.svg" width="36" height="36" alt="Kiro"> | **Kiro** | Powers → **Add Custom Power** → **Import from GitHub** → `https://github.com/OpenTideHQ/skills` |
+| <img src="docs/marketplace-kiro.svg" width="36" height="36" alt="Kiro"> | **Kiro** | Powers → **Add Custom Power** → **Import from GitHub** → `https://github.com/opentidehq/skills` |
 
 Copy [`AGENTS.md`](AGENTS.md) into a detection project when the agent reads project instructions from the workspace root.
 
-VS Code needs `chat.plugins.enabled`. A conforming client starts `opentide mcp start` in this plugin root. Point the server at the detection content repository when that working directory is this skills repository. See the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md).
+VS Code needs `chat.plugins.enabled`. A conforming client starts `opentide mcp start` in this plugin root. Point the server at the detection content repository when that working directory is this skills repository. See the [opentide MCP configuration](https://github.com/opentidehq/opentide/blob/development/docs/mcp/configuration.md).
 
-[`skills.sh.json`](skills.sh.json) groups the [skills.sh repository page](https://skills.sh/OpenTideHQ/skills). skills.sh reads that file from the default branch on the next `npx skills add`.
+[`skills.sh.json`](skills.sh.json) groups the [skills.sh repository page](https://skills.sh/opentidehq/skills). skills.sh reads that file from the default branch on the next `npx skills add`.
 
 Longer notes for each harness: [docs/install.md](docs/install.md).
 
@@ -42,7 +42,7 @@ Skills live once under `skills/`. Harness manifests at the repository root point
 
 ```
 plugin.json                      # Agent Plugins 1.0.0 manifest
-mcp.json                         # OpenTide MCP server (opentide mcp start, stdio)
+mcp.json                         # opentide MCP server (opentide mcp start, stdio)
 skills.sh.json                   # skills.sh repository page groups
 skills/                          # Canonical skills (only copy in git)
 AGENTS.md                        # Unified agents.md entrypoint
@@ -58,7 +58,7 @@ Install-time caching may copy files into a local plugin cache on the user's mach
 
 ## Still to publish
 
-These installs work from GitHub today. The remaining catalogue submissions are tracked in [#19](https://github.com/OpenTideHQ/skills/issues/19).
+These installs work from GitHub today. The remaining catalogue submissions are tracked in [#19](https://github.com/opentidehq/skills/issues/19).
 
 | Catalogue | What is left |
 | --- | --- |
@@ -69,7 +69,7 @@ These installs work from GitHub today. The remaining catalogue submissions are t
 | [Kiro Powers](https://kiro.dev/powers) | GitHub import works now. A curated registry listing still needs the Kiro submission path. |
 | GitHub skill search | Add the repository topic `agent-skills`, then `gh skill publish`. |
 
-The engine task for `opentide setup` installing this plugin is [opentide#431](https://github.com/OpenTideHQ/opentide/issues/431).
+The engine task for `opentide setup` installing this plugin is [opentide#431](https://github.com/opentidehq/opentide/issues/431).
 
 ## Contributing
 
@@ -82,11 +82,11 @@ The engine task for `opentide setup` installing this plugin is [opentide#431](ht
 
 See [`skills/README.md`](skills/README.md) for authoring conventions.
 
-The OpenTide mark is copied from [OpenTideHQ/.github](https://github.com/OpenTideHQ/.github/tree/main/assets/svg) (`logo-normal.svg`, `icon-normal.svg`). Marketplace marks in this README identify install targets and belong to their respective owners.
+The opentide mark is copied from [opentidehq/.github](https://github.com/opentidehq/.github/tree/main/assets/svg) (`logo-normal.svg`, `icon-normal.svg`). Marketplace marks in this README identify install targets and belong to their respective owners.
 
 ## Privacy
 
-This plugin distributes instructions, not a service. The skills, steering files, and manifests here are text your agent reads on your own machine. There is no telemetry, no analytics, and no callback: installing or using this plugin sends nothing to OpenTideHQ, and we collect, store, and process no data about you, your repositories, or your detections.
+This plugin distributes instructions, not a service. The skills, steering files, and manifests here are text your agent reads on your own machine. There is no telemetry, no analytics, and no callback: installing or using this plugin sends nothing to opentidehq, and we collect, store, and process no data about you, your repositories, or your detections.
 
 The MCP server declared in [`mcp.json`](mcp.json) is stdio. It runs locally, against repositories you already control. When a skill has your agent query a security platform, that request goes straight from your environment to that vendor under credentials you configured yourself — this plugin is not an intermediary and adds no collection of its own. Each vendor's own terms govern that traffic.
 
@@ -94,9 +94,9 @@ The MCP server declared in [`mcp.json`](mcp.json) is stdio. It runs locally, aga
 
 | Need | Where |
 | --- | --- |
-| Bug, question, or a skill you want added | [GitHub issues](https://github.com/OpenTideHQ/skills/issues) |
+| Bug, question, or a skill you want added | [GitHub issues](https://github.com/opentidehq/skills/issues) |
 | Security disclosure | `digit-ec-opentide@ec.europa.eu` — please do not open a public issue |
-| Maintainer | OpenTideHQ · [opentide.org](https://opentide.org) |
+| Maintainer | opentidehq · [opentide.org](https://opentide.org) |
 
 ## License
 

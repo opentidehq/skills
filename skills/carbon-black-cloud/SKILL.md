@@ -1,11 +1,11 @@
 ---
 name: carbon-black-cloud
-description: VMware Carbon Black Cloud Enterprise EDR authoring guidance — distinguishes process search query syntax (CBC search language) from watchlist feeds, scheduled searches, and live response. Covers indicator vs IOC discipline, watchlist subscription model, alert override / interrupt, sensor capability boundaries, and entity identifier alignment for cross-platform correlation. Use for carbon_black_cloud-keyed configurations in OpenTide MDR objects.
+description: VMware Carbon Black Cloud Enterprise EDR authoring guidance — distinguishes process search query syntax (CBC search language) from watchlist feeds, scheduled searches, and live response. Covers indicator vs IOC discipline, watchlist subscription model, alert override / interrupt, sensor capability boundaries, and entity identifier alignment for cross-platform correlation. Use for carbon_black_cloud-keyed configurations in opentide MDR objects.
 ---
 
 # Carbon Black Cloud Enterprise EDR — content authoring
 
-This skill encodes operational context for authoring detection content in `configurations.carbon_black_cloud` blocks of OpenTide MDR objects. Carbon Black Cloud (CBC) Enterprise EDR (formerly CB ThreatHunter) is the relevant product surface; older CB Response (on-prem) is **not** the same product.
+This skill encodes operational context for authoring detection content in `configurations.carbon_black_cloud` blocks of opentide MDR objects. Carbon Black Cloud (CBC) Enterprise EDR (formerly CB ThreatHunter) is the relevant product surface; older CB Response (on-prem) is **not** the same product.
 
 ---
 
@@ -253,7 +253,7 @@ CBC's Data Forwarder exports event data to AWS S3 or Azure Blob Storage in JSON 
 
 ---
 
-## 11. Mapping into OpenTide MDR
+## 11. Mapping into opentide MDR
 
 When CBC content lives in `configurations.carbon_black_cloud`:
 

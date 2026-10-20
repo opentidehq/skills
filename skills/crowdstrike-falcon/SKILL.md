@@ -1,11 +1,11 @@
 ---
 name: crowdstrike-falcon
-description: CrowdStrike Falcon detection engineering — distinguishes Falcon Insight (Event Search / EAM) from Falcon Next-Gen SIEM (LogScale / CQL), covers Falcon Query Language idioms, Custom IOA / IOC discipline, Correlation Rules (detection-as-code), Falcon Fusion workflow automation, sensor coverage gaps across Windows / macOS / Linux, SIEM ingestion patterns, real-time response guardrails, and entity-identifier alignment for cross-platform correlation. Distilled from CrowdStrike/falconpy SDK samples and API documentation. Use when authoring or reviewing CrowdStrike-keyed configurations in OpenTide MDR objects.
+description: CrowdStrike Falcon detection engineering — distinguishes Falcon Insight (Event Search / EAM) from Falcon Next-Gen SIEM (LogScale / CQL), covers Falcon Query Language idioms, Custom IOA / IOC discipline, Correlation Rules (detection-as-code), Falcon Fusion workflow automation, sensor coverage gaps across Windows / macOS / Linux, SIEM ingestion patterns, real-time response guardrails, and entity-identifier alignment for cross-platform correlation. Distilled from CrowdStrike/falconpy SDK samples and API documentation. Use when authoring or reviewing CrowdStrike-keyed configurations in opentide MDR objects.
 ---
 
 # CrowdStrike Falcon — content authoring
 
-This skill encodes operational context for authoring detection content destined for `configurations.crowdstrike` blocks in OpenTide MDR objects. Falcon's content surfaces are split across **multiple distinct products** with different query languages and lifecycle expectations — the first decision is identifying which surface the rule targets.
+This skill encodes operational context for authoring detection content destined for `configurations.crowdstrike` blocks in opentide MDR objects. Falcon's content surfaces are split across **multiple distinct products** with different query languages and lifecycle expectations — the first decision is identifying which surface the rule targets.
 
 ---
 
@@ -301,7 +301,7 @@ Falcon's Data Replicator streams raw event data to AWS S3 in near-real-time. Thi
 
 ## 11. Entity identifier alignment (cross-platform correlation)
 
-When OpenTide MDR objects bridge Falcon detections with Microsoft / Splunk equivalents, ensure identifier columns align:
+When opentide MDR objects bridge Falcon detections with Microsoft / Splunk equivalents, ensure identifier columns align:
 
 | Concept | Falcon | Microsoft Defender | Sentinel |
 |---|---|---|---|
@@ -315,7 +315,7 @@ Correlation **must happen at the analyst / orchestrator layer** (Fusion, SIEM, o
 
 ---
 
-## 12. Mapping into OpenTide MDR
+## 12. Mapping into opentide MDR
 
 When Falcon content lives in `configurations.crowdstrike` blocks:
 

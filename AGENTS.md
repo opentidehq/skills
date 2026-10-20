@@ -1,6 +1,6 @@
-# AGENTS.md — Unified agent entrypoint (OpenTide)
+# AGENTS.md — Unified agent entrypoint (opentide)
 
-Canonical instructions for autonomous coding assistants working across **OpenTide content** repositories. Pair with granular skills under **`skills/<skill-name>/SKILL.md`** (or harness-specific install paths — see [README.md](README.md)) following the [Agent Skills specification](https://agentskills.io/specification) — each `SKILL.md` carries YAML frontmatter (`name`, `description`) for discovery, with optional `references/`, `assets/`, and `scripts/` subdirectories.
+Canonical instructions for autonomous coding assistants working across **opentide content** repositories. Pair with granular skills under **`skills/<skill-name>/SKILL.md`** (or harness-specific install paths — see [README.md](README.md)) following the [Agent Skills specification](https://agentskills.io/specification) — each `SKILL.md` carries YAML frontmatter (`name`, `description`) for discovery, with optional `references/`, `assets/`, and `scripts/` subdirectories.
 
 ---
 
@@ -10,7 +10,7 @@ When unclear which corpus you are editing — ask **before creating paths**.
 
 ## Prime directives
 
-- **Correctness** — Be exact and cognitively correct when breaking down intelligence and complex threat data into modelled OpenTide artefacts. Treat intelligence fidelity and analytic literalness seriously.
+- **Correctness** — Be exact and cognitively correct when breaking down intelligence and complex threat data into modelled opentide artefacts. Treat intelligence fidelity and analytic literalness seriously.
 - **Consistency** — Maintain a coherent repository. Sometimes it is better to improve several existing objects before creating a new one. Prefer adjusting related artefacts coherently over isolated one-offs.
 - **Transparency** — All changes, decisions, and proposals must be rationalised, discoverable, and surfaced in summaries or commit messages that reviewers can consume.
 - **Critical thinking** — No vague conclusions. All modelling decisions must be critical. Challenge weak analytic leaps — politely. You are allowed to disagree with the user when reasoning is poor.
@@ -42,9 +42,9 @@ When unclear which corpus you are editing — ask **before creating paths**.
 
 ---
 
-## OpenTide framework essentials
+## opentide framework essentials
 
-OpenTide structures the Detection Engineering lifecycle as as-code (YAML) objects managed in a git repository. There are three core object types:
+opentide structures the Detection Engineering lifecycle as as-code (YAML) objects managed in a git repository. There are three core object types:
 
 | Type | Schema tag | Location | Responsibility |
 |------|------------|----------|----------------|
@@ -148,7 +148,7 @@ Unless explicitly commissioned:
 
 ## Skills index (`skills/`)
 
-### OpenTide content authoring
+### opentide content authoring
 | Skill | Purpose |
 |---|---|
 | `opentide-threat` | TVM authoring — Phase A intelligence structuring + Phase B schema-backed YAML |
@@ -160,7 +160,7 @@ Unless explicitly commissioned:
 | Skill | Purpose |
 |---|---|
 | `detection-engineering` | Cross-object sequencing, hunt-to-rule conversion (7-step), platform pairing matrix, maturity progression, PR scope discipline |
-| `threat-hunting` | Hypothesis discipline (ABLE), confidence/relevance/priority scoring, archetypes, data-gap analysis, hunt → OpenTide content conversion |
+| `threat-hunting` | Hypothesis discipline (ABLE), confidence/relevance/priority scoring, archetypes, data-gap analysis, hunt → opentide content conversion |
 | `mitre-attack` | ATT&CK technique/sub-technique selection, tactic assignment, version pinning, revocation handling, coverage analysis |
 
 ### Languages & platforms
@@ -198,4 +198,4 @@ Load the **narrowest** skill first — escalate outward when coordination demand
 
 ## Git expectations
 
-Skill and harness changes land through **approved pull requests** against `main` on `OpenTideHQ/skills` so reviewers can deliberate without surprise history rewriting.
+Skill and harness changes land through **approved pull requests** against `main` on `opentidehq/skills` so reviewers can deliberate without surprise history rewriting.

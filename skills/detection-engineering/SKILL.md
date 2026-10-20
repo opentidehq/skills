@@ -1,17 +1,17 @@
 ---
 name: detection-engineering
-description: Detection engineering lifecycle across the OpenTide TVM → DOM → MDR sequence and the operational practice of converting validated hunting queries into production detection rules. Encodes hunting-vs-detection trade-offs, hunt-to-rule conversion (7-step process with FP reduction, entity mapping, NRT compliance, response actions), platform pairing matrix (Microsoft KQL split, Splunk SPL, vendor consoles), maturity progression, PR scope discipline, and quality bars. Use when planning multi-phase detection work, sequencing object types in OpenTide content repos, reviewing PR scope, or operationalising hunts into MDR objects.
+description: Detection engineering lifecycle across the opentide TVM → DOM → MDR sequence and the operational practice of converting validated hunting queries into production detection rules. Encodes hunting-vs-detection trade-offs, hunt-to-rule conversion (7-step process with FP reduction, entity mapping, NRT compliance, response actions), platform pairing matrix (Microsoft KQL split, Splunk SPL, vendor consoles), maturity progression, PR scope discipline, and quality bars. Use when planning multi-phase detection work, sequencing object types in opentide content repos, reviewing PR scope, or operationalising hunts into MDR objects.
 ---
 
-# Detection engineering — OpenTide + DetectionOps
+# Detection engineering — opentide + DetectionOps
 
-This skill governs **how** detection content moves through its lifecycle. It pairs OpenTide's object lineage (Threat Vector → Detection Objective → Detection Rule) with the practical mechanics of converting validated hunting queries into production-grade detection rules on the platforms CoreTide deploys to.
+This skill governs **how** detection content moves through its lifecycle. It pairs opentide's object lineage (Threat Vector → Detection Objective → Detection Rule) with the practical mechanics of converting validated hunting queries into production-grade detection rules on the platforms CoreTide deploys to.
 
-> Always pair with: language skills (`kusto-query-language`, `splunk-spl-processing`), platform skills (`microsoft-sentinel`, `microsoft-defender-endpoint`, `crowdstrike-falcon`, `carbon-black-cloud`, `sentinelone-singularity`, `harfanglab`), and the OpenTide object skills (`opentide-threat`, `opentide-objective`, `opentide-rule`).
+> Always pair with: language skills (`kusto-query-language`, `splunk-spl-processing`), platform skills (`microsoft-sentinel`, `microsoft-defender-endpoint`, `crowdstrike-falcon`, `carbon-black-cloud`, `sentinelone-singularity`, `harfanglab`), and the opentide object skills (`opentide-threat`, `opentide-objective`, `opentide-rule`).
 
 ---
 
-## 1. OpenTide sequencing
+## 1. opentide sequencing
 
 1. **Evidence / threat modelling** — `opentide-threat` (TVM YAML, Phase A intel structuring + Phase B authoring).
 2. **Detection intent & signals** — `opentide-objective` (DOM YAML, signals, data contracts, methodology).
@@ -371,7 +371,7 @@ Map detections to attack simulation frameworks for continuous validation:
 
 ---
 
-## 10. PR scope discipline (OpenTide change requests)
+## 10. PR scope discipline (opentide change requests)
 
 - Default pull requests contain **one object type at a time** (TVM, DOM, or MDR).
 - An end-to-end vertical slice is acceptable when explicitly orchestrated (drill, pilot, framework bootstrap) — call it out in the pull request narrative.

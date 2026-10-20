@@ -5,7 +5,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MANIFEST="${ROOT}/manifest.json"
 SKILLS_DIR="${ROOT}/skills"
-SOURCE="${MANIFEST_SOURCE:-OpenTideHQ/skills}"
+SOURCE="${MANIFEST_SOURCE:-opentidehq/skills}"
 REF="${MANIFEST_REF:-main}"
 VERSION=1
 CHECK=false

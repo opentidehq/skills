@@ -1,6 +1,6 @@
 # Harness and plugin standards
 
-OpenTide Skills targets **one canonical `skills/` tree** and layers harness-specific packaging on top without duplicating skill content.
+opentide Skills targets **one canonical `skills/` tree** and layers harness-specific packaging on top without duplicating skill content.
 
 ## Standards map
 
@@ -9,7 +9,7 @@ OpenTide Skills targets **one canonical `skills/` tree** and layers harness-spec
 | [Agent Plugins](https://agent-plugins.org/specification) | Root `plugin.json` + `mcp.json` | agent-plugins.org | **Yes** — portable install |
 | [Agent Skills](https://agentskills.io/specification) | `skills/<name>/SKILL.md` | agentskills.io / Anthropic | **Canonical** — `skills/` |
 | [AGENTS.md](https://agents.md/) | Root `AGENTS.md` | AAIF / community | **Yes** — `AGENTS.md` |
-| [MCP](https://modelcontextprotocol.io/) | Root `mcp.json` (`opentide mcp start`) | AAIF / OpenTide | **Yes** — stdio server entry |
+| [MCP](https://modelcontextprotocol.io/) | Root `mcp.json` (`opentide mcp start`) | AAIF / opentide | **Yes** — stdio server entry |
 | **Kiro Power** | `plugin.json` (preferred) or `POWER.md` + `steering/` | AWS Kiro | **Yes** — both |
 | **Cursor plugin** | `.cursor-plugin/plugin.json` | Cursor | **Yes** |
 | **Claude Code plugin** | `.claude-plugin/plugin.json` | Anthropic | **Yes** |
@@ -77,7 +77,7 @@ This repo provides both without duplication:
 - **`skills/`** — canonical skill bodies (agentskills.io)
 - **`POWER.md`** — Kiro activation layer; steering files **point at** `skills/*.md`, they do not copy them
 
-Install the power: Powers panel → **Import power from GitHub** → `https://github.com/OpenTideHQ/skills`
+Install the power: Powers panel → **Import power from GitHub** → `https://github.com/opentidehq/skills`
 
 ## What we deliberately do not add
 
@@ -86,7 +86,7 @@ Install the power: Powers panel → **Import power from GitHub** → `https://gi
 | Per-harness copied `skills/` trees | Duplication; install cache handles distribution |
 | `.windsurf/` / `.trae/` rule mirrors | Tier 2 skills install covers most cases |
 | Separate Gemini/Antigravity manifest | Root `plugin.json` plus `.agents/skills/` covers those clients |
-| A second copy of the OpenTide MCP server | `mcp.json` launches `opentide mcp start`; this repo does not vendor the server |
+| A second copy of the opentide MCP server | `mcp.json` launches `opentide mcp start`; this repo does not vendor the server |
 
 ## Future candidates
 

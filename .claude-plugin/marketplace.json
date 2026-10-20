@@ -1,7 +1,7 @@
 {
   "name": "opentide",
   "owner": {
-    "name": "OpenTideHQ"
+    "name": "opentidehq"
   },
   "metadata": {
     "description": "opentide detection skills for Claude Code"
