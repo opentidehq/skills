@@ -1,6 +1,6 @@
-# OpenTide object workflow
+# opentide object workflow
 
-Use when authoring or reviewing **Threat Vector (TVM)**, **Detection Objective (DOM)**, or **Detection Rule (MDR)** YAML in OpenTide content repositories.
+Use when authoring or reviewing **Threat Vector (TVM)**, **Detection Objective (DOM)**, or **Detection Rule (MDR)** YAML in opentide content repositories.
 
 ## Before you write
 

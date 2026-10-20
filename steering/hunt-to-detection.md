@@ -1,10 +1,10 @@
 # Hunt to detection
 
-Use when converting hunts to production rules, planning multi-phase detection work, or reviewing PR scope across OpenTide objects.
+Use when converting hunts to production rules, planning multi-phase detection work, or reviewing PR scope across opentide objects.
 
 ## Primary skill
 
-Read **`skills/detection-engineering/SKILL.md`** — OpenTide TVM → DOM → MDR sequencing, 7-step hunt-to-rule conversion, platform pairing matrix, maturity progression, PR discipline.
+Read **`skills/detection-engineering/SKILL.md`** — opentide TVM → DOM → MDR sequencing, 7-step hunt-to-rule conversion, platform pairing matrix, maturity progression, PR discipline.
 
 ## Supporting skills
 

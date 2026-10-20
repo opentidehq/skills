@@ -1,6 +1,6 @@
 ---
 name: harfanglab
-description: HarfangLab orb / EDR detection engineering — Sigma rule authoring in CoreTide's validated YAML schema (selections array, modifiers, conditional field validation), RHQL hunt query language, YARA file/memory scanning (CoreTide structure with imports, meta.context, auto-routing), full logsource category catalogue (39 Windows, 12 Linux, 6 macOS), 21 Sigma modifiers, maturity/confidence/action lifecycle, exclusion discipline, and SIEM ingestion patterns. Distilled from CoreTide HarfangLab sub-schema and SigmaHQ (3132 rules). Use for harfanglab-keyed configurations in OpenTide MDR objects.
+description: HarfangLab orb / EDR detection engineering — Sigma rule authoring in CoreTide's validated YAML schema (selections array, modifiers, conditional field validation), RHQL hunt query language, YARA file/memory scanning (CoreTide structure with imports, meta.context, auto-routing), full logsource category catalogue (39 Windows, 12 Linux, 6 macOS), 21 Sigma modifiers, maturity/confidence/action lifecycle, exclusion discipline, and SIEM ingestion patterns. Distilled from CoreTide HarfangLab sub-schema and SigmaHQ (3132 rules). Use for harfanglab-keyed configurations in opentide MDR objects.
 ---
 
 # HarfangLab orb (EDR) — content authoring
@@ -26,7 +26,7 @@ The primary detection-authoring surface is **Sigma**. HarfangLab's posture leans
 
 ## 2. Sigma rules — CoreTide schema format
 
-HarfangLab consumes Sigma-based detection rules. In OpenTide, these are authored using the **CoreTide HarfangLab sub-schema** — an improved, fully validated YAML format that deviates from standard Sigma in key ways.
+HarfangLab consumes Sigma-based detection rules. In opentide, these are authored using the **CoreTide HarfangLab sub-schema** — an improved, fully validated YAML format that deviates from standard Sigma in key ways.
 
 ### CoreTide vs standard Sigma — key differences
 
@@ -353,7 +353,7 @@ Cross-platform correlation at the SOAR / SIEM layer.
 
 ---
 
-## 9. Mapping into OpenTide MDR
+## 9. Mapping into opentide MDR
 
 When HarfangLab content lives in `configurations.harfanglab`:
 

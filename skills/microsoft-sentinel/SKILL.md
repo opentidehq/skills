@@ -1,6 +1,6 @@
 ---
 name: microsoft-sentinel
-description: Microsoft Sentinel (Azure Log Analytics) hunting, analytic-rule, and detection authoring guidance — table-domain decision matrix, identity/cloud workload schemas (SigninLogs, AuditLogs, AzureActivity, OfficeActivity, CommonSecurityLog), TimeGenerated discipline, ResultType code patterns, NRT vs scheduled rule constraints, watchlists, ASIM caveats, materialise+arg_max+coalesce TI patterns, row_window_session sessionisation, BehaviorAnalytics/IdentityInfo enrichment. Always pair with kusto-query-language for language-level optimisation. Use for configurations.sentinel blocks in OpenTide MDR objects and Sentinel-first hypotheses.
+description: Microsoft Sentinel (Azure Log Analytics) hunting, analytic-rule, and detection authoring guidance — table-domain decision matrix, identity/cloud workload schemas (SigninLogs, AuditLogs, AzureActivity, OfficeActivity, CommonSecurityLog), TimeGenerated discipline, ResultType code patterns, NRT vs scheduled rule constraints, watchlists, ASIM caveats, materialise+arg_max+coalesce TI patterns, row_window_session sessionisation, BehaviorAnalytics/IdentityInfo enrichment. Always pair with kusto-query-language for language-level optimisation. Use for configurations.sentinel blocks in opentide MDR objects and Sentinel-first hypotheses.
 ---
 
 # Microsoft Sentinel — hunting & detection
@@ -356,9 +356,9 @@ Not all Sentinel tables exist in every workspace — they depend on data connect
 
 ---
 
-## 10. Mapping into OpenTide MDR
+## 10. Mapping into opentide MDR
 
-When KQL is wired into a `configurations.sentinel` block in an OpenTide MDR object:
+When KQL is wired into a `configurations.sentinel` block in an opentide MDR object:
 
 - **Description and tuning narrative** belong in the MDR `description` and `response.procedure` fields, not buried in inline comments.
 - **Severity, response actions, playbook URIs** belong in `response.alert_severity` / `response.playbook` per MDR schema.

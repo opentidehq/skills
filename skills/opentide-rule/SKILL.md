@@ -1,9 +1,9 @@
 ---
 name: opentide-rule
-description: Authors OpenTide Detection Rule objects — structured descriptions, response procedures an analyst can actually follow, exclusion discipline, and per-platform configurations wired to the signals they implement. Covers platform capability differences, signal traceability, and anti-patterns distilled from production corpora. Resolves object structure and platform keys from the installed engine instead of pinning fields. Pair with the relevant platform and query-language skills for syntax. Use when producing deployable detection content or updating existing rules.
+description: Authors opentide Detection Rule objects — structured descriptions, response procedures an analyst can actually follow, exclusion discipline, and per-platform configurations wired to the signals they implement. Covers platform capability differences, signal traceability, and anti-patterns distilled from production corpora. Resolves object structure and platform keys from the installed engine instead of pinning fields. Pair with the relevant platform and query-language skills for syntax. Use when producing deployable detection content or updating existing rules.
 ---
 
-# OpenTide Detection Rule (MDR)
+# opentide Detection Rule (MDR)
 
 An MDR is the **deployable artefact** — the detection rule that runs on a specific platform. It implements a DOM signal and carries the response metadata that guides analysts when the rule fires.
 
@@ -28,7 +28,7 @@ version 4 can still declare the first structural revision.
 
 Resolve the live structure in this order, stopping at the first that answers:
 
-1. **MCP resources**, when the OpenTide MCP server is connected.
+1. **MCP resources**, when the opentide MCP server is connected.
    `opentide://schemas/rule` returns the JSON Schema, resolved to the
    highest registered revision. `opentide://templates/rule` returns the
    authoring template. `opentide://vocabularies` lists the controlled

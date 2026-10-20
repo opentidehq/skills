@@ -7,7 +7,7 @@ This repository ships **one** skill tree and **multiple harness manifests** at t
 Works across Cursor, Copilot, Codex, Kiro, Claude Code, Gemini CLI, and other [Agent Skills clients](https://agentskills.io/clients).
 
 ```bash
-git clone https://github.com/OpenTideHQ/skills.git
+git clone https://github.com/opentidehq/skills.git
 cd skills
 mkdir -p /path/to/project/.agents/skills
 cp -r skills/* /path/to/project/.agents/skills/
@@ -18,17 +18,17 @@ Or:
 
 ```bash
 cd /path/to/project
-npx skills add OpenTideHQ/skills
+npx skills add opentidehq/skills
 cp AGENTS.md .
 ```
 
-`npx skills add` is also the listing path for the [skills.sh leaderboard](https://skills.sh/OpenTideHQ/skills). The repository page groups come from [`skills.sh.json`](../skills.sh.json) on the default branch, refreshed when the CLI installs from this repo.
+`npx skills add` is also the listing path for the [skills.sh leaderboard](https://skills.sh/opentidehq/skills). The repository page groups come from [`skills.sh.json`](../skills.sh.json) on the default branch, refreshed when the CLI installs from this repo.
 
 GitHub skill search (`gh skill search`) uses the repository topic `agent-skills`. Add that topic, or run `gh skill publish`, so this repository is included there as well.
 
 ## Agent Plugins
 
-Root [`plugin.json`](../plugin.json) and [`mcp.json`](../mcp.json) follow [Agent Plugins 1.0.0](https://agent-plugins.org/specification). Clients discover skills from `skills/` and MCP servers only from `mcp.json`. The OpenTide server is:
+Root [`plugin.json`](../plugin.json) and [`mcp.json`](../mcp.json) follow [Agent Plugins 1.0.0](https://agent-plugins.org/specification). Clients discover skills from `skills/` and MCP servers only from `mcp.json`. The opentide server is:
 
 ```json
 {
@@ -38,7 +38,7 @@ Root [`plugin.json`](../plugin.json) and [`mcp.json`](../mcp.json) follow [Agent
 }
 ```
 
-Install the server with `pip install opentide` so `opentide` is on `PATH`; it ships the MCP server and every platform SDK, and has no extras. When the client starts that process in this skills repository, point it at the detection content repository using the [OpenTide MCP configuration](https://github.com/OpenTideHQ/opentide/blob/development/docs/mcp/configuration.md).
+Install the server with `pip install opentide` so `opentide` is on `PATH`; it ships the MCP server and every platform SDK, and has no extras. When the client starts that process in this skills repository, point it at the detection content repository using the [opentide MCP configuration](https://github.com/opentidehq/opentide/blob/development/docs/mcp/configuration.md).
 
 Claude Code reads MCP servers from the harness manifest. [`.claude-plugin/plugin.json`](../.claude-plugin/plugin.json) sets `"mcpServers": "./mcp.json"` so it uses the same Agent Plugins entry. VS Code 1.140 selects the root `plugin.json` when `$schema` is the Agent Plugins 1.0.0 identifier, then loads `skills/` and `mcp.json`.
 
@@ -47,7 +47,7 @@ Claude Code reads MCP servers from the harness manifest. [`.claude-plugin/plugin
 In Cursor chat:
 
 ```text
-/add-plugin OpenTideHQ/skills
+/add-plugin opentidehq/skills
 ```
 
 Manifest: [`.cursor-plugin/plugin.json`](../.cursor-plugin/plugin.json) → `"skills": "./skills/"`
@@ -59,7 +59,7 @@ The public Cursor Marketplace listing is a separate submission at [cursor.com/ma
 ## Claude Code
 
 ```text
-/plugin marketplace add OpenTideHQ/skills
+/plugin marketplace add opentidehq/skills
 /plugin install opentide@opentide
 ```
 
@@ -71,12 +71,12 @@ Check the package with `claude plugin validate .` before a community catalogue s
 
 ## GitHub Copilot (VS Code / CLI)
 
-**VS Code** — Command Palette → **Chat: Install Plugin From Source** → `OpenTideHQ/skills`. Enable `chat.plugins.enabled`.
+**VS Code** — Command Palette → **Chat: Install Plugin From Source** → `opentidehq/skills`. Enable `chat.plugins.enabled`.
 
 **Copilot CLI:**
 
 ```bash
-copilot plugin marketplace add OpenTideHQ/skills
+copilot plugin marketplace add opentidehq/skills
 copilot plugin install opentide@opentide
 ```
 
@@ -107,7 +107,7 @@ Kiro has two complementary mechanisms — both supported from this repo without 
 A **Knowledge Base Power** activates on detection-engineering keywords and routes workflows via `steering/` files that point at canonical `skills/`.
 
 1. Kiro IDE → **Powers** panel (👻⚡) → **Add Custom Power**
-2. **Import power from GitHub** → `https://github.com/OpenTideHQ/skills`
+2. **Import power from GitHub** → `https://github.com/opentidehq/skills`
 3. Requires `POWER.md` at the repository root (included)
 
 Docs: [Create powers](https://kiro.dev/docs/powers/create/) · [Install powers](https://kiro.dev/docs/powers/installation/)
@@ -116,7 +116,7 @@ Docs: [Create powers](https://kiro.dev/docs/powers/create/) · [Install powers](
 
 Import individual skills from GitHub URLs:
 
-`https://github.com/OpenTideHQ/skills/tree/main/skills/kusto-query-language`
+`https://github.com/opentidehq/skills/tree/main/skills/kusto-query-language`
 
 Or copy into the project:
 

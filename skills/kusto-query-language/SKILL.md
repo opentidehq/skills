@@ -332,7 +332,7 @@ ProcessTable
 
 ## 8. Rationale & scoring fields (when feeding hunting/MDR records)
 
-When KQL is embedded in a record that carries a `rationale` field (hunt query objects, OpenTide MDR `description`/`response.procedure`), the rationale must answer four questions:
+When KQL is embedded in a record that carries a `rationale` field (hunt query objects, opentide MDR `description`/`response.procedure`), the rationale must answer four questions:
 
 1. **Why these tables?** What captures the observable; what was rejected.
 2. **Why these filters?** Map every non-trivial filter to source intelligence or behavioural reasoning.

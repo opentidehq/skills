@@ -1,6 +1,6 @@
 ---
 name: microsoft-defender-endpoint
-description: Microsoft Defender for Endpoint (MDE) Advanced Hunting authoring guidance — Device*/Email*/Identity* table schemas, Timestamp discipline, ProcessUniqueId vs PID for temporal joins, FileProfile() prevalence enrichment with null handling, AdditionalFields parsing, mandatory output columns for custom detection rules (Timestamp/DeviceId/ReportId), NRT single-table/no-comment constraints, retention boundaries, named-pipe and DGA detection patterns. Always pair with kusto-query-language for language-level optimisation. Use for configurations.defender_for_endpoint blocks in OpenTide MDR objects and Defender-first hypotheses.
+description: Microsoft Defender for Endpoint (MDE) Advanced Hunting authoring guidance — Device*/Email*/Identity* table schemas, Timestamp discipline, ProcessUniqueId vs PID for temporal joins, FileProfile() prevalence enrichment with null handling, AdditionalFields parsing, mandatory output columns for custom detection rules (Timestamp/DeviceId/ReportId), NRT single-table/no-comment constraints, retention boundaries, named-pipe and DGA detection patterns. Always pair with kusto-query-language for language-level optimisation. Use for configurations.defender_for_endpoint blocks in opentide MDR objects and Defender-first hypotheses.
 ---
 
 # Microsoft Defender for Endpoint — Advanced Hunting
@@ -341,9 +341,9 @@ DeviceProcessEvents
 
 ---
 
-## 10. Mapping into OpenTide MDR
+## 10. Mapping into opentide MDR
 
-When KQL is wired into a `configurations.defender_for_endpoint` block in an OpenTide MDR object:
+When KQL is wired into a `configurations.defender_for_endpoint` block in an opentide MDR object:
 
 - Description, tuning narrative, alert severity, response actions belong in the MDR `description` and `response.*` fields per MDR schema.
 - Inline KQL still carries the mandatory header block, comment discipline, and FP engineering above.

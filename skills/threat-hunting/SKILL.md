@@ -1,13 +1,13 @@
 ---
 name: threat-hunting
-description: Threat hunting hypothesis discipline using the ABLE framework (Actor, Behaviour, Location, Evidence), hypothesis quality scoring (confidence, relevance, priority, effort, scope), evidence-platform decision matrix, hypothesis archetypes (baseline anomaly, frequency-based, behavioural sequence), data-gap analysis, anti-pattern checks, and the bridge from validated hunts into OpenTide TVM/DOM/MDR objects. Use when generating hunt leads from intelligence, scoring hunting hypotheses, decomposing behaviour into observable telemetry, or feeding hunt outcomes back into Threat Vectors and Detection Objectives.
+description: Threat hunting hypothesis discipline using the ABLE framework (Actor, Behaviour, Location, Evidence), hypothesis quality scoring (confidence, relevance, priority, effort, scope), evidence-platform decision matrix, hypothesis archetypes (baseline anomaly, frequency-based, behavioural sequence), data-gap analysis, anti-pattern checks, and the bridge from validated hunts into opentide TVM/DOM/MDR objects. Use when generating hunt leads from intelligence, scoring hunting hypotheses, decomposing behaviour into observable telemetry, or feeding hunt outcomes back into Threat Vectors and Detection Objectives.
 ---
 
 # Threat hunting — hypothesis discipline
 
-This skill encodes the rigour of hypothesis-driven hunting (ABLE framework, scoring, anti-pattern checks) and the conversion path from validated hunts into OpenTide content. For language- or platform-level mechanics see the relevant skills (`kusto-query-language`, `microsoft-sentinel`, `microsoft-defender-endpoint`, `splunk-spl-processing`, etc.). For converting validated hunts into deployable rules, see `detection-engineering`.
+This skill encodes the rigour of hypothesis-driven hunting (ABLE framework, scoring, anti-pattern checks) and the conversion path from validated hunts into opentide content. For language- or platform-level mechanics see the relevant skills (`kusto-query-language`, `microsoft-sentinel`, `microsoft-defender-endpoint`, `splunk-spl-processing`, etc.). For converting validated hunts into deployable rules, see `detection-engineering`.
 
-> **OpenTide bridge**:
+> **opentide bridge**:
 > - Hunt **hypothesis** ↔ TVM `chaining`/`terrain` narrative + DOM analytic intent.
 > - Hunt **queries** ↔ DOM `signals` (logical specification) and MDR `configurations.*` (deployable expression).
 > - Hunt **verdict** ↔ DOM/MDR maturity progression and TVM evidence updates.
@@ -105,7 +105,7 @@ data_gaps:
 | `BLIND_SPOT` | Specific vector undetectable, others covered | Proceed; downgrade confidence |
 | `HYPOTHESIS_BLOCKED` | Cannot meaningfully test | May create with confidence `LOW`; verdict will be `INCONCLUSIVE` |
 
-In OpenTide, blind spots and blocked hypotheses feed back into the corresponding TVM `terrain.requirements` and DOM `data_requirements` to communicate gaps to coverage owners.
+In opentide, blind spots and blocked hypotheses feed back into the corresponding TVM `terrain.requirements` and DOM `data_requirements` to communicate gaps to coverage owners.
 
 ### Step 3 — Write the rationale
 
@@ -312,7 +312,7 @@ All pivot queries carry a rationale linking them back to the original hypothesis
 
 ---
 
-## 7. Hunt → OpenTide content conversion
+## 7. Hunt → opentide content conversion
 
 ### Validated hunt → MDR (production detection)
 
@@ -354,5 +354,5 @@ Confirmed hunts feed TVM `chaining` and `terrain` evidence. Use `opentide-threat
 - `kusto-query-language/references/Hypothesis-Anti-Patterns.md` (AP-H1–H5).
 - `detection-engineering/` for hunt-to-rule conversion (7-step process).
 - Platform skills for query authoring and table references: `microsoft-sentinel/`, `microsoft-defender-endpoint/`, `splunk-spl-processing/`, `crowdstrike-falcon/`, `carbon-black-cloud/`, `sentinelone-singularity/`, `harfanglab/`.
-- OpenTide content skills: `opentide-threat/`, `opentide-objective/`, `opentide-rule/`.
+- opentide content skills: `opentide-threat/`, `opentide-objective/`, `opentide-rule/`.
 - `mitre-attack/` for technique selection and coverage analysis.

@@ -3,10 +3,10 @@
   "version": "2.1.0",
   "description": "Detection skills for opentide repositories. Agents model threats, define what to detect, and write the rules and queries, with the platform and internals context each detection depends on.",
   "author": {
-    "name": "OpenTideHQ"
+    "name": "opentidehq"
   },
-  "homepage": "https://github.com/OpenTideHQ/skills",
-  "repository": "https://github.com/OpenTideHQ/skills",
+  "homepage": "https://github.com/opentidehq/skills",
+  "repository": "https://github.com/opentidehq/skills",
   "license": "EUPL-1.2",
   "keywords": ["opentide", "detection-engineering", "security"],
   "skills": "./skills/",
@@ -14,10 +14,10 @@
     "displayName": "opentide",
     "shortDescription": "Detection skills for opentide repositories.",
     "longDescription": "Detection skills for opentide repositories. Agents model threats, define what to detect, and write the rules and queries, with the platform and internals context each detection depends on.",
-    "developerName": "OpenTideHQ",
+    "developerName": "opentidehq",
     "category": "Security",
     "capabilities": ["Read", "Write", "Search"],
-    "websiteURL": "https://github.com/OpenTideHQ/skills",
+    "websiteURL": "https://github.com/opentidehq/skills",
     "defaultPrompt": [
       "Use opentide-threat to model threat intelligence into TVM objects.",
       "Use kusto-query-language with microsoft-sentinel for Sentinel detection rules.",

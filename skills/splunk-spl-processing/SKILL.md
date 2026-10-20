@@ -122,7 +122,7 @@ Prefer `lookup` / `inputlookup` over subsearches for IOC correlation (AP-S4).
 
 ### Three-layer macro architecture
 
-Production frameworks (ESCU, OpenTide) use three layers for portability:
+Production frameworks (ESCU, opentide) use three layers for portability:
 
 | Layer | Suffix | Purpose |
 |---|---|---|
@@ -152,7 +152,7 @@ Single canonical block — detection variants in `references/Detection-Type-Patt
 | `<detection_name>_filter`
 ```
 
-ESCU vs OpenTide macro mapping: `references/CIM-Data-Models.md`.
+ESCU vs opentide macro mapping: `references/CIM-Data-Models.md`.
 
 ---
 
@@ -295,7 +295,7 @@ index=wineventlog sourcetype="WinEventLog:Security" EventCode=4688 earliest=-7d@
 | stats count by host, User, CommandLine
 ````
 
-Apply the same header structure used in KQL (Hunt, Source, MITRE, Platform). Within OpenTide MDR objects, inline SPL headers may be reduced — metadata lives in MDR `description` and alert templates.
+Apply the same header structure used in KQL (Hunt, Source, MITRE, Platform). Within opentide MDR objects, inline SPL headers may be reduced — metadata lives in MDR `description` and alert templates.
 
 ---
 
@@ -316,17 +316,17 @@ Apply the same header structure used in KQL (Hunt, Source, MITRE, Platform). Wit
 - [ ] Notable / RBA fidelity choice deliberate and documented.
 - [ ] Detection type matches pattern in `references/Detection-Type-Patterns.md`.
 
-### ESCU / OpenTide macro conventions
+### ESCU / opentide macro conventions
 
-- [ ] `` `security_content_ctime()` `` (ESCU) or `` `soc_macro_ctime_utc()` `` (OpenTide) applied to first/last time fields.
+- [ ] `` `security_content_ctime()` `` (ESCU) or `` `soc_macro_ctime_utc()` `` (opentide) applied to first/last time fields.
 - [ ] Layer 3 filter macro (`` `<detection_name>_filter` ``) appended as last pipe.
 - [ ] Header comment block populated (or deferred to MDR metadata with rationale).
 
 ---
 
-## 13. Mapping into OpenTide MDR
+## 13. Mapping into opentide MDR
 
-When SPL is wired into `configurations.splunk` in an OpenTide MDR object, coordinate with `opentide-rule` for schema fields:
+When SPL is wired into `configurations.splunk` in an opentide MDR object, coordinate with `opentide-rule` for schema fields:
 
 | MDR field | SPL / ES alignment |
 |---|---|

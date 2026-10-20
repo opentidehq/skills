@@ -31,9 +31,9 @@ The Common Information Model (CIM) normalises data across sources. `tstats` agai
 
 4. Zero results with known process activity → check sourcetype→CIM mapping in ES → Data Inputs / TA configuration, not "no threats".
 
-## ESCU / OpenTide macro mapping
+## ESCU / opentide macro mapping
 
-| Purpose | ESCU macro | OpenTide equivalent (when deployed) |
+| Purpose | ESCU macro | opentide equivalent (when deployed) |
 |---|---|---|
 | Summariesonly flag | `` `security_content_summariesonly` `` | `` `soc_macro_summariesonly` `` |
 | Strip DM prefix | `` `drop_dm_object_name(Processes)` `` | Same pattern — tenant-defined |

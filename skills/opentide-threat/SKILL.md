@@ -1,9 +1,9 @@
 ---
 name: opentide-threat
-description: Converts threat intelligence into OpenTide Threat Vector objects — source hygiene, atomising reports into discrete adversary behaviours, gap analysis before modelling, then schema-backed YAML authoring. Covers terrain as preconditions rather than narrative, chaining between vectors, ATT&CK mapping, actor attribution, structured descriptions, and anti-patterns distilled from production corpora. Resolves object structure, vocabularies and repository layout from the installed engine instead of pinning fields. Use when turning reports, feeds or narratives into threat vectors, or refactoring existing ones, before detection objectives exist.
+description: Converts threat intelligence into opentide Threat Vector objects — source hygiene, atomising reports into discrete adversary behaviours, gap analysis before modelling, then schema-backed YAML authoring. Covers terrain as preconditions rather than narrative, chaining between vectors, ATT&CK mapping, actor attribution, structured descriptions, and anti-patterns distilled from production corpora. Resolves object structure, vocabularies and repository layout from the installed engine instead of pinning fields. Use when turning reports, feeds or narratives into threat vectors, or refactoring existing ones, before detection objectives exist.
 ---
 
-# OpenTide Threat Vector (TVM)
+# opentide Threat Vector (TVM)
 
 ## Why one skill handles both "intel" and "YAML"
 
@@ -65,7 +65,7 @@ version 4 can still declare the first structural revision.
 
 Resolve the live structure in this order, stopping at the first that answers:
 
-1. **MCP resources**, when the OpenTide MCP server is connected.
+1. **MCP resources**, when the opentide MCP server is connected.
    `opentide://schemas/threat` returns the JSON Schema, resolved to the
    highest registered revision. `opentide://templates/threat` returns the
    authoring template. `opentide://vocabularies` lists the controlled

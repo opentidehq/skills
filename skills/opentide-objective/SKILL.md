@@ -1,9 +1,9 @@
 ---
 name: opentide-objective
-description: Authors OpenTide Detection Objective objects — decomposing a threat into discrete detection opportunities, writing signals as analyst-facing alert specifications, modelling data availability honestly, choosing a composition strategy, and linking upstream to threat vectors and downstream to detection rules. Covers signal decomposition quality, entity correlation, and anti-patterns distilled from production corpora. Resolves object structure and vocabularies from the installed engine instead of pinning fields. Use when structuring coverage intent, or before detection rules attach to an objective.
+description: Authors opentide Detection Objective objects — decomposing a threat into discrete detection opportunities, writing signals as analyst-facing alert specifications, modelling data availability honestly, choosing a composition strategy, and linking upstream to threat vectors and downstream to detection rules. Covers signal decomposition quality, entity correlation, and anti-patterns distilled from production corpora. Resolves object structure and vocabularies from the installed engine instead of pinning fields. Use when structuring coverage intent, or before detection rules attach to an objective.
 ---
 
-# OpenTide Detection Objective (DOM)
+# opentide Detection Objective (DOM)
 
 A DOM bridges the gap between threat modelling (TVM) and deployable detection rules (MDR). It answers: **"What signals would tell us this threat is happening, and what data do we need to detect them?"**
 
@@ -28,7 +28,7 @@ version 4 can still declare the first structural revision.
 
 Resolve the live structure in this order, stopping at the first that answers:
 
-1. **MCP resources**, when the OpenTide MCP server is connected.
+1. **MCP resources**, when the opentide MCP server is connected.
    `opentide://schemas/objective` returns the JSON Schema, resolved to the
    highest registered revision. `opentide://templates/objective` returns the
    authoring template. `opentide://vocabularies` lists the controlled

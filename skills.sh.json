@@ -3,8 +3,8 @@
   "notGrouped": "bottom",
   "groupings": [
     {
-      "title": "OpenTide objects",
-      "description": "Author Threat Vectors, Detection Objectives, and Detection Rules as OpenTide YAML, and model the telemetry estate they depend on.",
+      "title": "opentide objects",
+      "description": "Author Threat Vectors, Detection Objectives, and Detection Rules as opentide YAML, and model the telemetry estate they depend on.",
       "skills": [
         "opentide-threat",
         "opentide-objective",
