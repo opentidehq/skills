@@ -5,7 +5,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MANIFEST="${ROOT}/manifest.json"
 SKILLS_DIR="${ROOT}/skills"
-SOURCE="${MANIFEST_SOURCE:-opentidehq/skills}"
+# Released opentide (0.14.2 to 0.16.0) compares the manifest source with this exact,
+# case-sensitive string and warns "Skills manifest source rejected" otherwise.
+SOURCE="${MANIFEST_SOURCE:-OpenTideHQ/skills}"
 REF="${MANIFEST_REF:-main}"
 VERSION=1
 CHECK=false
