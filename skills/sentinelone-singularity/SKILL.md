@@ -1,6 +1,6 @@
 ---
 name: sentinelone-singularity
-description: SentinelOne Singularity detection engineering — explicit distinction from Microsoft Sentinel, surface map across STAR Custom Logic (sensor-side behavioural rules), Deep Visibility (DVQL), Singularity Data Lake / PowerQuery (SDL alert configuration, scheduled queries, geo/math functions), exclusions and policies, Storyline ID-based correlation, AI Engine policy modes (detect / protect), SIEM ingestion patterns, and entity alignment for cross-platform correlation. Distilled from Sentinel-One/ai-siem community detection library. Use for sentinel_one-keyed configurations in opentide MDR objects — never confuse with microsoft-sentinel.
+description: SentinelOne Singularity detection engineering — explicit distinction from Microsoft Sentinel, surface map across STAR Custom Logic (sensor-side behavioural rules), Deep Visibility (DVQL), Singularity Data Lake / PowerQuery (SDL alert configuration, scheduled queries, geo/math functions), exclusions and policies, Storyline ID-based correlation, AI Engine policy modes (detect / protect), SIEM ingestion patterns, and entity alignment for cross-platform correlation. Distilled from Sentinel-One/ai-siem community detection library. Use for sentinel_one-keyed configurations in opentide detection rules — never confuse with microsoft-sentinel.
 ---
 
 # SentinelOne Singularity — content authoring
