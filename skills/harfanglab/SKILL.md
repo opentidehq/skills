@@ -1,6 +1,6 @@
 ---
 name: harfanglab
-description: HarfangLab orb / EDR detection engineering — Sigma rule authoring in CoreTide's validated YAML schema (selections array, modifiers, conditional field validation), RHQL hunt query language, YARA file/memory scanning (CoreTide structure with imports, meta.context, auto-routing), full logsource category catalogue (39 Windows, 12 Linux, 6 macOS), 21 Sigma modifiers, maturity/confidence/action lifecycle, exclusion discipline, and SIEM ingestion patterns. Distilled from CoreTide HarfangLab sub-schema and SigmaHQ (3132 rules). Use for harfanglab-keyed configurations in opentide MDR objects.
+description: HarfangLab orb / EDR detection engineering — Sigma rule authoring in opentide's validated YAML schema (selections array, modifiers, conditional field validation), RHQL hunt query language, YARA file/memory scanning (opentide structure with imports, meta.context, auto-routing), full logsource category catalogue (39 Windows, 12 Linux, 6 macOS), 21 Sigma modifiers, maturity/confidence/action lifecycle, exclusion discipline, and SIEM ingestion patterns. Distilled from the opentide HarfangLab sub-schema and SigmaHQ (3132 rules). Use for harfanglab-keyed configurations in opentide detection rules.
 ---
 
 # HarfangLab orb (EDR) — content authoring
