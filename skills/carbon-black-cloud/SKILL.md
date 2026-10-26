@@ -1,6 +1,6 @@
 ---
 name: carbon-black-cloud
-description: VMware Carbon Black Cloud Enterprise EDR authoring guidance — distinguishes process search query syntax (CBC search language) from watchlist feeds, scheduled searches, and live response. Covers indicator vs IOC discipline, watchlist subscription model, alert override / interrupt, sensor capability boundaries, and entity identifier alignment for cross-platform correlation. Use for carbon_black_cloud-keyed configurations in opentide MDR objects.
+description: VMware Carbon Black Cloud Enterprise EDR authoring guidance — distinguishes process search query syntax (CBC search language) from watchlist feeds, scheduled searches, and live response. Covers indicator vs IOC discipline, watchlist subscription model, alert override / interrupt, sensor capability boundaries, and entity identifier alignment for cross-platform correlation. Use for carbon_black_cloud-keyed configurations in opentide detection rules.
 ---
 
 # Carbon Black Cloud Enterprise EDR — content authoring
