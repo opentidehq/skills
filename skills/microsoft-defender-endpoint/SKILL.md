@@ -1,6 +1,6 @@
 ---
 name: microsoft-defender-endpoint
-description: Microsoft Defender for Endpoint (MDE) Advanced Hunting authoring guidance — Device*/Email*/Identity* table schemas, Timestamp discipline, ProcessUniqueId vs PID for temporal joins, FileProfile() prevalence enrichment with null handling, AdditionalFields parsing, mandatory output columns for custom detection rules (Timestamp/DeviceId/ReportId), NRT single-table/no-comment constraints, retention boundaries, named-pipe and DGA detection patterns. Always pair with kusto-query-language for language-level optimisation. Use for configurations.defender_for_endpoint blocks in opentide MDR objects and Defender-first hypotheses.
+description: Microsoft Defender for Endpoint (MDE) Advanced Hunting authoring guidance — Device*/Email*/Identity* table schemas, Timestamp discipline, ProcessUniqueId vs PID for temporal joins, FileProfile() prevalence enrichment with null handling, AdditionalFields parsing, mandatory output columns for custom detection rules (Timestamp/DeviceId/ReportId), NRT single-table/no-comment constraints, retention boundaries, named-pipe and DGA detection patterns. Always pair with kusto-query-language for language-level optimisation. Use for configurations.defender_for_endpoint blocks in opentide detection rules and Defender-first hypotheses.
 ---
 
 # Microsoft Defender for Endpoint — Advanced Hunting
