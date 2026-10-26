@@ -1,6 +1,6 @@
 ---
 name: mitre-attack
-description: MITRE ATT&CK mapping discipline and technique reference for opentide TVM, DOM, and MDR objects — technique vs sub-technique selection, tactic assignment, multi-technique chaining, version pinning, revocation handling, coverage gap analysis, platform matrix awareness, and a locally searchable technique index. Use when populating threat.att&ck fields in TVMs, mapping DOM signals to techniques, tagging MDR rules, assessing detection coverage against the ATT&CK matrix, or looking up technique IDs and descriptions.
+description: MITRE ATT&CK mapping discipline and technique reference for opentide threats, objectives and detection rules — technique vs sub-technique selection, tactic assignment, multi-technique chaining, version pinning, revocation handling, coverage gap analysis, platform matrix awareness, and a locally searchable technique index. Use when populating threat.att&ck fields in threats, mapping objective signals to techniques, tagging detection rules, assessing detection coverage against the ATT&CK matrix, or looking up technique IDs and descriptions.
 ---
 
 # MITRE ATT&CK — mapping discipline + technique reference
