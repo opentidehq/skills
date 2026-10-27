@@ -1,6 +1,6 @@
 ---
 name: detection-engineering
-description: Detection engineering lifecycle across the opentide TVM → DOM → MDR sequence and the operational practice of converting validated hunting queries into production detection rules. Encodes hunting-vs-detection trade-offs, hunt-to-rule conversion (7-step process with FP reduction, entity mapping, NRT compliance, response actions), platform pairing matrix (Microsoft KQL split, Splunk SPL, vendor consoles), maturity progression, PR scope discipline, and quality bars. Use when planning multi-phase detection work, sequencing object types in opentide content repos, reviewing PR scope, or operationalising hunts into MDR objects.
+description: Detection engineering lifecycle across the opentide threat → objective → rule sequence and the operational practice of converting validated hunting queries into production detection rules. Encodes hunting-vs-detection trade-offs, hunt-to-rule conversion (7-step process with FP reduction, entity mapping, NRT compliance, response actions), platform pairing matrix (Microsoft KQL split, Splunk SPL, vendor consoles), maturity progression, PR scope discipline, and quality bars. Use when planning multi-phase detection work, sequencing object types in opentide content repos, reviewing PR scope, or operationalising hunts into detection rules.
 ---
 
 # Detection engineering — spec-driven with opentide

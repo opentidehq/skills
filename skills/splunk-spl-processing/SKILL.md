@@ -4,7 +4,7 @@ description: >-
   Splunk Enterprise and Enterprise Security SPL authoring for detection engineering —
   index/sourcetype/time discipline, tstats/CIM acceleration, ESCU macro layers, ES
   correlation searches, notables, and RBA. Use when authoring or reviewing SPL,
-  configurations.splunk MDR blocks, ES correlation searches, or translating KQL
+  configurations.splunk blocks of detection rules, ES correlation searches, or translating KQL
   hypotheses to Splunk. Pair with detection-engineering and opentide-rule.
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: threat-hunting
-description: Threat hunting hypothesis discipline using the ABLE framework (Actor, Behaviour, Location, Evidence), hypothesis quality scoring (confidence, relevance, priority, effort, scope), evidence-platform decision matrix, hypothesis archetypes (baseline anomaly, frequency-based, behavioural sequence), data-gap analysis, anti-pattern checks, and the bridge from validated hunts into opentide TVM/DOM/MDR objects. Use when generating hunt leads from intelligence, scoring hunting hypotheses, decomposing behaviour into observable telemetry, or feeding hunt outcomes back into Threat Vectors and Detection Objectives.
+description: Threat hunting hypothesis discipline using the ABLE framework (Actor, Behaviour, Location, Evidence), hypothesis quality scoring (confidence, relevance, priority, effort, scope), evidence-platform decision matrix, hypothesis archetypes (baseline anomaly, frequency-based, behavioural sequence), data-gap analysis, anti-pattern checks, and the bridge from validated hunts into opentide threats, objectives and detection rules. Use when generating hunt leads from intelligence, scoring hunting hypotheses, decomposing behaviour into observable telemetry, or feeding hunt outcomes back into Threat Vectors and Detection Objectives.
 ---
 
 # Threat hunting — hypothesis discipline
