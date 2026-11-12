@@ -192,10 +192,12 @@ The editor (`opentide lsp`) completes and hovers them. Two limits of the offline
 - An unknown field is only a **warning** (`exabeam_unknown_field`, with a near-miss suggestion),
   because a tenant's parsers may define fields. `c_` (custom) and `m_` (metadata) fields are accepted.
   Treat the warning as a typo until proven otherwise.
-- **`activity_type`, `subject` and `outcome` values are not checked.** `activity_type:"network-connection"`
-  passes the engine but is not a CIM activity type (the CIM has `network-traffic`, `network-session`,
-  and others). Confirm each value through the editor's completion or hover, or against events in
-  Search, before relying on it. `activity_type` is `<subject>-<activity>`: `process-create`,
+- **`activity_type`, `subject` and `outcome` values are checked only by newer engines.** In the first
+  engine release after language-server 0.16.0 (opentidehq/language-server#248), a value the CIM does not list is the warning
+  `exabeam_unknown_value`, with a near-miss suggestion; older engines pass it silently.
+  `activity_type:"network-connection"` is not a CIM activity type (the CIM has `network-traffic`,
+  `network-session`, and others). Confirm each value through the editor's completion or hover, or
+  against events in Search, before relying on it. `activity_type` is `<subject>-<activity>`: `process-create`,
   `app-login`, `registry-modify`, `dns-request`.
 - Field names in `group_by`, `threshold.field` and `suppression.group_by` are not catalogue-checked
   either. Check them as carefully as the query.
