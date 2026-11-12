@@ -1,0 +1,84 @@
+{
+  "$comment": "Which skills cover each opentide platform, and the engine capabilities they were written against. scripts/check-opentide-coverage.sh compares this file with `opentide --json info`; update it in the same pull request as the skills it describes. See AGENTS.md, 'Keeping skills in step with opentide'.",
+  "reviewed_against": "0.28.0",
+  "platforms": {
+    "sentinel": {
+      "skills": ["microsoft-sentinel", "kusto-query-language"],
+      "can_deploy": true,
+      "can_validate": true,
+      "can_query": true
+    },
+    "defender_for_endpoint": {
+      "skills": ["microsoft-defender-endpoint", "kusto-query-language"],
+      "can_deploy": true,
+      "can_validate": true,
+      "can_query": true
+    },
+    "splunk": {
+      "skills": ["splunk-spl-processing"],
+      "can_deploy": true,
+      "can_validate": true,
+      "can_query": true
+    },
+    "crowdstrike": {
+      "skills": ["crowdstrike-falcon"],
+      "can_deploy": true,
+      "can_validate": false,
+      "can_query": true
+    },
+    "carbon_black_cloud": {
+      "skills": ["carbon-black-cloud"],
+      "can_deploy": true,
+      "can_validate": true,
+      "can_query": true
+    },
+    "sentinel_one": {
+      "skills": ["sentinelone-singularity"],
+      "can_deploy": true,
+      "can_validate": true,
+      "can_query": true
+    },
+    "harfanglab": {
+      "skills": ["harfanglab"],
+      "can_deploy": true,
+      "can_validate": false,
+      "can_query": true
+    },
+    "elastic": {
+      "skills": ["elastic-security"],
+      "can_deploy": true,
+      "can_validate": true,
+      "can_query": true
+    },
+    "sysdig": {
+      "skills": ["sysdig-secure", "linux-internals"],
+      "can_deploy": true,
+      "can_validate": false,
+      "can_query": false
+    },
+    "bitdefender": {
+      "skills": ["bitdefender-gravityzone"],
+      "can_deploy": true,
+      "can_validate": false,
+      "can_query": false
+    },
+    "graylog": {
+      "skills": ["graylog"],
+      "can_deploy": true,
+      "can_validate": true,
+      "can_query": true
+    },
+    "exabeam": {
+      "skills": ["exabeam-siem"],
+      "can_deploy": true,
+      "can_validate": true,
+      "can_query": true
+    },
+    "google_secops": {
+      "skills": ["google-secops"],
+      "can_deploy": true,
+      "can_validate": true,
+      "can_query": true
+    }
+  }
+}

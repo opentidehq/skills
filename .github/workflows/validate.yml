@@ -1,0 +1,74 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    # Daily: catch an opentide release that adds a platform or changes what one can do.
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  skills:
+    name: Skills, manifests and catalogue
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - run: python -m pip install --disable-pip-version-check pyyaml
+      - run: ./scripts/validate-skills.sh
+
+  opentide-coverage:
+    name: Coverage of the latest opentide release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Install the latest opentide
+        run: python -m pip install --disable-pip-version-check --upgrade opentide
+      - name: Compare coverage.json with the engine
+        env:
+          # The scheduled run also fails when a release has not been reviewed yet.
+          STRICT: ${{ github.event_name == 'schedule' && '--strict' || '' }}
+        run: ./scripts/check-opentide-coverage.sh --engine ${STRICT} 2>&1 | tee "${RUNNER_TEMP}/coverage.txt"
+      - name: Open a review issue
+        if: failure() && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(python -m pip show opentide | sed -n 's/^Version: //p')"
+          title="Review skills against opentide ${version}"
+          existing="$(gh issue list --state open --search "\"${title}\" in:title" --json number --jq '.[0].number // empty')"
+          if [[ -n "${existing}" ]]; then
+            echo "Issue #${existing} is already open"
+            exit 0
+          fi
+          {
+            echo "The daily coverage check failed against opentide ${version}."
+            echo
+            echo '```'
+            sed 's/^::\(error\|warning\):://' "${RUNNER_TEMP}/coverage.txt"
+            echo '```'
+            echo
+            echo "Follow [Keeping skills in step with opentide](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/blob/main/AGENTS.md#keeping-skills-in-step-with-opentide):"
+            echo "read the release's CHANGELOG entries, update the affected skills and coverage.json,"
+            echo "then bump \`reviewed_against\`."
+            echo
+            echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } >"${RUNNER_TEMP}/issue.md"
+          gh issue create --title "${title}" --body-file "${RUNNER_TEMP}/issue.md"

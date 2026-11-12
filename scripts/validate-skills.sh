@@ -261,11 +261,37 @@ if isinstance(skills_config, dict):
 else:
     fail("skills.sh.json must be a JSON object")
 
+# One release, one version: every manifest that carries the plugin version must agree,
+# or a marketplace serves a different release from the one the repository describes.
+versions: dict[str, object] = {}
+for rel in (
+    "plugin.json",
+    ".claude-plugin/plugin.json",
+    ".cursor-plugin/plugin.json",
+    ".codex-plugin/plugin.json",
+):
+    data = load(root / rel)
+    if isinstance(data, dict):
+        versions[rel] = data.get("version")
+for rel, entries_key in ((".claude-plugin/marketplace.json", "plugins"), (".agents/plugins/marketplace.json", "plugins")):
+    data = load(root / rel)
+    if isinstance(data, dict):
+        for entry in data.get(entries_key) or []:
+            if isinstance(entry, dict) and entry.get("name") == "opentide" and "version" in entry:
+                versions[rel] = entry["version"]
+if len(set(map(str, versions.values()))) > 1:
+    fail(
+        "plugin versions disagree: "
+        + ", ".join(f"{rel}={value}" for rel, value in versions.items())
+    )
+
 if errors:
     sys.exit(1)
 
 print("validated plugin.json and mcp.json")
 print(f"validated skills.sh.json ({len(seen)} skills)")
+print(f"validated plugin version {next(iter(versions.values()), '?')} across {len(versions)} manifests")
 PY
 
 "${ROOT}/scripts/build-manifest.sh" --check
+"${ROOT}/scripts/check-opentide-coverage.sh"
