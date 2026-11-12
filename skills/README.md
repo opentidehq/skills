@@ -20,13 +20,10 @@ Every `SKILL.md` must start with YAML frontmatter:
 ---
 name: skill-name
 description: Brief description of what this skill does and when to use it
-license: EUPL-1.2
-metadata:
-  author: opentidehq
 ---
 ```
 
-The `name` must match the parent directory name (lowercase, hyphens, max 64 characters).
+The `name` must match the parent directory name (lowercase, hyphens, max 64 characters). The `description` is at most 1024 characters and says when to use the skill; quote it, or use a `>-` block, when it contains `: `, or it is not valid YAML.
 
 ## Skills index
 
