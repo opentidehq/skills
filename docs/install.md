@@ -67,7 +67,9 @@ Manifest: [`.claude-plugin/plugin.json`](../.claude-plugin/plugin.json)
 
 Skills are namespaced: `/opentide:<skill-name>`
 
-Check the package with `claude plugin validate .` before a community catalogue submission at [platform.claude.com/plugins/submit](https://platform.claude.com/plugins/submit).
+Check the package with `claude plugin validate .`, then submit it to Anthropic's directory from [claude.ai/directory/manage](https://claude.ai/directory/manage) as a **Plugin bundle** ([submission guide](https://claude.com/docs/plugins/submit)). The earlier Console form is no longer used.
+
+The plugin's MCP server is local (stdio). Claude Code and Cowork sessions on the user's computer start it; chat on claude.ai, Claude Desktop and mobile do not load a plugin's local MCP servers.
 
 ## GitHub Copilot (VS Code / CLI)
 

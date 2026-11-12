@@ -10,11 +10,13 @@ Canonical home for opentide detection skills. The plugin `opentide` teaches agen
 
 ## Install
 
-Install the opentide MCP server once. The plugin starts it as `opentide mcp start` on `PATH`.
+Install the opentide MCP server once. The plugin starts it as `opentide mcp start` on `PATH`, so it always runs the opentide you installed.
 
 ```bash
-pip install opentide
+pip install --upgrade opentide
 ```
+
+Run the same command to move to the latest release.
 
 Then use the command for your agent. Each one installs this repository.
 
@@ -63,13 +65,13 @@ These installs work from GitHub today. The remaining catalogue submissions are t
 | Catalogue | What is left |
 | --- | --- |
 | [Cursor Marketplace](https://cursor.com/marketplace/publish) | Submit this repository. Listing is manually reviewed. The plugin icon is `docs/opentide-icon.svg`. |
-| [Claude community](https://platform.claude.com/plugins/submit) | Run `claude plugin validate .`, then submit. The official Claude catalogue is invite-only. |
+| [Claude plugin directory](https://claude.com/docs/plugins/submit) | Run `claude plugin validate .`, then submit from [claude.ai/directory/manage](https://claude.ai/directory/manage) as a **Plugin bundle**. The listing reads `icon`, `documentationUrl`, `supportUrl` and `privacyPolicyUrl` from `.claude-plugin/plugin.json`. Expect a reviewer hold: the MCP server runs `opentide` from `PATH`, which the validator cannot read. |
 | [Awesome Copilot](https://github.com/github/awesome-copilot) | Open a pull request using that repository's contributing guide. |
 | [ChatGPT / Codex directory](https://developers.openai.com/codex/plugins) | Submit the plugin for the shared public directory. |
 | [Kiro Powers](https://kiro.dev/powers) | GitHub import works now. A curated registry listing still needs the Kiro submission path. |
 | GitHub skill search | Add the repository topic `agent-skills`, then `gh skill publish`. |
 
-The engine task for `opentide setup` installing this plugin is [opentide#431](https://github.com/opentidehq/opentide/issues/431).
+When this plugin starts the MCP server in its own directory, the server serves the host's project ([opentide#431](https://github.com/opentidehq/opentide/issues/431)).
 
 ## Contributing
 
