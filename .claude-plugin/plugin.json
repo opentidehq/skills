@@ -9,6 +9,9 @@
   "repository": "https://github.com/opentidehq/skills",
   "license": "EUPL-1.2",
   "icon": ".claude-plugin/icon.png",
+  "documentationUrl": "https://github.com/opentidehq/skills/blob/main/docs/install.md",
+  "supportUrl": "https://github.com/opentidehq/skills/issues",
+  "privacyPolicyUrl": "https://github.com/opentidehq/skills#privacy",
   "keywords": [
     "opentide",
     "detection-engineering",
