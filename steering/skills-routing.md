@@ -33,10 +33,16 @@ All paths are relative to this repository root. Each skill is a `skills/<name>/S
 | `carbon-black-cloud` | Watchlists, process_guid, Live Response |
 | `sentinelone-singularity` | DVQL, STAR, Storyline (not Microsoft Sentinel) |
 | `harfanglab` | Sigma, RHQL, YARA |
+| `elastic-security` | Elastic Security rules — Kuery, Lucene, EQL, ES\|QL, ECS |
+| `sysdig-secure` | Sysdig Secure / Falco runtime rules |
+| `bitdefender-gravityzone` | GravityZone custom detection rules, criteria, YARA |
+| `graylog` | Graylog event definitions, Graylog search |
+| `exabeam-siem` | Exabeam correlation rules, Exabeam Query Language |
+| `google-secops` | Google SecOps (Chronicle) YARA-L 2.0, UDM |
 | `okta-identity` | Okta System Log, impersonation, session theft |
 | `amazon-web-services` | CloudTrail, IAM, GuardDuty |
 | `microsoft-azure` | Activity Log, ARM, RBAC, Key Vault |
-| `google-cloud-platform` | Cloud Audit Logs, Chronicle mapping |
+| `google-cloud-platform` | Cloud Audit Logs, IAM, GCP attack telemetry (pair with `google-secops` for YARA-L) |
 
 ## Defensive internals
 

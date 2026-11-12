@@ -134,7 +134,7 @@ eBPF programs attach to kernel hook points for security monitoring:
 
 | Tool | Mechanism | Detection surface |
 |---|---|---|
-| **Falco** | eBPF + rules engine | Process, file, network, container events. Sigma-like rule format. |
+| **Falco** | eBPF + rules engine | Process, file, network, container events. YAML rules with filter-expression conditions, macros and lists — see `sysdig-secure` for `configurations.sysdig`. |
 | **Tetragon** | eBPF (Cilium) | Process lifecycle, network, file access with enforcement capability |
 | **Tracee** | eBPF (Aqua) | System call tracing, container-aware |
 | **auditd** | Kernel audit framework | Traditional audit logging |

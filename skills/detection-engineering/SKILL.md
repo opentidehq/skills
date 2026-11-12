@@ -5,9 +5,9 @@ description: Detection engineering lifecycle across the opentide threat → obje
 
 # Detection engineering — spec-driven with opentide
 
-This skill governs **how** detection content moves through its lifecycle. It pairs opentide's object lineage (Threat Vector → Detection Objective → Detection Rule) with the practical mechanics of converting validated hunting queries into production-grade detection rules on the platforms CoreTide deploys to.
+This skill governs **how** detection content moves through its lifecycle. It pairs opentide's object lineage (Threat Vector → Detection Objective → Detection Rule) with the practical mechanics of converting validated hunting queries into production-grade detection rules on the platforms opentide deploys to.
 
-> Always pair with: language skills (`kusto-query-language`, `splunk-spl-processing`), platform skills (`microsoft-sentinel`, `microsoft-defender-endpoint`, `crowdstrike-falcon`, `carbon-black-cloud`, `sentinelone-singularity`, `harfanglab`), and the opentide object skills (`opentide-threat`, `opentide-objective`, `opentide-rule`).
+> Always pair with: language skills (`kusto-query-language`, `splunk-spl-processing`), platform skills (`microsoft-sentinel`, `microsoft-defender-endpoint`, `crowdstrike-falcon`, `carbon-black-cloud`, `sentinelone-singularity`, `harfanglab`, `elastic-security`, `sysdig-secure`, `bitdefender-gravityzone`, `graylog`, `exabeam-siem`, `google-secops`), and the opentide object skills (`opentide-threat`, `opentide-objective`, `opentide-rule`).
 
 ---
 
@@ -19,7 +19,7 @@ This skill governs **how** detection content moves through its lifecycle. It pai
 
 **Default rule**: one object type per change request unless explicitly running an end-to-end vertical slice (drill, pilot deployment, framework-bootstrap).
 
-CoreTide-aligned configuration keys most commonly seen:
+opentide's configuration keys, one per platform it deploys to:
 
 | Key | Platform | Pair with |
 |---|---|---|
@@ -30,8 +30,14 @@ CoreTide-aligned configuration keys most commonly seen:
 | `carbon_black_cloud` | VMware Carbon Black Cloud | `carbon-black-cloud` |
 | `sentinel_one` | SentinelOne Singularity | `sentinelone-singularity` |
 | `harfanglab` | HarfangLab orb | `harfanglab` |
+| `elastic` | Elastic Security | `elastic-security` |
+| `sysdig` | Sysdig Secure (Falco rules) | `sysdig-secure` + `linux-internals` |
+| `bitdefender` | Bitdefender GravityZone | `bitdefender-gravityzone` |
+| `graylog` | Graylog | `graylog` |
+| `exabeam` | Exabeam New-Scale SIEM | `exabeam-siem` |
+| `google_secops` | Google Security Operations | `google-secops` |
 
-Always confirm the exact keys against the active meta-schema and the `Configurations/systems` directory of the content repository — keys evolve.
+Always confirm the keys, and what each platform can do (deploy, `--live` validation, `opentide query`), with `opentide --json info` or the `opentide://platforms` MCP resource — keys and capabilities evolve with the engine.
 
 ---
 
@@ -81,6 +87,12 @@ A hunt may become a detection only after:
 | SentinelOne Singularity | Star Custom Logic / Deep Visibility / PowerQuery | `sentinelone-singularity` |
 | Carbon Black Cloud Enterprise EDR | Watchlist / process search syntax | `carbon-black-cloud` |
 | HarfangLab orb | Sigma + RHQL | `harfanglab` |
+| Elastic Security | Kuery, Lucene, EQL, ES\|QL | `elastic-security` |
+| Sysdig Secure | Falco rule conditions | `sysdig-secure` |
+| Bitdefender GravityZone | Detection criteria, YARA | `bitdefender-gravityzone` |
+| Graylog | Graylog search (Lucene dialect) | `graylog` |
+| Exabeam New-Scale SIEM | Exabeam Query Language (not Elastic EQL) | `exabeam-siem` |
+| Google Security Operations | YARA-L 2.0 over UDM | `google-secops` |
 
 **Never invent vendor syntax.** If the relevant platform skill does not assert a fact, route to vendor documentation rather than fabricating syntax.
 
@@ -284,6 +296,12 @@ Different platforms expose different rule types, response mechanisms, and constr
 | SentinelOne Singularity | STAR Custom Logic rule | `sentinelone-singularity` |
 | Carbon Black Cloud | Watchlist report, scheduled query | `carbon-black-cloud` |
 | HarfangLab | Sigma rule pack, custom detection rule | `harfanglab` |
+| Elastic Security | Query, EQL, ES\|QL, threshold, new terms, indicator match rule | `elastic-security` |
+| Sysdig Secure | Runtime (Falco) rule | `sysdig-secure` |
+| Bitdefender GravityZone | Custom detection rule | `bitdefender-gravityzone` |
+| Graylog | Event definition (Filter & Aggregation) | `graylog` |
+| Exabeam New-Scale SIEM | Correlation rule | `exabeam-siem` |
+| Google Security Operations | YARA-L 2.0 rule (single- or multi-event) | `google-secops` |
 
 ---
 

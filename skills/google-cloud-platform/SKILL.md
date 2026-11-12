@@ -244,7 +244,7 @@ GCP IAM misconfigurations enable privilege escalation through multiple vectors.
 
 ### Chronicle / Google SecOps
 
-GCP audit logs are natively ingested into Chronicle and normalised to UDM (Unified Data Model). Detection rules use YARA-L 2.0. Key UDM fields:
+GCP audit logs are natively ingested into Chronicle and normalised to UDM (Unified Data Model). Detection rules use YARA-L 2.0 — load `google-secops` to author them for `configurations.google_secops`. Key UDM fields:
 
 | UDM field | Maps to |
 |---|---|

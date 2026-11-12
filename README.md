@@ -44,6 +44,7 @@ Skills live once under `skills/`. Harness manifests at the repository root point
 plugin.json                      # Agent Plugins 1.0.0 manifest
 mcp.json                         # opentide MCP server (opentide mcp start, stdio)
 skills.sh.json                   # skills.sh repository page groups
+coverage.json                    # opentide platform → skill map, checked against the engine
 skills/                          # Canonical skills (only copy in git)
 AGENTS.md                        # Unified agents.md entrypoint
 POWER.md                         # Kiro Power (legacy activation; plugin.json is preferred)
@@ -74,9 +75,12 @@ The engine task for `opentide setup` installing this plugin is [opentide#431](ht
 ## Contributing
 
 1. Edit skills under `skills/<skill-name>/SKILL.md`.
-2. Run `./scripts/validate-skills.sh` (frontmatter checks and manifest drift gate).
+2. Run `./scripts/validate-skills.sh` (frontmatter, manifest drift, plugin versions and `coverage.json`).
 3. Regenerate the catalogue: `./scripts/build-manifest.sh` (commits `manifest.json`).
-4. Open a pull request.
+4. With the latest opentide installed, run `./scripts/check-opentide-coverage.sh --engine`.
+5. Open a pull request. CI runs the same checks, and daily checks the latest opentide release.
+
+Skills track opentide releases: every platform opentide deploys to has a skill, and each release is reviewed for skill impact. The process is in [AGENTS.md](AGENTS.md#keeping-skills-in-step-with-opentide).
 
 `manifest.json` is the catalogue source for `opentide setup skills discover|show|install`. Harness plugin manifests at the repo root still point at `./skills/`.
 

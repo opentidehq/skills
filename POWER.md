@@ -26,6 +26,19 @@ keywords:
   - sentinelone
   - harfanglab
   - sigma
+  - elastic
+  - elastic security
+  - eql
+  - es|ql
+  - sysdig
+  - falco
+  - bitdefender
+  - gravityzone
+  - graylog
+  - exabeam
+  - google secops
+  - chronicle
+  - yara-l
   - dom
   - tvm
   - mdr
@@ -85,6 +98,12 @@ Load steering on demand — do not read everything upfront.
 | Sentinel / Log Analytics | `skills/microsoft-sentinel/SKILL.md` |
 | Defender Advanced Hunting | `skills/microsoft-defender-endpoint/SKILL.md` |
 | Splunk / SPL | `skills/splunk-spl-processing/SKILL.md` |
+| Elastic / EQL / ES\|QL | `skills/elastic-security/SKILL.md` |
+| Graylog | `skills/graylog/SKILL.md` |
+| Exabeam | `skills/exabeam-siem/SKILL.md` |
+| Google SecOps / Chronicle / YARA-L | `skills/google-secops/SKILL.md` |
+| Sysdig / Falco | `skills/sysdig-secure/SKILL.md` |
+| Bitdefender GravityZone | `skills/bitdefender-gravityzone/SKILL.md` |
 | ATT&CK mapping | `skills/mitre-attack/SKILL.md` |
 | Threat hunt / hypothesis | `skills/threat-hunting/SKILL.md` |
 | Cross-object lifecycle | `skills/detection-engineering/SKILL.md` |

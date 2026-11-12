@@ -204,6 +204,14 @@ exclusions:
 | SentinelOne Singularity | `sentinelone-singularity` |
 | Carbon Black Cloud | `carbon-black-cloud` |
 | HarfangLab | `harfanglab` |
+| Elastic Security | `elastic-security` |
+| Sysdig Secure / Falco | `sysdig-secure` (+ `linux-internals`) |
+| Bitdefender GravityZone | `bitdefender-gravityzone` |
+| Graylog | `graylog` |
+| Exabeam New-Scale SIEM | `exabeam-siem` |
+| Google Security Operations | `google-secops` |
+
+Every `configurations.<key>` the engine accepts has a skill; `coverage.json` at the root of the skills repository is the map.
 
 Avoid shipping vendor-specific artefacts your manifest does not advertise — explicitly annotate gaps ("Sentinel backlog item #123") instead of placeholders that read as executable content.
 
