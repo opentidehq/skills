@@ -121,21 +121,18 @@ configurations:
       suppression_window: 1h
 ```
 
-deploys as `rule password_spray_then_success {`, a `meta:` section
-(`author`, `description`, `severity = "High"`, `priority = "High"`,
-`technique = "T1078,T1110.003"`, `opentide_uuid`, `opentide_version`), then
-`events:`, `match:` rendered as `$user, $ip over 30m`, `outcome:`, `condition:`
-and `options:` rendered as `suppression_window = 1h`. `deploy --dry-run` shows
-the exact text.
+deploys as `rule password_spray_then_success {`, the derived `meta:` (here
+`severity = "High"`, `technique = "T1078,T1110.003"`), then `events:`, `match:`
+rendered as `$user, $ip over 30m`, `outcome:`, `condition:` and `options:`
+rendered as `suppression_window = 1h`. `deploy --dry-run` shows the exact text.
 
 Rules of the block:
 
 - **Never paste a whole rule.** A `rule x {` header, a section label
   (`events:`) or a lone brace inside a section is `yaral_section_header`.
-- **Always use `|`.** `condition: #fail >= 10` as a plain scalar is a YAML
-  comment, loads as null, and fails as `yaral_section_empty`.
-- **No YAML aliases** for section text (`yaral_section_alias`): what deploys must
-  be readable under its own key.
+- **Always use `|`, never an alias.** `condition: #fail >= 10` as a plain scalar
+  is a YAML comment, loads as null, and fails as `yaral_section_empty`; an alias
+  is `yaral_section_alias`.
 - Backslashes in a `|` block are literal. In a YARA-L regex `/\\powershell\.exe$/`,
   `\\` matches one backslash; do not double it again for YAML.
 - Rule names are unique across enabled blocks, ignoring case
@@ -223,9 +220,8 @@ the behaviour.
   `sum`, `count`, `count_distinct`, `array`, `array_distinct`, `window.*`
   (`yaral_outcome_aggregation`). Write `$risk_score = max(80)` in a multi-event
   rule. `avg`, `stddev`, `earliest`, `latest` are search-only.
-- At most 20 outcome variables (`yaral_outcome_limit`).
-- Use outcomes to surface the analyst's pivots (host, user, command line), not
-  to dump every field.
+- At most 20 outcome variables (`yaral_outcome_limit`): surface the analyst's
+  pivots (host, user, command line), not every field.
 
 ### Reference lists and data tables
 
@@ -310,11 +306,10 @@ permissions each command needs.
 | Offline engine | `opentide validate`, `validate query --platform google_secops` (no `--live`), `lint --check queries`, editor | Parse errors, UDM fields and enum values, functions and arity, scope across sections, windows, outcome aggregation, condition shape, RE2 regexes, reference-list limits; advisories as warnings |
 | Live compile | `opentide validate query --platform google_secops --live` | Google's compiler through `verifyRuleText` (creates nothing): unjoined event variables, entity-only rules, tumbling-window `or`, the tenant's reference lists and data tables, allowed run frequencies. Diagnostics are mapped back to the section key and line |
 
-The offline engine is an **approximation**: Google publishes no grammar or
-compiler. A clean offline result is not a compile. Run `--live` before
-promoting to `RELEASE` when credentials are available, and never report an
-offline pass as a tenant check. `.yaral` and `.yl2` files are checked with
-`opentide validate query --file`. MCP `validate_query` takes `google_secops`.
+The offline engine is an **approximation** (Google publishes no grammar or
+compiler): never report an offline pass as a compile. Run `--live` before
+`RELEASE` where credentials exist. `.yaral` / `.yl2` files: `opentide validate
+query --file`; MCP `validate_query` takes `google_secops`.
 
 ---
 
@@ -372,9 +367,8 @@ of an action on two objects (the original file of a copy, and its machine). The
 initiator of a connection or logon is `principal`. Which side a parser fills
 varies by log type: check with a UDM search before trusting a mapping.
 
-Cross-platform correlation belongs to the analyst or SOAR layer. Keep outcome
-names consistent across rules (`$host`, `$user`, `$command_line`) so pivots line
-up.
+Correlate across platforms at the analyst or SOAR layer, and keep outcome names
+consistent (`$host`, `$user`, `$command_line`) so pivots line up.
 
 ---
 
@@ -385,7 +379,6 @@ up.
 | Whole `rule … { }` pasted into `events` | Split into section keys; opentide writes header and meta |
 | Plain-scalar `condition: #e > 0` | Block scalar `\|` |
 | No `metadata.event_type` filter, or a regex first | Equality on event type first, then equalities, then regexes |
-| Unanchored `.*` regex where a `=` or `strings.ends_with` would do | Anchor or use equality |
 | `$risk_score` missing or constant across every rule | Score by impact, documented in the description |
 | Event fields unaggregated in a multi-event `outcome` | `max()`, `array_distinct()`, `count_distinct()` |
 | `run_frequency: LIVE` on a multi-event rule | `LIVE_CUSTOMIZABLE` |
