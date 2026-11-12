@@ -5,6 +5,8 @@ description: Authors opentide Detection Objective objects — decomposing a thre
 
 # opentide Detection Objective (DOM)
 
+> `opentide setup skills` also installs `opentide-detection-objective` from the opentide package: a short, offline contract for the objective's shape and check commands. This skill is the authoring practice; when they disagree on structure, the installed engine is right.
+
 A DOM bridges the gap between threat modelling (TVM) and deployable detection rules (MDR). It answers: **"What signals would tell us this threat is happening, and what data do we need to detect them?"**
 
 ---

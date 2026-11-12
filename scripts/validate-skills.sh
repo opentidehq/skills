@@ -92,6 +92,21 @@ for path in paths:
     elif len(description) > 1024:
         errors.append(f"{where}: description too long ({len(description)} > 1024)")
 
+# CoreTide-era identifiers. `opentide setup skills` installs catalogue skills into
+# detection repositories, and these taught agents a layout and schema tags opentide
+# no longer reads (opentidehq/opentide#405). Its own e2e test checks the installed
+# copy for the same strings.
+STALE = ("mdr::", "tvm::", "dom::", "Schemas/Templates", "Configurations/systems")
+for path in sorted(skills_dir.rglob("*.md")):
+    text = path.read_text(encoding="utf-8")
+    for needle in STALE:
+        if needle in text:
+            line = text[: text.index(needle)].count("\n") + 1
+            errors.append(
+                f"{path.relative_to(skills_dir.parent)}:{line}: CoreTide-era identifier "
+                f"'{needle}'; resolve the current one from the engine instead"
+            )
+
 if errors:
     for err in errors:
         print(f"ERROR: {err}")

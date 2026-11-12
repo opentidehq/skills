@@ -5,6 +5,8 @@ description: Authors opentide Detection Rule objects — structured descriptions
 
 # opentide Detection Rule (MDR)
 
+> `opentide setup skills` also installs `opentide-detection-rule` from the opentide package: a short, offline contract for the rule's shape and check commands. This skill is the authoring practice; when they disagree on structure, the installed engine is right.
+
 An MDR is the **deployable artefact** — the detection rule that runs on a specific platform. It implements a DOM signal and carries the response metadata that guides analysts when the rule fires.
 
 ---

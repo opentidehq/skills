@@ -5,6 +5,8 @@ description: Converts threat intelligence into opentide Threat Vector objects â€
 
 # opentide Threat Vector (TVM)
 
+> `opentide setup skills` also installs `opentide-threat-vector` from the opentide package: a short, offline contract for the threat's shape and check commands. This skill is the authoring practice; when they disagree on structure, the installed engine is right.
+
 ## Why one skill handles both "intel" and "YAML"
 
 Splitting "TI analysis" and "TVM authoring" into sibling skills creates ambiguous triggers. Threat Vector work is fundamentally **intel -> structured hypothesis -> validated YAML** â€” keep upstream triage inside this skill under **Phase A**, then transition to **Phase B**. One deliverable lineage from intelligence intake to a validated threat vector object.
