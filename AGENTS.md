@@ -54,7 +54,7 @@ opentide structures the Detection Engineering lifecycle as as-code (YAML) object
 
 Always ingest **living templates** bundled with whichever repository syncs schemas — identifiers evolve.
 
-Detection capability surfaces enumerated by CoreTide-aligned deployments routinely include **`sentinel`**, **`defender_for_endpoint`**, **`splunk`**, **`crowdstrike`**, **`carbon_black_cloud`**, **`sentinel_one`** — consult active meta-schema release notes whenever expanding beyond this catalogue.
+opentide deploys `configurations.*` blocks for ten platforms: **`sentinel`**, **`defender_for_endpoint`**, **`splunk`**, **`elastic`**, **`crowdstrike`**, **`carbon_black_cloud`**, **`sentinel_one`**, **`harfanglab`**, **`sysdig`** and **`bitdefender`**. Use the keys the workspace's `opentide setup platforms` enabled, and its bundled schemas for each block's fields. Elastic, Sysdig (Falco) and Bitdefender GravityZone have no platform skill here yet: rely on the schema, the template and `opentide validate`, not on recalled syntax.
 
 ---
 
