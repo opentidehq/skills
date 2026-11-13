@@ -1,6 +1,6 @@
 {
   "$comment": "Which skills cover each opentide platform, and the engine capabilities they were written against. scripts/check-opentide-coverage.sh compares this file with `opentide --json info`; update it in the same pull request as the skills it describes. See AGENTS.md, 'Keeping skills in step with opentide'.",
-  "reviewed_against": "0.28.0",
+  "reviewed_against": "0.28.1",
   "platforms": {
     "sentinel": {
       "skills": ["microsoft-sentinel", "kusto-query-language"],
