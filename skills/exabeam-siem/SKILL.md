@@ -42,8 +42,7 @@ answers:
 3. **Validators**: `opentide validate` (block constraints, the `exabeam_*` codes), `opentide validate
    query` (the language), `opentide lint`. A validator's finding outranks anything written here.
 
-Every `exabeam_*` code has an entry in opentide's diagnostics reference (`docs/cli/diagnostics.md`):
-read it when a code is unfamiliar rather than guessing the fix.
+Run `opentide explain <code>` when a code is unfamiliar rather than guessing the fix.
 
 What follows is the part the schema does not tell you: what each concept means on Exabeam, and what
 separates a rule that works from one that only validates.
@@ -77,7 +76,7 @@ A block holds one or more `sequences`, written **in the order the events happen*
 | Condition | Written as | Meaning |
 |---|---|---|
 | Any match | no `threshold` | Every matching event satisfies the sequence |
-| Threshold | `threshold` with a function, an operator, a value and a window (`within`) | `count` (events, or a field's values), `unique_count`, `value`, `max`, `min`, `sum`, `average` compared with `more_than`/`less_than` (a number) or, for `value` only, `in`/`not_in` (a list) |
+| Threshold | `threshold` with a function, an operator, a value and a window (`within`) | `count` (events, or a field's values), `unique_count`, `max`, `min`, `sum`, `average` compare with `more_than`/`less_than` and a number (`count` and `unique_count`: a non-negative integer). `value` compares with `in`/`not_in` and a non-empty list, and takes nothing else |
 
 `group_by` on a sequence (one to three fields) evaluates the threshold **per value**. It does **not**
 de-duplicate triggers: an any-match sequence still triggers on every matching event. To trigger once
@@ -162,7 +161,7 @@ A sequence query is a **filter**: field terms combined with `AND`, `OR`, `NOT` a
 | One of several | `process_name:("powershell.exe", "pwsh.exe")` | `process_name IN (…)` |
 | Exclude | `AND NOT user:"svc_backup"` | `user != "…"` (`exabeam_not_equal`); a bare `NOT` with no `AND`/`OR` before it (`exabeam_implicit_operator`) |
 | Field present | `NOT process_command_line:null` | `exists(…)` |
-| Contains / wildcard | `process_path:WLDi("*\\appdata\\local\\temp\\*")` | `contains(…)`, `LIKE` (`exabeam_unknown_function`) |
+| Contains / wildcard | `process_path:WLDi("*\\appdata\\local\\temp\\*")` | `contains(…)`, `LIKE(…)` (`exabeam_unknown_function`); a SQL-style `field LIKE "…"` is not reported at all, so never write it |
 | Regular expression | `url:RGXi("\\.(aspx|php)$")` | a value between slashes, `url:"/adm.n/"` (`exabeam_legacy_regex`); look-around or back-references (not RE2, `exabeam_regex`) |
 | Number comparison | `bytes_out:>1000000`, `dest_port:[1 TO 1023]` | a comparison on a string field |
 | String field holding digits | `event_code:("4625", "4771")` | `event_code:4625` (`exabeam_string_field_number`) |
@@ -192,15 +191,16 @@ The editor (`opentide lsp`) completes and hovers them. Two limits of the offline
 - An unknown field is only a **warning** (`exabeam_unknown_field`, with a near-miss suggestion),
   because a tenant's parsers may define fields. `c_` (custom) and `m_` (metadata) fields are accepted.
   Treat the warning as a typo until proven otherwise.
-- **`activity_type`, `subject` and `outcome` values are checked only by newer engines.** In the first
-  engine release after language-server 0.16.0 (opentidehq/language-server#248), a value the CIM does not list is the warning
-  `exabeam_unknown_value`, with a near-miss suggestion; older engines pass it silently.
+- **`activity_type`, `subject` and `outcome` values are checked only by newer releases.** opentide
+  0.28.0 (engine 0.16.0) does not check them: a misspelt value passes silently. A release whose
+  engine has the CIM value check reports it as the warning `exabeam_unknown_value` in `opentide lint`
+  and the editor, with a near-miss suggestion.
   `activity_type:"network-connection"` is not a CIM activity type (the CIM has `network-traffic`,
   `network-session`, and others). Confirm each value through the editor's completion or hover, or
   against events in Search, before relying on it. `activity_type` is `<subject>-<activity>`: `process-create`,
   `app-login`, `registry-modify`, `dns-request`.
-- Field names in `group_by`, `threshold.field` and `suppression.group_by` are not catalogue-checked
-  either. Check them as carefully as the query.
+- Field names in `group_by`, `threshold.field`, `suppression.group_by` and `correlation.group_by`
+  are not catalogue-checked either. Check them as carefully as the query.
 
 ---
 
@@ -262,8 +262,8 @@ or `403` stops the tenant (`exabeam_tenant_unauthorized`), a `409` means the sub
 feature (`exabeam_feature_unavailable`).
 
 Tenants live in `.opentide/configurations/platforms/exabeam.toml` (`opentide setup platforms
---exabeam`): an API `region` (calls go to `https://api.<region>.exabeam.cloud`) or an `api_url`,
-`client_id` and `client_secret` as `$VAR`s, and an optional tenant `test_mode`. Run `opentide deploy
+--exabeam`): a `region` (required; calls go to `https://api.<region>.exabeam.cloud`), an optional
+`api_url` that replaces that base URL, `client_id` and `client_secret` as `$VAR`s, and an optional tenant `test_mode`. Run `opentide deploy
 --dry-run` first: it shows the exact create request per tenant.
 
 ---
@@ -282,7 +282,8 @@ pass. It proves the tenant **parses** the filter, nothing more:
 
 `opentide query --platform exabeam` runs a query through the same Search API, read-only, at most 3,000
 rows (`--limit` is capped with a warning). `--rule <uuid>` or `--file <path>` runs each sequence's
-filter as its own result, without the condition or correlation, and says so. Both need an API key with
+filter as its own result, without the condition or correlation, and says so for a sequence with a
+`threshold` or `group_by`. Both need an API key with
 **Search, Analyze and Export**. The search is synchronous with no cancel: a search that outlives
 `--timeout` is abandoned by closing the connection.
 
@@ -340,14 +341,15 @@ Use the same fields in `group_by`, `correlation.group_by` and `suppression.group
 - [ ] String values double-quoted, digits on string fields quoted, mixed `AND`/`OR` parenthesised.
 - [ ] Fields are CIM names; any `exabeam_unknown_field` warning explained or fixed.
 - [ ] Every `activity_type`, `subject` and `outcome` value confirmed against the CIM or Search.
-- [ ] Field names in `group_by`, `threshold.field` and `suppression.group_by` checked by hand.
+- [ ] Field names in `group_by`, `threshold.field`, `suppression.group_by` and `correlation.group_by` checked by hand.
 - [ ] Context-table sequences have no threshold; the tables exist on every target tenant.
 - [ ] `correlation.within` exceeds the sequence windows plus a minute per step.
 - [ ] Granular suppression set when triggers should be once per entity.
 - [ ] `outcome` deliberate; `test_mode` used for staging rather than `outcome: none`.
 - [ ] Exabeam rule name at most 128 characters, unique among enabled blocks and on the tenant.
 - [ ] Description's first sentence reads well collapsed to one line.
-- [ ] `opentide validate` and `opentide validate query --platform exabeam` clean; `--live` passed and the
+- [ ] `opentide validate` and `opentide lint` clean (`lint` reports the `exabeam_*` warnings;
+      `validate` reports errors only); `--live` passed and the
       filter returned rows over a realistic window with `opentide query`.
 - [ ] `opentide deploy --dry-run` reviewed before the first real deploy.
 

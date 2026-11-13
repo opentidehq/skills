@@ -43,9 +43,9 @@ block's keys, the UDM type graph and the YARA-L function catalogue all ship with
 the installed opentide and its analysis engine, and they move.
 
 1. **Block keys**: `opentide://schemas/rule` (MCP), else `.opentide/schemas/` for
-   the rule's `metadata.schema`, else `opentide generate schemas`. `opentide new
-   --platform google_secops` scaffolds a block with `events`, `outcome` and
-   `condition` already present.
+   the rule's `metadata.schema`, else `opentide generate schemas`. `opentide new rule
+   --name "…" --platform google_secops --objective <uuid>` scaffolds a rule whose
+   block has `events`, `outcome` and `condition` already present.
 2. **Capability**: `opentide --json info --platform google_secops` or
    `opentide://platforms`. Google SecOps deploys, validates live, checks offline,
    and runs `opentide query`.
@@ -86,12 +86,13 @@ matrix reads), `opentide_uuid`, `opentide_version`, then the block's own `meta`.
 A block `meta` key that repeats a derived key, is a keyword or is not a string is
 `google_secops_meta_key`.
 
-This block (from opentide's test fixtures):
+This block (trimmed from opentide's test fixtures):
 
 ```yaml
 configurations:
   google_secops:
     schema: platform::google_secops::1.0
+    enabled: true
     status: PRODUCTION
     name: password_spray_then_success
     severity: High
@@ -303,7 +304,7 @@ permissions each command needs.
 | Check | Command | Catches |
 |---|---|---|
 | Block constraints | `opentide validate` | `google_secops_*` constraint codes, `yaral_section_*`, `yaral_match_shape`, `yaral_match_window`, `yaral_option`, duplicate names |
-| Offline engine | `opentide validate`, `validate query --platform google_secops` (no `--live`), `lint --check queries`, editor | Parse errors, UDM fields and enum values, functions and arity, scope across sections, windows, outcome aggregation, condition shape, RE2 regexes, reference-list limits; advisories as warnings |
+| Offline engine | `opentide validate` and `validate query --platform google_secops` (no `--live`) for errors; `lint --check queries` and the editor for warnings | Parse errors, UDM fields and enum values, functions and arity, scope across sections, windows, outcome aggregation, condition shape, RE2 regexes, reference-list limits. The `yaral_*` warnings (`yaral_unfiltered_event`, `yaral_leading_wildcard_regex`, `yaral_reference_list_deprecated`, `yaral_string_escape`) appear in `lint`, except in opentide 0.28.0 and earlier, which show them only in the editor (`opentide lsp start`, `opentide tui`); `validate` and `lint` report the `google_secops_*` advisories |
 | Live compile | `opentide validate query --platform google_secops --live` | Google's compiler through `verifyRuleText` (creates nothing): unjoined event variables, entity-only rules, tumbling-window `or`, the tenant's reference lists and data tables, allowed run frequencies. Diagnostics are mapped back to the section key and line |
 
 The offline engine is an **approximation** (Google publishes no grammar or
@@ -405,7 +406,7 @@ consistent (`$host`, `$user`, `$command_line`) so pivots line up.
 - [ ] Multi-event outcomes aggregated; at most 20 outcomes.
 - [ ] `run_frequency` only when needed, `LIVE` only for single-event rules.
 - [ ] `name` unique (ignoring case) if composites will consume it.
-- [ ] `opentide validate` and `lint --check queries` clean; advisories understood.
+- [ ] `opentide validate` clean, and every `yaral_*` warning and `google_secops_*` advisory resolved or understood (`lint --check queries`, or the editor on opentide 0.28.0).
 - [ ] `validate query --platform google_secops --live` run before `RELEASE` where credentials exist.
 - [ ] A `system: google_secops` hunt in `response.procedure.searches` for analyst pivots.
 - [ ] Tenant `deletion` choice understood before setting a status that maps to `DELETION`.

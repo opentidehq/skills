@@ -25,8 +25,8 @@ block's keys, types and defaults ship with the engine and move with it.
 
 1. **MCP**: `opentide://schemas/rule` (the `graylog` key under `configurations`),
    `opentide://templates/rule`, and `opentide://platforms` for capabilities.
-2. **CLI**: `opentide --json info --platform graylog`; `opentide new --platform
-   graylog` scaffolds a rule with the block's template.
+2. **CLI**: `opentide --json info --platform graylog`; `opentide new rule --name "…"
+   --platform graylog --objective <uuid>` scaffolds a rule with the block's template.
 3. **Repository**: `.opentide/schemas/` and `.opentide/templates/`, or generate
    them with `opentide generate`.
 
@@ -158,7 +158,7 @@ lower-cased at index time: match them in lower case.
 | Starts with | `image_lc:c\:\\windows\\*` or a regex | — | a trailing wildcard is fine |
 | Case-insensitive | a `_lc` copy and lower-case regex | `/(?i)mimikatz/` | Lucene has no inline flags: matches nothing, silently (`graylog_regex_unsupported`) |
 | Word boundary | explicit context (`/.* -enc .*/`) | `\b`, `\B` | Graylog refuses them |
-| Non-capturing / lookaround / backreference | rewrite as alternation | `(?:…)`, `(?=…)`, `\1` | literal text to Lucene: matches nothing |
+| Non-capturing / lookaround / backreference | rewrite as alternation | `(?:…)`, `(?=…)`, `\1` | `(?:` and lookarounds are literal text and match nothing; `\1` is the digit 1 and silently matches something else |
 | Literal `@ # & < > ~` in a regex | `\@`, `\#` … | `/.*@contoso\.com/` | operators in Lucene regex; `@` is "any string" (`graylog_regex_operator`) |
 | One literal backslash | `\\` | `\\\\` | `\\` is already one backslash; four match two (`graylog_double_backslash`) |
 | At least *n* | `bytes:>=1` | `bytes:[1 TO *]` | an open range is refused (`graylog_open_range`) |
@@ -170,7 +170,8 @@ lower-cased at index time: match them in lower case.
 Lucene regex is **anchored**: it must match the whole value, hence the leading
 and trailing `.*`. It supports alternation `(a|b)`, classes, repeats, numeric
 intervals `<16-31>`, `\d`, `\w`, `\s`. Outside a regex, escape
-`& | : \ / + - ! ( ) { } [ ] ^ " ~ * ?` with a backslash.
+`& | : \ / + - = ! ( ) { } [ ] ^ " ~ * ?` with a backslash; `<` and `>` cannot be
+escaped, so quote the value or avoid them.
 
 ### YAML quoting
 
@@ -267,7 +268,8 @@ for analysts; deploy never finds a definition by it.
 
 | Step | What happens |
 |---|---|
-| `opentide validate` | block constraints (`graylog_*` codes at fixed field paths), condition grammar, advisories (`graylog_overlapping_window`, `graylog_all_streams`, `graylog_title_duplicate`), and the query in the Graylog dialect |
+| `opentide validate` | block constraints (`graylog_*` codes at fixed field paths), condition grammar, advisories (`graylog_overlapping_window`, `graylog_all_streams`, `graylog_title_duplicate`), and the query in the Graylog dialect (errors only) |
+| `opentide lint --check queries` | the query's warnings (`graylog_analyzed_field`, `graylog_regex_operator`, `graylog_regex_quote`, `graylog_double_backslash`). opentide 0.28.0 and earlier drop them from `lint`: see them in the editor (`opentide lsp start`) or `opentide tui` |
 | `opentide validate query --platform graylog` | the query offline; `.lucene` files too |
 | `… --live` | `POST /api/search/validate` per tenant, with the block's streams and a relative range of `window`: no search runs |
 | `opentide deploy --dry-run` | the requests, built for 7.2 without asking a server |
@@ -287,7 +289,8 @@ State and lifecycle:
   in the rule. Commit it. Deploy never lists definitions, nor finds one by title
   or tag.
 - Every `PUT` carries `?schedule=true|false`; a disable is an unscheduled update.
-  A `PUT` answering 404 re-creates the definition (`graylog_definition_recreated`).
+  A `PUT` answering 404 re-creates the definition (`graylog_definition_recreated`);
+  under `DISABLEMENT` the id is removed instead (`graylog_definition_missing`).
 - A create that gets no answer is **not retried** (`graylog_create_unconfirmed`):
   titles are not unique, and a retry could create a duplicate. Find it by title
   (or the `opentide.<uuid>` tag on 7.2), then delete it or record its id.
@@ -385,7 +388,7 @@ rules, so a SOAR or the analyst can pivot between platforms on one name.
 - [ ] Filter: `window` equals `every`. Aggregation: condition in the grammar, `group_by` on the acting entity.
 - [ ] `event_fields` expose host, user and process; `event_key` uses them; `grace_period` set on noisy rules.
 - [ ] `summary` (7.1+) and `remediation` give the analyst the next step.
-- [ ] `opentide validate` clean; `opentide validate query --platform graylog --live` accepted.
+- [ ] `opentide validate` clean, and every `graylog_*` warning from `opentide lint` (or the editor) resolved; `opentide validate query --platform graylog --live` accepted.
 - [ ] `opentide deploy --dry-run` reviewed; deployment state committed after deploy.
 
 ---
