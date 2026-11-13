@@ -96,16 +96,25 @@ for path in paths:
 # detection repositories, and these taught agents a layout and schema tags opentide
 # no longer reads (opentidehq/opentide#405). Its own e2e test checks the installed
 # copy for the same strings.
-STALE = ("mdr::", "tvm::", "dom::", "Schemas/Templates", "Configurations/systems")
-for path in sorted(skills_dir.rglob("*.md")):
+STALE = re.compile(
+    r"(?i:\b(?:mdr|tvm|dom)::\d)"  # retired schema tags in any case, such as mdr::2.1
+    r"|Schemas/Templates|Configurations/systems"  # retired CoreTide layout paths
+    r"|opentide migrate objects"  # removed in opentide 0.21.0
+)
+root = skills_dir.parent
+scanned = sorted(skills_dir.rglob("*.md")) + sorted(
+    path
+    for pattern in ("*.md", "steering/*.md", "rules/*.mdc")
+    for path in root.glob(pattern)
+)
+for path in scanned:
     text = path.read_text(encoding="utf-8")
-    for needle in STALE:
-        if needle in text:
-            line = text[: text.index(needle)].count("\n") + 1
-            errors.append(
-                f"{path.relative_to(skills_dir.parent)}:{line}: CoreTide-era identifier "
-                f"'{needle}'; resolve the current one from the engine instead"
-            )
+    for found in STALE.finditer(text):
+        line = text[: found.start()].count("\n") + 1
+        errors.append(
+            f"{path.relative_to(root)}:{line}: retired identifier '{found.group(0)}'; "
+            "resolve the current one from the engine instead"
+        )
 
 if errors:
     for err in errors:

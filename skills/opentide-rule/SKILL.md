@@ -5,7 +5,7 @@ description: Authors opentide Detection Rule objects — structured descriptions
 
 # opentide Detection Rule (MDR)
 
-> `opentide setup skills` also installs `opentide-detection-rule` from the opentide package: a short, offline contract for the rule's shape and check commands. This skill is the authoring practice; when they disagree on structure, the installed engine is right.
+> opentide's package also ships `opentide-detection-rule`, a short, offline contract for the rule's shape and check commands; `opentide setup skills` installs it it is in the default set (the default set is `opentide-detection-rule` and `detection-engineering`). This skill is the authoring practice; when they disagree on structure, the installed engine is right.
 
 An MDR is the **deployable artefact** — the detection rule that runs on a specific platform. It implements a DOM signal and carries the response metadata that guides analysts when the rule fires.
 
@@ -50,10 +50,12 @@ Then read a neighbouring object of the same family for local convention, and
 something that overlaps.
 
 Repository layout is not fixed either. A CoreTide-era corpus uses different
-family names and directories than a current one, and `opentide migrate objects`
-is what moves it forward -- the repository owner's decision, not one to take
-mid-task. Derive paths from the template you just resolved rather than assuming
-either layout.
+family names and directories than a current one, and opentide has no command
+that converts it (`migrate objects` was removed in 0.21.0): moving it is the
+repository owner's decision, not one to take mid-task, and `opentide validate`
+reports the keys it no longer accepts. Derive paths from the template you just
+resolved, or the repository's path configuration, rather than assuming either
+layout.
 
 ## Why there is no field table here
 

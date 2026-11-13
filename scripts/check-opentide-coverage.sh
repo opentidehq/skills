@@ -44,11 +44,12 @@ if [[ "${ENGINE}" == true ]]; then
     echo "ERROR: ${OPENTIDE_BIN} not found; install it with: pip install opentide" >&2
     exit 1
   fi
-  # An empty directory: `info` reports the engine's platforms, not a repository's.
+  # An empty directory, and no OPENTIDE_REPO_ROOT: `info` reports the engine's
+  # platforms, not a repository's (whose configuration could fail the check).
   WORKDIR="$(mktemp -d)"
   trap 'rm -rf "${WORKDIR}"' EXIT
   ENGINE_JSON="${WORKDIR}/info.json"
-  (cd "${WORKDIR}" && "${OPENTIDE_BIN}" --json info >"${ENGINE_JSON}")
+  (cd "${WORKDIR}" && env -u OPENTIDE_REPO_ROOT "${OPENTIDE_BIN}" --json info >"${ENGINE_JSON}")
 fi
 
 python3 - "${ROOT}" "${ENGINE_JSON}" "${STRICT}" <<'PY'
@@ -109,8 +110,24 @@ for key, entry in platforms.items():
             )
 
 
-def version_tuple(value: str) -> tuple[int, ...]:
-    return tuple(int(part) for part in re.findall(r"\d+", value)[:3])
+try:
+    from packaging.version import Version as _Version
+except ImportError:  # pragma: no cover - depends on the host interpreter
+    _Version = None
+
+
+def compare_versions(left: str, right: str) -> int:
+    """-1, 0 or 1. PEP 440 when `packaging` can read both (0.28.0.post1 > 0.28.0),
+    else the numbers in each, in order."""
+    if _Version is not None:
+        try:
+            a, b = _Version(left), _Version(right)
+            return (a > b) - (a < b)
+        except Exception:
+            pass
+    x = tuple(int(part) for part in re.findall(r"\d+", left))
+    y = tuple(int(part) for part in re.findall(r"\d+", right))
+    return (x > y) - (x < y)
 
 
 if engine_path:
@@ -147,13 +164,13 @@ if engine_path:
                     f"{', '.join(entry.get('skills', []))} and coverage.json"
                 )
     if isinstance(reviewed, str) and VERSION_RE.match(reviewed) and engine_version:
-        if version_tuple(engine_version) > version_tuple(reviewed):
+        if compare_versions(engine_version, reviewed) > 0:
             message = (
                 f"opentide {engine_version} is newer than coverage.json reviewed_against "
                 f"{reviewed}: review its CHANGELOG for skill impact, then bump reviewed_against"
             )
             (errors if strict else warnings).append(message)
-        elif version_tuple(engine_version) < version_tuple(reviewed):
+        elif compare_versions(engine_version, reviewed) < 0:
             warnings.append(
                 f"opentide {engine_version} is older than reviewed_against {reviewed}; "
                 f"install the latest release for an accurate check"

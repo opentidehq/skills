@@ -62,7 +62,7 @@ Full descriptions: [`AGENTS.md`](../AGENTS.md#skills-index-skills).
 
 ### Platform skills
 
-A platform skill teaches the platform, not opentide's field list: rule types, query language idioms and pitfalls, field model, scheduling, exclusions, entity alignment, anti-patterns and an authoring checklist. Its opentide section says what `opentide deploy` does there, what `--live` validation and the offline engine check, and whether `opentide query` runs — taken from opentide's source and `AGENTS.md`, never assumed. Configuration structure is resolved from the engine (`opentide://schemas/rule`, `opentide --json info --platform <key>`), as `opentide-rule` explains, so the skill does not go stale when a field is added.
+A platform skill teaches the platform, not opentide's field list: rule types, query language idioms and pitfalls, field model, scheduling, exclusions, entity alignment, anti-patterns and an authoring checklist. Its opentide section says what `opentide deploy` does there, what `--live` validation and the offline engine check, and whether `opentide query` runs — taken from opentide's source and `AGENTS.md`, never assumed. Configuration structure is resolved from the engine's schema (`opentide://schemas/rule` or `.opentide/schemas/`), and capabilities from `opentide --json info --platform <key>`, as `opentide-rule` explains, so the skill does not go stale when a field is added.
 
 Skills follow opentide's releases: see [Keeping skills in step with opentide](../AGENTS.md#keeping-skills-in-step-with-opentide).
 
