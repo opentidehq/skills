@@ -54,7 +54,7 @@ opentide structures the Detection Engineering lifecycle as as-code (YAML) object
 
 Always ingest **living templates** bundled with whichever repository syncs schemas — identifiers evolve.
 
-opentide deploys `configurations.*` blocks for ten platforms: **`sentinel`**, **`defender_for_endpoint`**, **`splunk`**, **`elastic`**, **`crowdstrike`**, **`carbon_black_cloud`**, **`sentinel_one`**, **`harfanglab`**, **`sysdig`** and **`bitdefender`**. Use the keys the workspace's `opentide setup platforms` enabled, and its bundled schemas for each block's fields. Elastic, Sysdig (Falco) and Bitdefender GravityZone have no platform skill here yet: rely on the schema, the template and `opentide validate`, not on recalled syntax.
+opentide deploys `configurations.*` blocks for thirteen platforms: **`sentinel`**, **`defender_for_endpoint`**, **`splunk`**, **`elastic`**, **`crowdstrike`**, **`carbon_black_cloud`**, **`sentinel_one`**, **`harfanglab`**, **`sysdig`**, **`bitdefender`**, **`graylog`**, **`exabeam`** and **`google_secops`**. Use the keys the workspace's `opentide setup platforms` enabled, and its bundled schemas for each block's fields. Elastic, Sysdig (Falco), Bitdefender GravityZone, Graylog, Exabeam and Google Security Operations (YARA-L) have no platform skill here yet: rely on the schema, the template and `opentide validate`, not on recalled syntax.
 
 ---
 
