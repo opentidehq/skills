@@ -5,6 +5,8 @@ description: Converts threat intelligence into opentide Threat Vector objects â€
 
 # opentide Threat Vector (TVM)
 
+> opentide's package also ships `opentide-threat-vector`, a short, offline contract for the threat's shape and check commands; `opentide setup skills` installs it with `--install opentide-threat-vector` or `--all` (the default set is `opentide-detection-rule` and `detection-engineering`). This skill is the authoring practice; when they disagree on structure, the installed engine is right.
+
 ## Why one skill handles both "intel" and "YAML"
 
 Splitting "TI analysis" and "TVM authoring" into sibling skills creates ambiguous triggers. Threat Vector work is fundamentally **intel -> structured hypothesis -> validated YAML** â€” keep upstream triage inside this skill under **Phase A**, then transition to **Phase B**. One deliverable lineage from intelligence intake to a validated threat vector object.
@@ -85,10 +87,12 @@ Then read a neighbouring object of the same family for local convention, and
 something that overlaps.
 
 Repository layout is not fixed either. A CoreTide-era corpus uses different
-family names and directories than a current one, and `opentide migrate objects`
-is what moves it forward -- the repository owner's decision, not one to take
-mid-task. Derive paths from the template you just resolved rather than assuming
-either layout.
+family names and directories than a current one, and opentide has no command
+that converts it (`migrate objects` was removed in 0.21.0): moving it is the
+repository owner's decision, not one to take mid-task, and `opentide validate`
+reports the keys it no longer accepts. Derive paths from the template you just
+resolved, or the repository's path configuration, rather than assuming either
+layout.
 
 ### Why there is no field table here
 

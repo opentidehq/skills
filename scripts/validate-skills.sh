@@ -92,6 +92,30 @@ for path in paths:
     elif len(description) > 1024:
         errors.append(f"{where}: description too long ({len(description)} > 1024)")
 
+# CoreTide-era identifiers. `opentide setup skills` installs catalogue skills into
+# detection repositories, and these taught agents a layout and schema tags opentide
+# no longer reads (opentidehq/opentide#405). Its own e2e test checks the installed
+# copy for the same strings.
+STALE = re.compile(
+    r"(?i:\b(?:mdr|tvm|dom)::\d)"  # retired schema tags in any case, such as mdr::2.1
+    r"|Schemas/Templates|Configurations/systems"  # retired CoreTide layout paths
+    r"|opentide migrate objects"  # removed in opentide 0.21.0
+)
+root = skills_dir.parent
+scanned = sorted(skills_dir.rglob("*.md")) + sorted(
+    path
+    for pattern in ("*.md", "steering/*.md", "rules/*.mdc")
+    for path in root.glob(pattern)
+)
+for path in scanned:
+    text = path.read_text(encoding="utf-8")
+    for found in STALE.finditer(text):
+        line = text[: found.start()].count("\n") + 1
+        errors.append(
+            f"{path.relative_to(root)}:{line}: retired identifier '{found.group(0)}'; "
+            "resolve the current one from the engine instead"
+        )
+
 if errors:
     for err in errors:
         print(f"ERROR: {err}")
@@ -261,11 +285,37 @@ if isinstance(skills_config, dict):
 else:
     fail("skills.sh.json must be a JSON object")
 
+# One release, one version: every manifest that carries the plugin version must agree,
+# or a marketplace serves a different release from the one the repository describes.
+versions: dict[str, object] = {}
+for rel in (
+    "plugin.json",
+    ".claude-plugin/plugin.json",
+    ".cursor-plugin/plugin.json",
+    ".codex-plugin/plugin.json",
+):
+    data = load(root / rel)
+    if isinstance(data, dict):
+        versions[rel] = data.get("version")
+for rel, entries_key in ((".claude-plugin/marketplace.json", "plugins"), (".agents/plugins/marketplace.json", "plugins")):
+    data = load(root / rel)
+    if isinstance(data, dict):
+        for entry in data.get(entries_key) or []:
+            if isinstance(entry, dict) and entry.get("name") == "opentide" and "version" in entry:
+                versions[rel] = entry["version"]
+if len(set(map(str, versions.values()))) > 1:
+    fail(
+        "plugin versions disagree: "
+        + ", ".join(f"{rel}={value}" for rel, value in versions.items())
+    )
+
 if errors:
     sys.exit(1)
 
 print("validated plugin.json and mcp.json")
 print(f"validated skills.sh.json ({len(seen)} skills)")
+print(f"validated plugin version {next(iter(versions.values()), '?')} across {len(versions)} manifests")
 PY
 
 "${ROOT}/scripts/build-manifest.sh" --check
+"${ROOT}/scripts/check-opentide-coverage.sh"

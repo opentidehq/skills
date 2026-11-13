@@ -2,7 +2,7 @@
   "version": 1,
   "source": "OpenTideHQ/skills",
   "ref": "main",
-  "generated_at": "2026-10-12T11:41:23Z",
+  "generated_at": "2026-11-12T19:34:13Z",
   "skills": [
     {
       "slug": "active-directory",
@@ -13,6 +13,11 @@
       "slug": "amazon-web-services",
       "name": "amazon-web-services",
       "description": "AWS security telemetry and internals for detection engineering — CloudTrail event structure (management vs data events, read-only vs write), IAM mechanics (roles, policies, assume-role chains, SCPs, permission boundaries), GuardDuty finding types, S3 access logging, VPC Flow Logs, Lambda execution model, cross-account access patterns, and the mapping between AWS operations and detection telemetry. Use when authoring detections targeting AWS cloud infrastructure abuse, privilege escalation, data exfiltration, or persistence."
+    },
+    {
+      "slug": "bitdefender-gravityzone",
+      "name": "bitdefender-gravityzone",
+      "description": "Bitdefender GravityZone (EDR/XDR) custom detection rule authoring for opentide's configurations.bitdefender block — the two rule kinds (Basic criteria on a detection target, or a YARA signature), how criteria are written (is / contains / any, wildcards, short registry hives, EDR versus XDR sensors, pairing rules) and checked by opentide validate against the engine's criteria catalogue, YARA under the engine's bitdefender profile (ASCII only, 30,000 characters, confirmed modules), automatic actions, severity, endpoint-tag and company targeting, and how deploy works over the Incidents API (whole-payload updates, the 24-hex rule id in deployment state, exclusion rules never touched). States plainly that there is no live validation and no opentide query. Use when writing, reviewing or deploying a bitdefender block in an opentide detection rule."
     },
     {
       "slug": "carbon-black-cloud",
@@ -30,6 +35,11 @@
       "description": "Detection engineering lifecycle across the opentide threat → objective → rule sequence and the operational practice of converting validated hunting queries into production detection rules. Encodes hunting-vs-detection trade-offs, hunt-to-rule conversion (7-step process with FP reduction, entity mapping, NRT compliance, response actions), platform pairing matrix (Microsoft KQL split, Splunk SPL, vendor consoles), maturity progression, PR scope discipline, and quality bars. Use when planning multi-phase detection work, sequencing object types in opentide content repos, reviewing PR scope, or operationalising hunts into detection rules."
     },
     {
+      "slug": "elastic-security",
+      "name": "elastic-security",
+      "description": "Elastic Security detection engineering for opentide's `elastic` platform (`configurations.elastic`, `platform::elastic::1.0`): choosing a rule type (custom query in Kibana KQL or Lucene, EQL including sequences, ES|QL, threshold, new terms, indicator match, machine learning), the idioms and pitfalls of each query language, ECS field discipline, index patterns and data views, interval and look-back scheduling against ingestion delay, alert suppression, exceptions, severity and risk overrides, ATT&CK mapping, and how opentide compiles, deploys, validates (offline engine and `--live` rule preview) and runs `opentide query`. Resolves block structure from the engine instead of pinning fields. Use when authoring, reviewing or tuning Elastic-keyed detection rules, or translating a hunt into a Kibana detection rule."
+    },
+    {
       "slug": "email-and-collaboration",
       "name": "email-and-collaboration",
       "description": "M365 email and collaboration security telemetry for detection engineering — Exchange Online mail flow (transport rules, journaling, DLP), mailbox delegation and forwarding rules, OAuth app permissions on mailboxes, SharePoint/OneDrive external sharing, Teams guest access, Purview Unified Audit Log (UAL) event types, MailItemsAccessed semantics, and BEC/phishing detection patterns. Use when authoring detections targeting email-based attacks, business email compromise, data exfiltration via collaboration tools, or insider threat indicators."
@@ -40,9 +50,24 @@
       "description": "Microsoft Entra ID (formerly Azure AD) — identity platform internals, telemetry, and attack detection. Covers the full Entra ID surface including sign-in logs (interactive, non-interactive, service principal, managed identity), audit logs, Identity Protection risk signals, Conditional Access evaluation, directory role management, OAuth/consent grants, PRT/token mechanics, cross-tenant B2B/B2C, and workload identities. Includes SKU gating (P1 vs P2), ResultType code catalogue, identity attack patterns (password spray, AiTM, MFA fatigue, token theft, OAuth abuse, Golden SAML), and entity alignment for cross-platform correlation. Use for any work involving Entra ID telemetry, identity-focused detection, or directory security posture. Pair with the relevant platform skill for query mechanics (microsoft-sentinel, splunk-spl-processing, crowdstrike-falcon, etc.)."
     },
     {
+      "slug": "exabeam-siem",
+      "name": "exabeam-siem",
+      "description": "Exabeam New-Scale SIEM detection engineering for opentide: correlation rules as configurations.exabeam blocks (sequences, any-match and threshold conditions, group-by, correlation windows, suppression, delay, schedule, outcomes, test mode), Exabeam Query Language filter idioms and pitfalls (not Elastic EQL), the engine's rule and search profiles, Common Information Model fields and context tables, and how opentide deploys (name check that refuses rather than adopts, 100-a-minute pacing, lower-case rule UUID in deployment state), what validate query --live checks and opentide query. Use when authoring or reviewing Exabeam-keyed detection rules, Exabeam hunts or .exabeam files, or translating a detection from another SIEM to Exabeam."
+    },
+    {
       "slug": "google-cloud-platform",
       "name": "google-cloud-platform",
       "description": "Google Cloud Platform security telemetry for detection engineering — Cloud Audit Logs structure (Admin Activity, Data Access, System Event, Policy Denied), IAM mechanics (roles, service accounts, workload identity federation, impersonation), GCP-specific attack patterns (service account key theft, cross-project access, storage exfiltration), VPC Flow Logs, and the mapping to Google SecOps (Chronicle) YARA-L and SIEM ingestion. Use when authoring detections targeting GCP infrastructure abuse."
+    },
+    {
+      "slug": "google-secops",
+      "name": "google-secops",
+      "description": "Google Security Operations (Google SecOps, formerly Chronicle) detection engineering in YARA-L 2.0 — UDM events and the entity graph, single-event versus multi-event rules, match windows, outcome and risk score, condition counting, reference lists and data tables, curated detections versus custom rules, run frequency and retrohunts, UDM search. Covers YARA-L idioms and pitfalls, how opentide assembles a rule from the sections of a configurations.google_secops block plus derived meta, the Chronicle API v1 deploy flow and its ru_ rule id in deployment state, DELETION archive versus delete, what the offline engine and --live verifyRuleText each catch, opentide query through udmSearch, and UDM principal/target/src alignment with other platforms. Use when authoring or reviewing google_secops configurations or google_secops hunts in opentide detection rules, or translating a detection from KQL, SPL or CQL into YARA-L."
+    },
+    {
+      "slug": "graylog",
+      "name": "graylog",
+      "description": "Graylog detection engineering for opentide — event definitions of the Filter & Aggregation type (streams, search query, aggregation condition, group-by, search window and interval, event fields and key, notifications), the Lucene-based Graylog search dialect and its traps (analysed versus keyword fields, case sensitivity and the lower-cased-copy pipeline pattern, leading wildcards, Lucene regex limits, backslash escaping, _exists_, open ranges), Graylog Information Model field naming, how opentide builds each request for Graylog 6.3 to 7.2 and checks the query with /api/search/validate before every save, opentide query, anti-patterns and an authoring checklist. Resolves block structure from the installed engine. Use when authoring or reviewing configurations.graylog blocks of detection rules, Graylog search queries, or Graylog event definitions."
     },
     {
       "slug": "harfanglab",
@@ -128,6 +153,11 @@
       "slug": "splunk-spl-processing",
       "name": "splunk-spl-processing",
       "description": "Splunk Enterprise and Enterprise Security SPL authoring for detection engineering — index/sourcetype/time discipline, tstats/CIM acceleration, ESCU macro layers, ES correlation searches, notables, and RBA. Use when authoring or reviewing SPL, configurations.splunk blocks of detection rules, ES correlation searches, or translating KQL hypotheses to Splunk. Pair with detection-engineering and opentide-rule."
+    },
+    {
+      "slug": "sysdig-secure",
+      "name": "sysdig-secure",
+      "description": "Sysdig Secure and Falco detection engineering for opentide `configurations.sysdig` blocks (platform::sysdig::1.0). Covers the Falco rule language (conditions, operators, macros, lists, exceptions, tunings through append_to_rule), event sources (syscall, k8s_audit, cloud and SaaS plugins), field classes, evt.type-first performance discipline, priority and output templates, container and Kubernetes context, and Sysdig Secure runtime policies. Explains what opentide derives and deploys through the Sysdig Secure runtime API (block macros and lists expanded into the condition, the Sysdig rule id in deployment state, policy membership), and that checking is offline only, through the analysis engine: no live validation and no opentide query. Includes anti-patterns, cross-platform entity alignment and an authoring checklist. Use when authoring, tuning, converting or reviewing Falco rules for Sysdig Secure in opentide detection rules."
     },
     {
       "slug": "threat-hunting",

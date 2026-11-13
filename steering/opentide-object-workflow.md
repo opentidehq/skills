@@ -1,6 +1,6 @@
 # opentide object workflow
 
-Use when authoring or reviewing **Threat Vector (TVM)**, **Detection Objective (DOM)**, or **Detection Rule (MDR)** YAML in opentide content repositories.
+Use when authoring or reviewing **threat** (TVM), **objective** (DOM), or **rule** (MDR) YAML in opentide content repositories.
 
 ## Before you write
 
@@ -11,9 +11,11 @@ Use when authoring or reviewing **Threat Vector (TVM)**, **Detection Objective (
 
 | Type | Schema tag | Typical path |
 |------|------------|--------------|
-| Threat Vector | `tvm::…` / `threat::1.0` | `objects/threats/*.yaml` (library) or `Objects/Threat Vectors/*.yaml` (legacy) |
-| Detection Objective | `dom::…` / `objective::1.0` | `objects/objectives/*.yaml` |
-| Detection Rule | `mdr::…` / `rule::1.0` | `objects/rules/*.yaml` |
+| Threat | `threat::…` | `objects/threats/*.yaml` (CoreTide-era: `Objects/Threat Vectors/`) |
+| Objective | `objective::…` | `objects/objectives/*.yaml` |
+| Rule | `rule::…` | `objects/rules/*.yaml` |
+
+Resolve the current revision (for example `rule::1.1`) from `opentide://schemas/<family>` or `.opentide/schemas/`, not from this table.
 
 **Filenames:** dash-case slugs derived from the object `name` (lowercase, hyphens — `slugify()` in opentide). The `name` field stays human-readable; generated docs mirror the slug.
 
@@ -22,7 +24,7 @@ Use when authoring or reviewing **Threat Vector (TVM)**, **Detection Objective (
 1. **Analyse intelligence** — distinct TTPs only; stop if object type is unclear.
 2. **Plan hierarchy** — TVMs first, then DOMs, then MDRs.
 3. **Search existing objects** — update vs create; preserve UUIDs when updating.
-4. **Load templates and schemas** from the content repo's `Schemas/` tree.
+4. **Load templates and schemas** — `opentide://templates/<family>` and `opentide://schemas/<family>`, or `.opentide/templates/` and `.opentide/schemas/` (`opentide generate` writes them).
 5. **Generate UUIDs** with system tools (`uuidgen` / `[guid]::NewGuid()`).
 6. **Author** — TVM → DOM → MDR; link relations correctly.
 7. **Validate** with `opentide validate` or schema CI.
@@ -39,4 +41,4 @@ Use when authoring or reviewing **Threat Vector (TVM)**, **Detection Objective (
 
 ## Platform keys (MDR `configurations.*`)
 
-Common surfaces: `sentinel`, `defender_for_endpoint`, `splunk`, `crowdstrike`, `carbon_black_cloud`, `sentinel_one`. Consult active meta-schema release notes before adding others.
+`sentinel`, `defender_for_endpoint`, `splunk`, `crowdstrike`, `carbon_black_cloud`, `sentinel_one`, `harfanglab`, `elastic`, `sysdig`, `bitdefender`, `graylog`, `exabeam`, `google_secops`. `opentide --json info` is authoritative; `coverage.json` maps each key to its platform skill.
