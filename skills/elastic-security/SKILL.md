@@ -24,7 +24,7 @@ A validator error outranks anything written here. Run `opentide validate` and `o
 
 Structural concepts worth knowing before you read the schema:
 
-- `type` picks the rule type, and the type picks the query language (§1). Each type has its own sub-block (`threshold`, `new_terms`, `eql`, `threat`, `machine_learning`); a sub-block on the wrong type, or a missing one, is `type_block`.
+- `type` picks the rule type, and the type picks the query language (§1). Types with settings have their own sub-block: `threshold`, `new_terms`, `threat` and `machine_learning` are required on their type, and `eql` is optional on `eql`. A sub-block on the wrong type, or a missing required one, is `type_block`.
 - Settings are grouped (`scheduling`, `severity`, `risk`, `suppression`, `overrides`, `guide`, `exceptions`, `actions`). Kibana's flat names (`from`, `interval`, `max_signals`, `risk_score`, `note`, `alert_suppression`, `threat_index`, `timestamp_override`, ...) are refused in the block: author the grouped form, opentide compiles the flat one.
 - `threat` in this block is the **indicator side of an indicator match rule**, not the ATT&CK array. ATT&CK comes from the rule's techniques (§9).
 - `status` is required on the block, as on every platform, and maps through `deployment.toml` to a strategy.
@@ -76,10 +76,10 @@ event.category : "process" and event.type : "start"
   and not process.parent.name : "ccmexec.exe"
 ```
 
-- `field : value`, lower-case `and` / `or` / `not`, parentheses, value lists `field : (a or b)`, ranges `field >= 10`.
+- `field : value`, `and` / `or` / `not` (case-insensitive; write them lower case), parentheses, value lists `field : (a or b)`, ranges `field >= 10`.
 - `*` is a wildcard **only outside quotes**; `"*.exe"` is a literal asterisk [`kuery_quoted_wildcard`]. `?` is a literal, not a single-character wildcard [`kuery_question_mark`].
 - A value with no field searches every field — slow and noisy [`kuery_free_text`].
-- No Lucene syntax: no `AND`/`OR` in caps as operators, no `/regex/`, no `[a TO b]` [`kuery_lucene_syntax`, `kuery_looks_like_lucene`].
+- No Lucene syntax: no `/regex/`, no `[a TO b]` ranges, no `_exists_`, `&&`/`||`, fuzzy `~` or boost `^` [`kuery_lucene_syntax`, `kuery_looks_like_lucene`]. Upper-case `AND`/`OR`/`NOT` are valid KQL operators (in Lucene, by contrast, lower case is a search term).
 - Special characters need escaping [`kuery_escape`]; range types must match the field [`kuery_range_type`].
 - `opentide query` can only run KQL through a rule preview (§13).
 
@@ -103,6 +103,8 @@ sequence by host.id with maxspan=2m
   [process where event.type == "start" and process.parent.name : "winword.exe"
      and process.name : ("cmd.exe", "powershell.exe", "pwsh.exe")]
 ```
+
+With the default schedule (`interval: 5m`, `lookback: 1m`) a `maxspan=2m` sequence earns `eql_maxspan_lookback`: set `scheduling.lookback` to `2m` or more for it, so a sequence that straddles two runs is still seen.
 
 - `==` is case-sensitive and takes no wildcards; `:` is case-insensitive and takes wildcards. Prefer `:` for process and file names [`eql_case_sensitive`, `eql_literal_wildcard`]. `like~`, `in~`, `regex~` are the case-insensitive forms.
 - **Always set `maxspan` on a sequence** [`eql_maxspan_missing`]; it is mandatory with missing-event terms `![ ]`. Units must be ones Elasticsearch accepts [`eql_maxspan_unit`].
@@ -134,7 +136,7 @@ FROM logs-system.security-*, logs-windows.forwarded-*
 - **Write ECS, not vendor field names**, whenever the integration maps them: `process.name`, `process.command_line`, `process.parent.executable`, `user.name`, `source.ip`, `host.id`, `event.category` / `event.type` / `event.action` / `event.outcome`. Vendor fields (`winlog.event_data.*`, `aws.cloudtrail.*`) are for detail ECS does not carry.
 - **Filter on the categorisation fields first** (`event.category`, `event.type`, `event.dataset`, `event.code`), then on entities.
 - **Know the mapping type.** `keyword` is exact and case-sensitive; `wildcard` and `match_only_text` behave differently under wildcards and aggregation; `text` cannot be aggregated. Group-by, threshold, cardinality and new-terms fields must be aggregatable — checked with `_field_caps` before deploy.
-- The engine checks fields against its ECS catalogue (and the columns `visibility.toml` declares) **only when every index the query reads starts with `logs-`** and is written in the block: `ecs_unknown_field` (warning; ECS allows custom fields) and `ecs_type_mismatch` (error). Queries over a data view, the tenant default index, or non-`logs-` patterns get no field check — review those by hand.
+- The engine checks fields against its ECS catalogue (and the columns `visibility.toml` declares) **only when every index the query reads starts with `logs-`** and is written in the block: `ecs_unknown_field` (warning, for a likely typo of an ECS field such as `process.nmae`; integration namespaces like `winlog.*` and other custom fields pass silently, so a clean run does not prove every field is ECS) and `ecs_type_mismatch` (error). Queries over a data view, the tenant default index, or non-`logs-` patterns get no field check — review those by hand.
 - Record the fields the rule needs in `required_fields` with their mapping types, and the integrations in `integration`. Both are informational in Kibana; they tell the SOC what must be onboarded.
 
 ---
@@ -296,7 +298,7 @@ Key sequences and suppression on the stable identifiers (`host.id`, `process.ent
 - [ ] `language` set only for `query`, `threshold`, `new_terms`, `threat_match`; Lucene chosen for a reason.
 - [ ] `index` (a list of specific data streams) or an existing `data_view_id`, not both; datasets declared in `visibility.toml`.
 - [ ] ECS fields; aggregation fields are aggregatable; custom timestamp fields are dates.
-- [ ] EQL: `:` for names, `maxspan` set and within `interval + lookback`, `by` on stable IDs.
+- [ ] EQL: `:` for names, `maxspan` set and no longer than `lookback` (never longer than `interval + lookback`), `by` on stable IDs.
 - [ ] ES\|QL: entity in `BY` when aggregating; `METADATA _id` when not (pre-9.4); tenant `version` declared.
 - [ ] `scheduling.lookback` ≥ `1m`, sized to ingestion delay; threshold look-back ≤ interval.
 - [ ] Suppression: 1–3 `group_by` fields (none on threshold, `duration` instead); licence of each tenant considered.

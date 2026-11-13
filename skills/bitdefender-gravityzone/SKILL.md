@@ -34,7 +34,7 @@ The catalogue is generated from Bitdefender's "Detection and exclusion criteria 
 |---|---|---|
 | Custom **detection** rule, Basic (criteria) | `configurations.bitdefender.detection` | API `type: 1`, `subtype: 0` |
 | Custom **detection** rule, YARA | `configurations.bitdefender.yara` | API `type: 1`, `subtype: 1` |
-| Custom **exclusion** rule | not supported | API `type: 2`. opentide never creates, updates or deletes one; an `exclusion:` key in the block is `bitdefender_rule_kind` |
+| Custom **exclusion** rule | not supported | API `type: 2`. opentide never creates, updates or deletes one; an `exclusion:` key is refused as an unknown key, and a block with neither `detection` nor `yara` is `bitdefender_rule_kind` |
 | Automatic actions on a detection | `actions` | Isolate, investigation package, sandbox, kill, scan, quarantine, risk scan |
 | Scope (where the rule applies) | `targets`, and the tenant's `targets` default | Endpoint tags, or companies on a partner tenant; neither means the whole company |
 | Telemetry search / hunting | none | No `opentide query` runner; hunt elsewhere and encode the result as criteria |

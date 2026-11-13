@@ -106,7 +106,7 @@ Where they come from:
 
 | Code | Meaning |
 |---|---|
-| `ecs_unknown_field` | Not an ECS field nor a declared column (warning; custom fields are allowed). Only on queries whose written indices all start with `logs-` |
+| `ecs_unknown_field` | A near miss of an ECS field (a likely typo, such as `process.nmae`), not declared in `visibility.toml` (warning). Integration namespaces (`winlog.*`, `aws.*`, …), `labels.*` and other custom fields are never reported. Only on queries whose written indices all start with `logs-` |
 | `ecs_type_mismatch` | The operation cannot apply to the field's type (error) |
 | `elastic_dataset_not_declared` | An `index`, `threat.index` or ES\|QL `FROM` pattern no `visibility.toml` elastic log source covers (warning, opt-in once any elastic log source exists) |
 
