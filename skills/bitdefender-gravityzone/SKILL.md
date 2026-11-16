@@ -106,7 +106,7 @@ Each field (and, for enums, each value) is evaluated by a sensor: `edr`, `xdr` o
 
 ## 5. YARA under the bitdefender profile
 
-`yara.signature` is a whole YARA source — imports, then one or more rules — written out in the block (not a YAML alias, `yara_signature_alias`). Deploy sends it verbatim as `settings.yaraQuery`, with line endings normalised to `\n` and one trailing newline. The engine checks it offline as libyara 4.5 compiles it, under the **bitdefender profile**:
+`yara.signature` is a whole YARA source — imports, then one or more rules — written out in the block (not a YAML alias, `yara_signature_alias`). Deploy sends it verbatim as `settings.yaraQuery`, with line endings normalised to `\n` and one trailing newline. The engine checks it offline as YARA-X 1.x compiles it — what YARA-X refuses is an error — under the **bitdefender profile**:
 
 | Constraint | Code | Severity |
 |---|---|---|
@@ -115,7 +115,9 @@ Each field (and, for enums, each value) is evaluated by a sensor: `edr`, `xdr` o
 | No `include` | `yara_include` | error |
 | At least one rule that is neither `private` nor `global` | `yara_empty_signature` | error |
 | No rule name used twice | `yara_duplicate_rule` | error |
-| Modules: `pe`, `elf`, `math`, `hash`, `time` are confirmed on GravityZone; another known module is flagged | `yara_module_unconfirmed` | warning (`opentide lint`) |
+| No syntax only YARA-X has — `with`, digit separators, float meta, `"""` strings, `.len()`, the 64-bit and float readers (`uint64`, `float32`, …), `(?` regexp groups — until GravityZone is confirmed to take it | `yara_x_only_syntax` | error |
+| Modules: `pe`, `elf`, `math`, `hash`, `time` are confirmed on GravityZone; another known module (`crx` and `zip` included) is flagged | `yara_module_unconfirmed` | warning (`opentide lint`) |
+| Known modules are YARA-X's default modules less `vt`: `console`, `crx`, `cuckoo`, `dex`, `dotnet`, `elf`, `hash`, `lnk`, `macho`, `math`, `pe`, `string`, `time`, `zip`. `import "magic"` (not a YARA-X default) and `import "vt"` (VirusTotal's own scan metadata) are refused, and the message says why | `yara_unknown_module` | error |
 | Any syntax or semantic error | `yara_*` | error |
 
 The ASCII rule bites in prose: an en dash, a curly apostrophe or an accented name in `meta.description` fails the rule. Write meta in plain ASCII, and use hex strings or escapes for non-ASCII content.
@@ -314,7 +316,7 @@ Matching semantics differ too: GravityZone has whole-value wildcards and AND-onl
 - [ ] Registry keys use short hive names.
 - [ ] One sensor per rule (no EDR-only with XDR-only); pairing rules satisfied.
 - [ ] Alert filter, if any, in `detection.alert`.
-- [ ] YARA: ASCII only, under 30,000 characters, no `include`, one public rule at least, confirmed modules.
+- [ ] YARA: ASCII only, under 30,000 characters, no `include`, no YARA-X-only syntax, one public rule at least, confirmed modules.
 - [ ] Actions allowed for the kind and target; containment held back until the rule is proven.
 - [ ] `severity` set when `alert_severity` is Critical or Informational.
 - [ ] `targets` uses tenant aliases, or is left out on purpose.

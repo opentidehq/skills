@@ -267,6 +267,12 @@ harfanglab:
 | `string` | String manipulation | `string.to_int()`, `string.length()` |
 | `macho` | macOS Mach-O analysis | `macho.file_type`, `macho.has_entitlement()` |
 
+opentide checks the signature offline as YARA-X 1.x compiles it, under the engine's HarfangLab profile: what YARA-X refuses is an error, and so is syntax only YARA-X has (`with`, digit separators, `.len()`, the 64-bit and float readers such as `uint64`, `(?` regexp groups; `yara_x_only_syntax`) until HarfangLab is confirmed to take it.
+
+- **Known modules** are YARA-X's default modules less `vt`: `console`, `crx`, `cuckoo`, `dex`, `dotnet`, `elf`, `hash`, `lnk`, `macho`, `math`, `pe`, `string`, `time`, `zip`. `import "magic"` (not a YARA-X default) and `import "vt"` (VirusTotal's own scan metadata) are `yara_unknown_module` errors; in `imports`, an unknown module is `harfanglab_yara_import`.
+- **Confirmed on HarfangLab** are `pe`, `elf`, `math`, `hash`, `time`. Any other known module — `dotnet`, `string` and `macho` above, `crx` and `zip` too — is the warning `yara_module_unconfirmed` (`opentide lint`).
+- **Module booleans** (`pe.is_dll()`, `dotnet.is_dotnet`, `lnk.is_lnk`) are tested alone or with `not`. `== 1` is a warning; an ordering (`> 0`), `!=` or arithmetic on one is a `yara_type` error.
+
 ### Scan context and auto-routing
 
 | `meta.context` | Description | Auto-routing |
