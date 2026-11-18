@@ -370,6 +370,17 @@ When HarfangLab content lives in `configurations.harfanglab`:
 - **Expected whitelist patterns** documented in `falsepositives`.
 - Coordinate with `opentide-rule` for placement and `detection-engineering` for lifecycle.
 
+### Tenants and deploy
+
+- **One tenant takes both kinds.** The rule block's own key picks the endpoint: a `sigma` block goes to HarfangLab's Sigma rules, a `yara` block to its YARA files, for a create, an update and a delete. A block is one kind, never both (`harfanglab_rule_kind`).
+- **The tenant has no `type`.** Do not write `type` under a HarfangLab tenant's `[tenants.setup]`. `opentide validate` refuses a leftover one at its key, and `deploy`, `query` and the SDKs fail the tenant for it.
+- **One tenant per manager.** Two tenants on one manager would each deploy every rule, so each YARA file would be posted twice.
+- **Changing kind leaves the old rule behind.** A rule whose block moves from `sigma` to `yara` leaves its Sigma rule on the tenant: delete it there.
+- **SDK deploys name the kind.** `Connection.deploy` takes `{"kind": "Sigma" | "YARA", "rule": <compiled rule>}`, and `{"kind": ...}` alone for a delete.
+- **No live validation.** YARA is checked offline (§4); Sigma is not checked on the tenant (`--live` reports `supported: false`).
+
+> **Upgrade note (opentide 1.0, platform-harfanglab 1.6).** `[tenants.setup] type` is removed. Delete the key from every HarfangLab tenant. If a manager had two tenants, one for Sigma and one for YARA, keep one of them.
+
 ---
 
 ## 10. Quality checklist
@@ -390,3 +401,4 @@ When HarfangLab content lives in `configurations.harfanglab`:
 - [ ] Sensor / OS coverage declared in MDR description.
 - [ ] Whitelists carry audit metadata (ticket, owner, expiry).
 - [ ] SIEM ingestion method documented (Syslog CEF / API).
+- [ ] No `type` under the HarfangLab tenant's `[tenants.setup]`; one tenant per manager.
