@@ -317,6 +317,7 @@ When an MDR object targets multiple `configurations.*` keys (e.g., both `sentine
 - [ ] Entity mapping uses each platform's native field conventions.
 - [ ] Alert severity and response actions are calibrated per platform (a "Medium" in one SIEM may not map to "Medium" in another).
 - [ ] NRT / real-time variants are only created where the platform supports them for the target data source.
+- [ ] After `opentide deploy`, every entry of the run's `failures` is read: the run deploys what it can and exits 1 on any failure, so one platform's success does not mean the others deployed (`opentide-rule`).
 
 ### Acceptable divergence
 

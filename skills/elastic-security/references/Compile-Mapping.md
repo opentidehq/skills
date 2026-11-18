@@ -1,6 +1,6 @@
 # How an Elastic block compiles to a Kibana rule
 
-What `opentide deploy` sends to `POST|PUT /api/detection_engine/rules` (in the tenant's Kibana space) for each block setting. Use it to read a `deploy --dry-run` body or to translate a rule exported from Kibana. `opentide deploy --dry-run` shows the real body for the installed version; trust it over this table.
+What `opentide deploy` sends to `POST|PUT /api/detection_engine/rules` (in the tenant's Kibana space) for each block setting. Use it to read a `deploy --dry-run` body or to translate a rule exported from Kibana. `opentide deploy --dry-run --json` shows the real body for the installed version under `api_request.payload` (`api_request.block` is the rule's `elastic` block); trust it over this table.
 
 ## Identity and metadata
 

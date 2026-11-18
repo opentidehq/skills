@@ -131,6 +131,38 @@ What this skill asserts is the part the schema does not:
   the `validate_query` and `validate_rule` MCP tools on a platform that
   supports it. A query never executed against its platform is a draft.
 
+### Validating and deploying
+
+- **`validate --strict` needs objects.** Under `--strict`, `opentide validate`
+  fails (exit 1, `issues_found`) when it finds no detection objects, so a CI job
+  pointed at the wrong folder no longer passes. `--allow-empty` (with `--strict`
+  only, inside a workspace) lets an empty workspace pass. The commit hook from
+  `opentide setup hooks` uses it; the generated CI does not. A hook written by
+  an older release runs `--strict` alone: re-run `opentide setup hooks`, after
+  everyone who commits has upgraded, as an older `opentide` refuses
+  `--allow-empty` with exit 2.
+- **`opentide deploy` deploys everything it can, then reports every failure.**
+  A rule the tenant refuses fails on its own; the run goes on to the next rule,
+  tenant and platform. A tenant that cannot be used (unset or refused
+  credentials, no connection) fails, and its remaining rules are "not
+  attempted"; the other tenants go on. Only an interrupt stops the run.
+- **Read `failures`, not the first error.** The `--json` result lists each
+  failure in `failures` (`platform`, `tenant`, the rule's `id` and `name` for a
+  rule failure, `error`); `error` names the first. The run still exits 1 when
+  anything failed. A platform whose every tenant failed is not in `deployed`.
+  On GitHub Actions, GitLab and Azure Pipelines the job summary has a table of
+  the failures, and a platform with a failed rule shows as `partly deployed`.
+- **The SDKs deploy to every platform.** The Python and Node SDKs and the Rust
+  `opentide` crate deploy to all thirteen built-in platforms
+  (`Connection.deploy`). A failed deploy always raises (or rejects) with
+  `scope` (`rule`: the tenant's other rules can deploy; `tenant`: it can take
+  none), `status` (the HTTP status, when there is one), `fields` (`platform`,
+  `tenant`, `address`, `detail`), `partial` (what the deploy did before failing,
+  such as a created rule's `remote_id`, to record) and `more_failures`
+  (`moreFailures` in Node) for the failures after the first. Plan a deploy with
+  `deploy_plan` (`deploy --dry-run`); the platform skill says what its body
+  holds (Elastic's `api_request` is `{payload, block}`).
+
 
 ## Response procedure authoring
 
