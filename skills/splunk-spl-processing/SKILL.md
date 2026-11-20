@@ -122,7 +122,7 @@ Prefer `lookup` / `inputlookup` over subsearches for IOC correlation (AP-S4).
 
 ### Three-layer macro architecture
 
-Production frameworks (ESCU, opentide) use three layers for portability:
+Production frameworks such as ESCU use three layers for portability. opentide defines no macros of its own: it deploys the rule's SPL as written, so every macro a query calls must exist on the tenant.
 
 | Layer | Suffix | Purpose |
 |---|---|---|
@@ -152,7 +152,7 @@ Single canonical block — detection variants in `references/Detection-Type-Patt
 | `<detection_name>_filter`
 ```
 
-ESCU vs opentide macro mapping: `references/CIM-Data-Models.md`.
+ESCU vs tenant macro mapping: `references/CIM-Data-Models.md`.
 
 ---
 
@@ -316,9 +316,9 @@ Apply the same header structure used in KQL (Hunt, Source, MITRE, Platform). Wit
 - [ ] Notable / RBA fidelity choice deliberate and documented.
 - [ ] Detection type matches pattern in `references/Detection-Type-Patterns.md`.
 
-### ESCU / opentide macro conventions
+### ESCU / tenant macro conventions
 
-- [ ] `` `security_content_ctime()` `` (ESCU) or `` `soc_macro_ctime_utc()` `` (opentide) applied to first/last time fields.
+- [ ] `` `security_content_ctime()` `` (ESCU) or the tenant's own time-formatting macro applied to first/last time fields.
 - [ ] Layer 3 filter macro (`` `<detection_name>_filter` ``) appended as last pipe.
 - [ ] Header comment block populated (or deferred to MDR metadata with rationale).
 
@@ -340,6 +340,14 @@ When SPL is wired into `configurations.splunk` in an opentide MDR object, coordi
 | `risk.threat_objects[]` | `field`, `type` (e.g. `ip`, `file_hash`) |
 
 Description, tuning narrative, severity, and response procedure → MDR `description` and `response.*`. Hunt-to-rule conversion: `detection-engineering`.
+
+### What `opentide deploy` writes to Splunk
+
+- **The search is the `query` as written.** opentide appends nothing: no `eval`, no mapping macro, no environment-specific pipe. Releases before 1.0 appended an `MDR_UUID`/`MDR_status` eval and a site-specific mapping macro; current releases do not, so never add them to a query, and remove them from an older rule's SPL if they were copied in.
+- **The description gets a last line, `opentide rule <uuid>`.** opentide writes it; do not put it in the MDR `description` yourself, and do not edit it in Splunk. It is how a deploy finds and deletes the saved search a renamed rule left behind. A saved search written by an older release has no such line until it is deployed again.
+- **`alert.managedBy` is written empty.** opentide no longer fills it; a redeploy clears an older value.
+- **Unchanged saved searches are not rewritten.** A deploy compares each setting it would send with the saved search on the tenant and reports a match as `unchanged`. A setting removed from the `configurations.splunk` block keeps its value in Splunk: clear it there.
+- Check a rule before deploying with `opentide validate` (offline SPL engine) and `opentide validate query --live` against a tenant when one is configured.
 
 ---
 

@@ -31,13 +31,13 @@ The Common Information Model (CIM) normalises data across sources. `tstats` agai
 
 4. Zero results with known process activity → check sourcetype→CIM mapping in ES → Data Inputs / TA configuration, not "no threats".
 
-## ESCU / opentide macro mapping
+## ESCU / tenant macro mapping
 
-| Purpose | ESCU macro | opentide equivalent (when deployed) |
+| Purpose | ESCU macro | Non-ESCU tenant |
 |---|---|---|
-| Summariesonly flag | `` `security_content_summariesonly` `` | `` `soc_macro_summariesonly` `` |
+| Summariesonly flag | `` `security_content_summariesonly` `` | Tenant-defined macro, or `summariesonly=true` inline |
 | Strip DM prefix | `` `drop_dm_object_name(Processes)` `` | Same pattern — tenant-defined |
-| Epoch → readable time | `` `security_content_ctime(field)` `` | `` `soc_macro_ctime_utc(field)` `` |
+| Epoch → readable time | `` `security_content_ctime(field)` `` | Tenant-defined macro, or `convert ctime(field)` inline |
 | FP exclusions (Layer 3) | `` `<detection_name>_filter` `` | Tenant filter macro per rule |
 
-Non-ESCU tenants: replace ESCU macros with tenant Layer 1/2/3 macros; never assume `security_content_*` exists.
+Non-ESCU tenants: replace ESCU macros with tenant Layer 1/2/3 macros; never assume `security_content_*` exists. opentide ships no macros: a macro a rule calls must be defined on the tenant.
