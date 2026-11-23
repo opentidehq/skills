@@ -294,6 +294,16 @@ Title / description templates support `{{ColumnName}}` tokens:
 
 Sentinel analytic rules support direct ATT&CK mapping in rule configuration — populate tactic and technique IDs in the rule UI/template, not just in inline comments.
 
+In opentide, deploy sends the `configurations.sentinel` block's `alert.techniques` (and `alert.tactics`) when set; an empty list counts as unset. Otherwise it sends the rule's objective's techniques. The two are never merged, and the rule's own `techniques` field is not sent.
+
+Sentinel is aligned to **ATT&CK v18**, and ARM rejects an id it does not know, so deploy changes each newer id and warns `technique_newer_than_sentinel_attack`:
+
+- An id newer than v18 is sent as the v18 id it replaced (`T1685.002` as `T1562.008`), else as its v18 parent; one with no v18 equivalent is left out.
+- For a newer parent such as `T1685`, the warning lists where its sub-techniques map in v18, so the objective can name the v18 id.
+- `alert.techniques` accepts v18 ids only.
+
+Read the warnings of `deploy --dry-run` before a release.
+
 ### ASIM parsers
 
 Use ASIM when:
@@ -363,4 +373,6 @@ When KQL is wired into a `configurations.sentinel` block in an opentide MDR obje
 - **Description and tuning narrative** belong in the MDR `description` and `response.procedure` fields, not buried in inline comments.
 - **Severity, response actions, playbook URIs** belong in `response.alert_severity` / `response.playbook` per MDR schema.
 - **Inline KQL** still carries the mandatory header block, comment discipline, and FP engineering described above.
+- **Techniques** come from `alert.techniques`/`alert.tactics` when set, otherwise from the objective (§7, ATT&CK v18 alignment). Never copy both.
+- **Deploy reads before it writes.** Each rule is read from the workspace first, and `deploy --json` reports `create`, `update` or `unchanged` per rule (not `upsert`); a read ARM refuses fails that rule and writes nothing.
 - Coordinate with `opentide-rule` for the structural placement and `detection-engineering` for hunt-to-rule conversion discipline.

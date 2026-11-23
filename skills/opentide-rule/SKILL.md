@@ -46,7 +46,7 @@ Resolve the live structure in this order, stopping at the first that answers:
    cause, not a missing object type.
 
 Then read a neighbouring object of the same family for local convention, and
-`opentide --json info rules` to see what already exists before adding
+`opentide --json info rules` (it holds only that section; `--platform` with a section is a usage error) to see what already exists before adding
 something that overlaps.
 
 Repository layout is not fixed either. A CoreTide-era corpus uses different
@@ -152,6 +152,41 @@ What this skill asserts is the part the schema does not:
   anything failed. A platform whose every tenant failed is not in `deployed`.
   On GitHub Actions, GitLab and Azure Pipelines the job summary has a table of
   the failures, and a platform with a failed rule shows as `partly deployed`.
+- **`--json` rows carry an `action`.** A deployed Elastic or Sentinel rule reads
+  `create`, `update` or `unchanged` (Sentinel reads the workspace before it
+  writes; it no longer reports `upsert`). `unchanged` means nothing was written.
+- **Techniques are sent per platform, never merged.** A block's own technique
+  list (Sentinel `alert.techniques`/`alert.tactics`, Defender `alert.techniques`)
+  is sent when set, an empty list counting as unset; otherwise the objective's
+  techniques are. CrowdStrike's `details.tactic`/`details.technique` are sent
+  only when set. Sentinel is held to ATT&CK v18
+  (`technique_newer_than_sentinel_attack`), Defender to Enterprise ids
+  (`technique_not_enterprise_left_out`): read the dry run's warnings.
+- **Push diffs and promotion.** On a push, `deploy` reads the pushed commits'
+  diff; `OPENTIDE_PUSH_BASE` names the commit it starts at, on any provider (the
+  generated Azure pipeline sets it). Status promotion happens only on a push to
+  the default branch (`OPENTIDE_DEFAULT_BRANCH` where the provider has none).
+- **`opentide setup ci <github|gitlab|azure>`** writes the pipeline.
+  `--stdout` prints it without writing, to diff against an adapted one;
+  `github --app-token` pushes with a GitHub App token (variable
+  `OPENTIDE_APP_CLIENT_ID`, secret `OPENTIDE_APP_PRIVATE_KEY`);
+  `azure --variable-group <name>` links a Library group. Put your own jobs
+  between `# opentide:user-begin` and `# opentide:user-end`: that region
+  survives regeneration, the rest of the file is replaced.
+- **`validate` failures name their cause.** A `--file` path that does not exist
+  fails with `file_not_found`, one that selects nothing with `scope_no_match`.
+  `validate query --live --json` lists refused queries under `rejected`;
+  `failure.code` is `query_rejected`, `credential_unset`, `tenant_unreachable`
+  or `authentication_failed`.
+- **`lint.toml` tunes severity per code**: `[<check>.codes]`, for example
+  `[queries.codes] kql_join_summarize_before_project = "info"` (`off` drops a
+  code). It cannot change an engine error, which `validate` reports.
+  `reviewed_before_modified` (`[metadata]`) warns when `metadata.reviewed` is
+  before `metadata.modified`.
+- **MCP `get_chaining`** returns a UUID's threat, objective and rule lineage;
+  `depth` (optional, undirected hops, `0` is the object alone) bounds it, and
+  `chaining_index` holds only what is returned. A rule whose `detection_model`
+  is a signal follows it to that signal's objective.
 - **The SDKs deploy to every platform.** The Python and Node SDKs and the Rust
   `opentide` crate deploy to all thirteen built-in platforms
   (`Connection.deploy`). A failed deploy always raises (or rejects) with
