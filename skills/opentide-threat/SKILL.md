@@ -156,6 +156,7 @@ Chaining models relationships between TVMs using a controlled vocabulary:
 2. Include a `description` narrative explaining the relationship.
 3. Verify the target TVM exists in the corpus before adding a chain.
 4. Multiple chains per TVM are normal (2-3 typical for complex threats).
+5. A chain never points at its own threat, and its keys are exactly `relation`, `vector` and `description`: `validate` refuses a self-link and a misspelt `vector`/`relation` key.
 
 ```yaml
 chaining:

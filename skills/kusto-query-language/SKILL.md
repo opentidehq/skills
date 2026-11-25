@@ -207,7 +207,7 @@ let malicious_domains = dynamic(["evil.example", "c2.example.net"]);
 
 - **Inline IOCs** with `let` + `dynamic([...])`; avoid `externaldata()` for production rules unless your tenant explicitly supports it.
 - **Inline reference tables** via `datatable(...)` for known-good lists, Tier 0 groups, exclusion lookups.
-- **`materialize()`** when the same intermediate set feeds multiple downstream joins (e.g. TI feed dedup before joining against multiple log tables).
+- **`materialize()`** when the same intermediate set feeds multiple downstream joins (e.g. TI feed dedup before joining against multiple log tables). It takes a tabular expression: `extend x = materialize(y)` is a syntax error in Kusto, and `opentide validate` reports it.
 
 ```kql
 let active_ti = materialize(

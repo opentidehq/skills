@@ -154,7 +154,21 @@ What this skill asserts is the part the schema does not:
   the failures, and a platform with a failed rule shows as `partly deployed`.
 - **`--json` rows carry an `action`.** A deployed Elastic or Sentinel rule reads
   `create`, `update` or `unchanged` (Sentinel reads the workspace before it
-  writes; it no longer reports `upsert`). `unchanged` means nothing was written.
+  writes; it no longer reports `upsert`). `unchanged` means nothing was written;
+  Splunk and Elastic report it too, and `summary` counts it under `unchanged`.
+- **A rule no tenant takes is `skipped`**, with a `reason` and no tenant, and a
+  dry run lists it under `unrouted`, not in `changes`. A platform that sent
+  nothing is not in `deployed`.
+- **Retiring a deleted rule file.** Every `deploy` warns about deployed rules
+  whose file is gone and lists them under `retirable` in `--json`. A
+  `--strategy RELEASE` run with `--prune` deletes them from the tenants: by the
+  id deployment state records on platforms that keep one, by UUID on Microsoft
+  Defender, and from the run's diff on Sentinel, Splunk, Elastic and HarfangLab;
+  Carbon Black Cloud cannot, and says so. Nothing is retired while an object
+  file fails to load or the UUID is still in the workspace. The production job
+  `opentide setup ci` generates passes `--prune`; `setup ci --no-prune` keeps
+  the warning only. To retire a rule deliberately, prefer the `DELETION` status
+  over deleting its file.
 - **Techniques are sent per platform, never merged.** A block's own technique
   list (Sentinel `alert.techniques`/`alert.tactics`, Defender `alert.techniques`)
   is sent when set, an empty list counting as unset; otherwise the objective's
@@ -173,6 +187,17 @@ What this skill asserts is the part the schema does not:
   `azure --variable-group <name>` links a Library group. Put your own jobs
   between `# opentide:user-begin` and `# opentide:user-end`: that region
   survives regeneration, the rest of the file is replaced.
+- **Objects are read as YAML 1.2, field types as declared.** Only `true` and
+  `false` are booleans (`enabled: yes` is a string), a quoted number in an
+  integer field fails, a merge key (`<<: *base`) is an ordinary key, and
+  `metadata.created`/`modified` must be dates (`2026-11-25`).
+- **Write multi-line queries as literal blocks (`|` or `|-`).** In a folded
+  block (`>`, `>-`) or a plain multi-line scalar, YAML joins the lines, so a
+  `//` comment silently comments out every filter after it; `validate` reports
+  it as `query_folded_comment`.
+- **`opentide new` takes `metadata.organisation` from
+  `.opentide/configurations/organisation.toml`** (written by
+  `opentide setup --org "<name>"`); with no file it leaves it out and says so.
 - **`validate` failures name their cause.** A `--file` path that does not exist
   fails with `file_not_found`, one that selects nothing with `scope_no_match`.
   `validate query --live --json` lists refused queries under `rejected`;
@@ -183,10 +208,19 @@ What this skill asserts is the part the schema does not:
   code). It cannot change an engine error, which `validate` reports.
   `reviewed_before_modified` (`[metadata]`) warns when `metadata.reviewed` is
   before `metadata.modified`.
-- **MCP `get_chaining`** returns a UUID's threat, objective and rule lineage;
-  `depth` (optional, undirected hops, `0` is the object alone) bounds it, and
-  `chaining_index` holds only what is returned. A rule whose `detection_model`
-  is a signal follows it to that signal's objective.
+- **MCP `get_chaining`** returns a UUID's threat, objective and rule lineage,
+  one hop by default: an objective's threats and rules, a rule's objective.
+  `depth` (undirected hops, `0` is the object alone) widens it; an answer that
+  stops short carries `truncated: true` and a `hint` to call again with a
+  larger `depth`. Read the graph from `lineage`; `chaining_index` holds only
+  the `threat.chaining` relations of the returned threats. A rule whose
+  `detection_model` is a signal follows it to that signal's objective.
+- **MCP `deploy_rule` with `dry_run`** returns the command line's
+  `deploy --dry-run` document (`plan`, `changes`, `payloads`, `diagnostics`)
+  and `would_deploy`; `platform` may be left out when the rule has one block.
+- **Template resources are YAML.** `opentide://templates/{type}` is the
+  template `opentide new` starts from, as `application/yaml`; read it as YAML,
+  not as a JSON string.
 - **The SDKs deploy to every platform.** The Python and Node SDKs and the Rust
   `opentide` crate deploy to all thirteen built-in platforms
   (`Connection.deploy`). A failed deploy always raises (or rejects) with

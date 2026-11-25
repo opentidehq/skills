@@ -9,6 +9,8 @@ This skill encodes the discipline of mapping adversary behaviour to ATT&CK and b
 
 **Current baseline**: ATT&CK **v19** (April 2026, Enterprise domain: 15 tactics, 222 techniques, 475 sub-techniques).
 
+> **opentide's vocabulary is newer.** opentide 1.0.0's bundled `att&ck` vocabulary follows ATT&CK **20.1**, and that vocabulary is what `opentide validate` checks ids against. When this skill's v19 index and the vocabulary disagree, the vocabulary wins: look the id up with `opentide info vocab` or the MCP resource `opentide://vocabularies/att&ck`.
+
 > **v19 breaking change**: Defense Evasion was split into **Stealth** (TA0005) and **Defense Impairment** (TA0112). Any existing mappings referencing TA0005 as "Defense Evasion" must be reviewed and re-assigned.
 
 > **Online version check**: If this skill may be outdated, verify the current ATT&CK version at:
