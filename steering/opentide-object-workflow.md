@@ -41,4 +41,4 @@ Resolve the current revision (for example `rule::1.1`) from `opentide://schemas/
 
 ## Platform keys (MDR `configurations.*`)
 
-`sentinel`, `defender_for_endpoint`, `splunk`, `crowdstrike`, `carbon_black_cloud`, `sentinel_one`, `harfanglab`, `elastic`, `sysdig`, `bitdefender`, `graylog`, `exabeam`, `google_secops`. `opentide --json info` is authoritative; `coverage.json` maps each key to its platform skill.
+`sentinel`, `microsoft_defender`, `splunk`, `crowdstrike`, `carbon_black_cloud`, `sentinel_one`, `harfanglab`, `elastic`, `sysdig`, `bitdefender`, `graylog`, `exabeam`, `google_secops`. `opentide --json info` is authoritative; `coverage.json` maps each key to its platform skill.

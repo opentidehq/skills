@@ -5,7 +5,7 @@ description: Microsoft Sentinel (Azure Log Analytics) hunting, analytic-rule, an
 
 # Microsoft Sentinel — hunting & detection
 
-Author and review KQL for Microsoft Sentinel (Azure Log Analytics) workspaces. This skill covers Sentinel-native tables and operational specifics; for endpoint telemetry (process, file, registry, device-level network) use **`microsoft-defender-endpoint`**; for vendor-neutral KQL optimisation use **`kusto-query-language`**.
+Author and review KQL for Microsoft Sentinel (Azure Log Analytics) workspaces. This skill covers Sentinel-native tables and operational specifics; for endpoint telemetry (process, file, registry, device-level network) use **`microsoft-defender`**; for vendor-neutral KQL optimisation use **`kusto-query-language`**.
 
 ---
 

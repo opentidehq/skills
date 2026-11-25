@@ -269,7 +269,7 @@ exclusions:
 | Stack | Skill pairing |
 |-------|----------------|
 | Sentinel & Log Analytics | `kusto-query-language` + `microsoft-sentinel` |
-| Defender for Endpoint | `kusto-query-language` + `microsoft-defender-endpoint` |
+| Microsoft Defender | `kusto-query-language` + `microsoft-defender` |
 | Splunk SPL / ES correlation | `splunk-spl-processing` |
 | CrowdStrike Falcon | `crowdstrike-falcon` |
 | SentinelOne Singularity | `sentinelone-singularity` |

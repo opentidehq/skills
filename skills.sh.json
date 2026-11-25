@@ -27,7 +27,7 @@
       "skills": [
         "kusto-query-language",
         "microsoft-sentinel",
-        "microsoft-defender-endpoint",
+        "microsoft-defender",
         "entra-id",
         "windows-event-logs",
         "splunk-spl-processing",

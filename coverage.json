@@ -8,8 +8,8 @@
       "can_validate": true,
       "can_query": true
     },
-    "defender_for_endpoint": {
-      "skills": ["microsoft-defender-endpoint", "kusto-query-language"],
+    "microsoft_defender": {
+      "skills": ["microsoft-defender", "kusto-query-language"],
       "can_deploy": true,
       "can_validate": true,
       "can_query": true
