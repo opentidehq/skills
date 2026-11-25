@@ -19,7 +19,7 @@ keywords:
   - sentinel
   - microsoft sentinel
   - defender
-  - defender for endpoint
+  - microsoft defender
   - crowdstrike
   - falcon
   - carbon black
@@ -96,7 +96,7 @@ Load steering on demand — do not read everything upfront.
 | Log source coverage / what telemetry we have | `skills/opentide-visibility/SKILL.md` |
 | KQL (any Microsoft surface) | `skills/kusto-query-language/SKILL.md` + platform skill |
 | Sentinel / Log Analytics | `skills/microsoft-sentinel/SKILL.md` |
-| Defender Advanced Hunting | `skills/microsoft-defender-endpoint/SKILL.md` |
+| Microsoft Defender (advanced hunting, custom detection rules) | `skills/microsoft-defender/SKILL.md` |
 | Splunk / SPL | `skills/splunk-spl-processing/SKILL.md` |
 | Elastic / EQL / ES\|QL | `skills/elastic-security/SKILL.md` |
 | Graylog | `skills/graylog/SKILL.md` |

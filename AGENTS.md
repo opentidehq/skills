@@ -54,7 +54,7 @@ opentide structures the Detection Engineering lifecycle as as-code (YAML) object
 
 The structural revision (`metadata.schema`, e.g. `rule::1.1`) moves with the engine: resolve it from the opentide MCP resources (`opentide://schemas/<family>`, `opentide://templates/<family>`) or the generated `.opentide/schemas/` and `.opentide/templates/`, never from memory. A CoreTide-era corpus still uses `Objects/Threat Vectors/`, `Objects/Detection Objectives/` and `Objects/Detection Rules/`; opentide has no command that converts it (`migrate objects` was removed in 0.21.0), so moving it is the repository owner's decision, and `opentide validate` reports the keys it no longer accepts.
 
-opentide deploys to thirteen platforms, each a `configurations.<key>`: `sentinel`, `defender_for_endpoint`, `splunk`, `crowdstrike`, `carbon_black_cloud`, `sentinel_one`, `harfanglab`, `elastic`, `sysdig`, `bitdefender`, `graylog`, `exabeam`, `google_secops`. [`coverage.json`](coverage.json) maps each key to its skills; `opentide --json info` lists the platforms the installed engine knows and whether each can deploy, validate (`--live`) and query.
+opentide deploys to thirteen platforms, each a `configurations.<key>`: `sentinel`, `microsoft_defender`, `splunk`, `crowdstrike`, `carbon_black_cloud`, `sentinel_one`, `harfanglab`, `elastic`, `sysdig`, `bitdefender`, `graylog`, `exabeam`, `google_secops`. [`coverage.json`](coverage.json) maps each key to its skills; `opentide --json info` lists the platforms the installed engine knows and whether each can deploy, validate (`--live`) and query.
 
 ---
 
@@ -80,12 +80,12 @@ Avoid mixing heterogeneous object edits in one merge unless explicitly orchestra
 
 ## Query & platform skill routing
 
-Microsoft stacks share **KQL** idioms (**`kusto-query-language`**), diverging operationally (**`microsoft-sentinel`** vs **`microsoft-defender-endpoint`**). Splunk adopts **SPL** (**`splunk-spl-processing`**). Other SIEMs each carry their own language skill: **`elastic-security`** (Kuery, Lucene, EQL, ES|QL), **`graylog`** (Graylog search), **`exabeam-siem`** (Exabeam Query Language — not Elastic's EQL) and **`google-secops`** (YARA-L 2.0). Endpoint / XDR / runtime integrations each carry authored guardrails (**`crowdstrike-falcon`**, **`sentinelone-singularity`**, **`carbon-black-cloud`**, **`harfanglab`**, **`bitdefender-gravityzone`**, **`sysdig-secure`**). Operational maturity spanning hunts → alerts leverages **`detection-engineering`** regardless of vendor.
+Microsoft stacks share **KQL** idioms (**`kusto-query-language`**), diverging operationally (**`microsoft-sentinel`** vs **`microsoft-defender`**). Splunk adopts **SPL** (**`splunk-spl-processing`**). Other SIEMs each carry their own language skill: **`elastic-security`** (Kuery, Lucene, EQL, ES|QL), **`graylog`** (Graylog search), **`exabeam-siem`** (Exabeam Query Language — not Elastic's EQL) and **`google-secops`** (YARA-L 2.0). Endpoint / XDR / runtime integrations each carry authored guardrails (**`crowdstrike-falcon`**, **`sentinelone-singularity`**, **`carbon-black-cloud`**, **`harfanglab`**, **`bitdefender-gravityzone`**, **`sysdig-secure`**). Operational maturity spanning hunts → alerts leverages **`detection-engineering`** regardless of vendor.
 
 | `configurations.<key>` | Skill(s) |
 |---|---|
 | `sentinel` | `microsoft-sentinel` + `kusto-query-language` |
-| `defender_for_endpoint` | `microsoft-defender-endpoint` + `kusto-query-language` |
+| `microsoft_defender` | `microsoft-defender` + `kusto-query-language` |
 | `splunk` | `splunk-spl-processing` |
 | `crowdstrike` | `crowdstrike-falcon` |
 | `carbon_black_cloud` | `carbon-black-cloud` |
@@ -184,7 +184,7 @@ Unless explicitly commissioned:
 |---|---|
 | `kusto-query-language` | Vendor-neutral KQL — operator hierarchy, joins, FP engineering, anti-patterns (+ `references/Best-Practices.md`, `references/Hypothesis-Anti-Patterns.md`) |
 | `microsoft-sentinel` | Sentinel / Log Analytics specifics — table domain matrix, ResultType codes, NRT vs scheduled rules, ASIM, TI patterns (+ `references/Anti-Patterns.md`) |
-| `microsoft-defender-endpoint` | Defender Advanced Hunting specifics — Device*/Email* schemas, mandatory output columns, FileProfile, AdditionalFields, NRT constraints (+ `references/Anti-Patterns.md`) |
+| `microsoft-defender` | Microsoft Defender Advanced Hunting and custom detection rules (`configurations.microsoft_defender`, Graph beta) — Device*/Email* schemas, schedule, alert, entities, automated actions, FileProfile, AdditionalFields, NRT constraints (+ `references/Anti-Patterns.md`) |
 | `entra-id` | Microsoft Entra ID — identity platform internals, telemetry surfaces, SKU gating, ResultType codes, directory roles, PIM, token mechanics, OAuth/consent, attack patterns (+ `references/ResultType-Codes.md`) |
 | `windows-event-logs` | Windows native event IDs (Security/Sysmon/PowerShell), audit policy prerequisites, platform table mapping (+ `references/Audit-Policy-Matrix.md`) |
 | `splunk-spl-processing` | SPL for Splunk Enterprise / ES — index/sourcetype discipline, stats vs tstats vs mstats, accelerated DMs, ES correlation searches, RBA (+ `references/Anti-Patterns.md`) |

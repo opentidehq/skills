@@ -25,7 +25,7 @@ All paths are relative to this repository root. Each skill is a `skills/<name>/S
 |-------|--------------|
 | `kusto-query-language` | Any KQL — pair with a Microsoft platform skill |
 | `microsoft-sentinel` | Sentinel tables, NRT, ASIM, TI |
-| `microsoft-defender-endpoint` | Advanced Hunting, Device* schemas |
+| `microsoft-defender` | Advanced Hunting, Device* schemas, `microsoft_defender` custom detection rules |
 | `entra-id` | Entra identity telemetry, ResultType, OAuth |
 | `windows-event-logs` | Native Windows event IDs, audit policy |
 | `splunk-spl-processing` | SPL, ES, tstats, correlation searches |

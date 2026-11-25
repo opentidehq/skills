@@ -2,7 +2,7 @@
   "version": 1,
   "source": "OpenTideHQ/skills",
   "ref": "main",
-  "generated_at": "2026-11-23T15:16:32Z",
+  "generated_at": "2026-11-25T10:42:15Z",
   "skills": [
     {
       "slug": "active-directory",
@@ -82,7 +82,7 @@
     {
       "slug": "kusto-query-language",
       "name": "kusto-query-language",
-      "description": "Platform-agnostic Kusto Query Language (KQL) patterns, optimisation rules, anti-patterns, and correlation techniques shared by Microsoft Sentinel and Microsoft Defender Advanced Hunting. Covers operator hierarchy, filter ordering, joins, summarise patterns, commenting discipline, false-positive engineering, IOC templates, and bug-class anti-patterns. Use when authoring or reviewing any KQL — pair with microsoft-sentinel or microsoft-defender-endpoint for table schemas, ingestion semantics, and platform-native rule constraints."
+      "description": "Platform-agnostic Kusto Query Language (KQL) patterns, optimisation rules, anti-patterns, and correlation techniques shared by Microsoft Sentinel and Microsoft Defender Advanced Hunting. Covers operator hierarchy, filter ordering, joins, summarise patterns, commenting discipline, false-positive engineering, IOC templates, and bug-class anti-patterns. Use when authoring or reviewing any KQL — pair with microsoft-sentinel or microsoft-defender for table schemas, ingestion semantics, and platform-native rule constraints."
     },
     {
       "slug": "linux-internals",
@@ -100,9 +100,9 @@
       "description": "Azure cloud infrastructure security telemetry for detection engineering — Azure Activity Log and Resource Manager operations, Azure RBAC model (roles, scopes, PIM), managed identity mechanics, Key Vault access patterns, storage account security, virtual machine and compute operations, network security groups, Azure Policy and Defender for Cloud signals. Use when authoring detections targeting Azure resource abuse, privilege escalation, data exfiltration, or persistence at the infrastructure layer. For Entra ID identity detections, use `entra-id` instead."
     },
     {
-      "slug": "microsoft-defender-endpoint",
-      "name": "microsoft-defender-endpoint",
-      "description": "Microsoft Defender for Endpoint (MDE) Advanced Hunting authoring guidance — Device*/Email*/Identity* table schemas, Timestamp discipline, ProcessUniqueId vs PID for temporal joins, FileProfile() prevalence enrichment with null handling, AdditionalFields parsing, mandatory output columns for custom detection rules (Timestamp/DeviceId/ReportId), NRT single-table/no-comment constraints, retention boundaries, named-pipe and DGA detection patterns. Always pair with kusto-query-language for language-level optimisation. Use for configurations.defender_for_endpoint blocks in opentide detection rules and Defender-first hypotheses."
+      "slug": "microsoft-defender",
+      "name": "microsoft-defender",
+      "description": "Microsoft Defender XDR advanced hunting and custom detection rules — Device*/Email*/Identity* table schemas, Timestamp discipline, ProcessUniqueId vs PID for temporal joins, FileProfile() prevalence enrichment, AdditionalFields parsing, required output columns, NRT constraints, and the opentide configurations.microsoft_defender block on the Microsoft Graph beta custom detection API (schedule frequency and lookback, alert template, entity mappings, automated actions, device-group scope, incident correlation, exclusions, uuid-addressed deploy). Always pair with kusto-query-language for language-level optimisation. Use for configurations.microsoft_defender blocks in opentide detection rules and Defender-first hypotheses."
     },
     {
       "slug": "microsoft-sentinel",

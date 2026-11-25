@@ -22,7 +22,7 @@ Read **`skills/detection-engineering/SKILL.md`** — opentide threat → objecti
 | Stack | Language skill | Platform skill |
 |-------|----------------|----------------|
 | Sentinel / Log Analytics | `kusto-query-language` | `microsoft-sentinel` |
-| Defender Advanced Hunting | `kusto-query-language` | `microsoft-defender-endpoint` |
+| Defender Advanced Hunting | `kusto-query-language` | `microsoft-defender` |
 | Splunk Enterprise / ES | `splunk-spl-processing` | (included in SPL skill) |
 | CrowdStrike Falcon | — | `crowdstrike-falcon` |
 | Elastic Security | Kuery / Lucene / EQL / ES\|QL | `elastic-security` |
