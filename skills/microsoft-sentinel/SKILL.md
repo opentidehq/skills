@@ -374,5 +374,6 @@ When KQL is wired into a `configurations.sentinel` block in an opentide MDR obje
 - **Severity, response actions, playbook URIs** belong in `response.alert_severity` / `response.playbook` per MDR schema.
 - **Inline KQL** still carries the mandatory header block, comment discipline, and FP engineering described above.
 - **Techniques** come from `alert.techniques`/`alert.tactics` when set, otherwise from the objective (§7, ATT&CK v18 alignment). Never copy both.
+- **A misspelt table fails `validate`.** A table that is neither in the catalogue nor declared in `visibility.toml`, but is a near miss of one that is (`SecurityEvnt`), is the error `kql_table_misspelt`, with the table to use. If the workspace really holds that table or function, declare it as a `[[logsources]]` entry with `system = "sentinel"`; other unknown tables stay the `kql_unknown_table` warning.
 - **Deploy reads before it writes.** Each rule is read from the workspace first, and `deploy --json` reports `create`, `update` or `unchanged` per rule (not `upsert`); a read ARM refuses fails that rule and writes nothing.
 - Coordinate with `opentide-rule` for the structural placement and `detection-engineering` for hunt-to-rule conversion discipline.
