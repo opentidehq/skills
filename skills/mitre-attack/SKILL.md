@@ -117,8 +117,10 @@ Deprecated techniques have no replacement. Remove the mapping and document the g
 
 | Field | ATT&CK content |
 |---|---|
-| Rule metadata / `configurations.*.mitre` | Technique IDs for the platform rule |
+| `techniques` / `configurations.*` technique fields | Technique IDs for the rule; a block's own list (Sentinel `alert.techniques`/`alert.tactics`, Defender `alert.techniques`) is sent when set, otherwise the objective's, never merged |
 | `description` | Technique context in prose |
+
+Deploy adapts the ids per platform: Sentinel is aligned to ATT&CK v18 (a newer id is sent as the v18 id it replaced, else its v18 parent, else left out, with `technique_newer_than_sentinel_attack`); Defender sends Enterprise ids only (`technique_not_enterprise_left_out`); CrowdStrike's one-value `details.tactic`/`details.technique` are never inherited. Read a platform's warnings in `deploy --dry-run`, and see its skill.
 
 **Quality bar**: The MDR technique mapping must match what the query actually detects. A KQL query filtering on `FileName =~ "ntdsutil.exe"` maps to `T1003.003`, not the parent `T1003`.
 

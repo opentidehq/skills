@@ -347,4 +347,5 @@ When KQL is wired into a `configurations.defender_for_endpoint` block in an open
 
 - Description, tuning narrative, alert severity, response actions belong in the MDR `description` and `response.*` fields per MDR schema.
 - Inline KQL still carries the mandatory header block, comment discipline, and FP engineering above.
+- **Techniques.** `alert.techniques` is sent as the alert template's `mitreTechniques` when set; an empty list counts as unset. Otherwise deploy sends the rule's objective's techniques, never merged with the block's. Defender takes Enterprise ATT&CK ids only: Mobile and ICS ids are left out with a `technique_not_enterprise_left_out` warning. The Sentinel v18 mapping does not apply.
 - Coordinate with `opentide-rule` for structural placement and `detection-engineering` for hunt-to-rule conversion discipline.
