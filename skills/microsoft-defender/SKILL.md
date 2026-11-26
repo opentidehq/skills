@@ -238,7 +238,7 @@ Project the columns an entity needs to resolve, then map them in `entities` (§1
 | `urls` | `RemoteUrl` |
 | `mailboxes`, `mail_messages` | `RecipientEmailAddress`, `NetworkMessageId`, `SenderFromAddress` |
 
-Graph does not say which fields a mapping needs to resolve an entity; map every identifying column the query returns.
+Graph does not publish which fields a mapping needs. One rule is known: a registry value needs its `key` (Graph refuses `value_name` alone). Give each device a `device_id` or `name`, and each account an `aad_user_id`, `sid` or `upn`: those are the identifiers Defender names an impacted asset by. Beyond that, map every identifying column the query returns.
 
 ### Automated actions — conservative defaults
 
@@ -288,6 +288,7 @@ Drop the comment header for an NRT rule.
 - [ ] `configurations.microsoft_defender` sets `query` and `schedule.frequency`; no `lookback` with `NRT`, none shorter than `frequency`.
 - [ ] Every column named in `entities`, `actions` and `alert.custom_details` is projected, in the query's spelling.
 - [ ] At least one entity mapped (no `microsoft_defender_no_entities` advisory).
+- [ ] Every `registry_values` mapping sets `key`; every `hosts` mapping `device_id` or `name`; every `accounts` mapping `aad_user_id`, `sid` or `upn`.
 - [ ] Automated actions proportionate to confidence; no allow and block of the same file.
 - [ ] `metadata.uuid` unchanged on an already-deployed rule (it is the Defender rule id).
 
@@ -389,6 +390,17 @@ Each key is an entity kind holding a list of mappings; each mapping maps a field
 
 Defender for Endpoint tables yield hosts, accounts, files, processes, ips, urls and registry values; the other kinds come from the Office 365, Identity and Cloud Apps tables. A mapping has at least one field. A block that maps no entity gets the advisory `microsoft_defender_no_entities`: the alert cannot be triaged or acted on by entity, so map at least the device or account.
 
+**Identifiers per kind.** Beyond one field, opentide enforces only what Graph is known to refuse, and warns where an impacted asset would have no identifier:
+
+| Kind | Rule | Code |
+|---|---|---|
+| `registry_values` | `key` is required (Graph identifier `RegKey`; without it: "Entity mapping for type 'RegistryValue' does not include a required identifier. Supported identifiers: RegKey \| Name") | `microsoft_defender_entity_identifier` (error) |
+| `hosts` | set `device_id` or `name` (`DeviceId`, `DeviceName`, `RemoteDeviceName`) | `microsoft_defender_impacted_asset_identifier` (warning) |
+| `accounts` | set `aad_user_id`, `sid` or `upn` (`AccountObjectId`, `AccountSid`, `AccountUpn`, `InitiatingProcessAccount*`); `name` alone is weak | `microsoft_defender_impacted_asset_identifier` (warning) |
+| every other kind | any one of its fields | `microsoft_defender_entity_mapping` (error, when empty) |
+
+Graph checks the mappings when it creates or enables a rule, not while the rule is disabled: a disabled rule with a bad mapping fails on the deploy that enables it, so fix the error before then.
+
 **Column names** (entity fields, action columns, `custom_details` values) are sent verbatim, in the case the query's output spells them (`DeviceId`). Validation only checks they are non-blank (`microsoft_defender_column`); Defender checks they exist at deploy, so project every one of them.
 
 ### `actions`
@@ -467,6 +479,7 @@ configurations:
 | `microsoft_defender_custom_details` | `alert.custom_details` not a map of non-blank names to strings |
 | `microsoft_defender_entity_kind` | an unknown kind under `entities` |
 | `microsoft_defender_entity_mapping` | a kind that is not a list, an empty mapping, or a field not of its kind |
+| `microsoft_defender_entity_identifier` | a mapping without an identifier Graph requires of its kind (a `registry_values` mapping without `key`) |
 | `microsoft_defender_action_kind` | an unknown action under `actions` |
 | `microsoft_defender_action_target` | an empty action list, an empty target, a field not of its action, or empty `device_groups` |
 | `microsoft_defender_isolation_type` | `isolation_type` not `full` or `selective` |
@@ -474,7 +487,7 @@ configurations:
 | `microsoft_defender_scope` | `scope` not a non-empty `device_groups` list |
 | `microsoft_defender_incident` | `incident` not `{exclude_from_correlation: <boolean>}` |
 
-`microsoft_defender_no_entities` is an advisory (warning), never a rejection. Run `opentide explain <code>` for any of them.
+`microsoft_defender_no_entities` and `microsoft_defender_impacted_asset_identifier` (a device or account mapping with no identifier) are advisories (warnings), never a rejection; `validate --strict` fails on them. Run `opentide explain <code>` for any of them.
 
 ### Deploy
 
