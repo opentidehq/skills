@@ -204,6 +204,8 @@ NRT (`schedule.frequency: NRT`, sent as `PT0S`) runs continuously but is strictl
 | No `externaldata()` | External references unsupported |
 | No `lookback` | opentide rejects `schedule.lookback` with `NRT` (`microsoft_defender_lookback`) |
 
+`opentide lint` and the editor report a query that breaks the first three, a table off Microsoft's NRT list, or `EmailEvents`' `LatestDeliveryLocation`/`LatestDeliveryAction` as the warning `microsoft_defender_nrt_query` (not `validate`; `lint --strict` fails on it).
+
 **NRT-supported tables**:
 
 | Category | Tables |
@@ -401,7 +403,7 @@ Defender for Endpoint tables yield hosts, accounts, files, processes, ips, urls 
 
 Graph checks the mappings when it creates a rule and each time it enables one, not on an update to a disabled rule (whether it checks a rule created disabled is not confirmed): a disabled rule with a bad mapping can fail on the deploy that enables it, so fix the error before then. The warning's columns are those Defender's wizard maps to an impacted asset, and the combinations are Sentinel's strong identifiers; nothing says Graph refuses a mapping without them.
 
-**Column names** (entity fields, action columns, `custom_details` values) are sent verbatim, in the case the query's output spells them (`DeviceId`). Validation only checks they are non-blank (`microsoft_defender_column`); Defender checks they exist at deploy, so project every one of them.
+**Column names** (entity fields, action columns, `custom_details` values) are sent verbatim, in the case the query's output spells them (`DeviceId`). A blank one is `microsoft_defender_column`; one the query's output lacks is `microsoft_defender_column_not_in_output` when opentide can infer the output, and Defender's to refuse at deploy otherwise, so project every one of them.
 
 ### `actions`
 
@@ -489,7 +491,7 @@ configurations:
 | `microsoft_defender_scope` | `scope` not a non-empty `device_groups` list |
 | `microsoft_defender_incident` | `incident` not `{exclude_from_correlation: <boolean>}` |
 
-`microsoft_defender_no_entities`, `microsoft_defender_impacted_asset_identifier` (a device or account mapping with no strong identifier) and `microsoft_defender_column_type` (an entity mapped from a `dynamic`, `datetime`, `bool` or `timespan` column) are warnings and `microsoft_defender_unprojected_output` (the query returns columns the block does not use) a note: advisories, never rejections. `validate --strict` fails on `microsoft_defender_no_entities`, not on `microsoft_defender_impacted_asset_identifier`; `lint --strict` fails on any warning. `microsoft_defender_column_not_in_output` and `microsoft_defender_required_columns` are errors, new in opentide 1.1.0: `validate` can fail a rule that passed before. The output checks run offline, in `validate`, `lint` and the editor, and report nothing when the engine cannot infer the query's output (an unknown table or function, `evaluate`, `bag_unpack`). Run `opentide explain <code>` for any of them.
+`microsoft_defender_no_entities`, `microsoft_defender_impacted_asset_identifier` (a device or account mapping with no strong identifier) and `microsoft_defender_column_type` (an entity mapped from a `dynamic`, `datetime`, `bool` or `timespan` column) are warnings, as are `microsoft_defender_custom_details_limit` (more than 20 custom details, or names over 4 KB: Defender drops them all from the alert) and `microsoft_defender_placeholder_limit` (more than three `{{Column}}` in the alert title or description), and `microsoft_defender_unprojected_output` (the query returns columns the block does not use) a note: advisories, never rejections. `validate --strict` fails on `microsoft_defender_no_entities`, not on `microsoft_defender_impacted_asset_identifier` or the two limits; `lint --strict` fails on any warning. `microsoft_defender_column_not_in_output` and `microsoft_defender_required_columns` are errors, new in opentide 1.1.0: `validate` can fail a rule that passed before. The output checks run offline, in `validate`, `lint` and the editor, and report nothing when the engine cannot infer the query's output (an unknown table or function, `evaluate`, `bag_unpack`). Run `opentide explain <code>` for any of them.
 
 ### Deploy
 
