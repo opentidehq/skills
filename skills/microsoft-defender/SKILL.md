@@ -170,7 +170,7 @@ let lookback = ago(7d);
 
 ### Required output columns
 
-Custom detection rules in Defender XDR enforce specific columns. Missing required columns → rule creation fails (unlike hunting queries where output columns are flexible). `opentide validate` fails such a query offline when the query names its output columns and a Defender XDR table (`microsoft_defender_required_columns`, an error since the release after 1.0.0: a rule that passed before can fail now), and `opentide validate query --live` checks what the tenant returns.
+Custom detection rules in Defender XDR enforce specific columns. Missing required columns → rule creation fails (unlike hunting queries where output columns are flexible). `opentide validate` fails such a query offline when the query names its output columns and a Defender XDR table (`microsoft_defender_required_columns`, an error since opentide 1.1.0: a rule that passed before can fail now), and `opentide validate query --live` checks what the tenant returns.
 
 **Endpoint tables** (`DeviceProcessEvents`, `DeviceFileEvents`, `DeviceNetworkEvents`, `DeviceRegistryEvents`, etc.):
 
@@ -238,7 +238,7 @@ Project the columns an entity needs to resolve, then map them in `entities` (§1
 | `urls` | `RemoteUrl` |
 | `mailboxes`, `mail_messages` | `RecipientEmailAddress`, `NetworkMessageId`, `SenderFromAddress` |
 
-Graph does not say which fields a mapping needs to resolve an entity; map every identifying column the query returns.
+Graph does not publish which fields a mapping needs. One rule is known: a registry value needs its `key` (Graph refuses `value_name` alone). Give each device a `device_id` or `name` (or `netbios_name` with `nt_domain` or `dns_domain`), and each account an `aad_user_id`, `sid` or `upn` (or `name` with `nt_domain`, `dns_domain` or `upn_suffix`): those are the strong identifiers of an impacted device or user. Beyond that, map every identifying column the query returns.
 
 ### Automated actions — conservative defaults
 
@@ -288,6 +288,7 @@ Drop the comment header for an NRT rule.
 - [ ] `configurations.microsoft_defender` sets `query` and `schedule.frequency`; no `lookback` with `NRT`, none shorter than `frequency`.
 - [ ] Every column named in `entities`, `actions` and `alert.custom_details` is projected, in the query's spelling.
 - [ ] At least one entity mapped (no `microsoft_defender_no_entities` advisory).
+- [ ] Every `registry_values` mapping sets `key`; every `hosts` and `accounts` mapping sets a strong identifier (see Identifiers per kind).
 - [ ] Automated actions proportionate to confidence; no allow and block of the same file.
 - [ ] `metadata.uuid` unchanged on an already-deployed rule (the Defender rule id is `opentide-<uuid>`).
 
@@ -389,6 +390,17 @@ Each key is an entity kind holding a list of mappings; each mapping maps a field
 
 Defender for Endpoint tables yield hosts, accounts, files, processes, ips, urls and registry values; the other kinds come from the Office 365, Identity and Cloud Apps tables. A mapping has at least one field. A block that maps no entity gets the advisory `microsoft_defender_no_entities`: the alert cannot be triaged or acted on by entity, so map at least the device or account.
 
+**Identifiers per kind.** Beyond one field, opentide enforces only what Graph is known to refuse, and warns where a device or user mapping has no strong identifier:
+
+| Kind | Rule | Code |
+|---|---|---|
+| `registry_values` | `key` is required (Graph identifier `RegKey`; without it: "Entity mapping for type 'RegistryValue' does not include a required identifier. Supported identifiers: RegKey \| Name") | `microsoft_defender_entity_identifier` (error) |
+| `hosts` | set `device_id` (`DeviceId`) or `name` (`DeviceName`, `RemoteDeviceName`), or `netbios_name` with `nt_domain` or `dns_domain`; a domain or `netbios_name` alone is weak | `microsoft_defender_impacted_asset_identifier` (warning) |
+| `accounts` | set `aad_user_id` (`AccountObjectId`), `sid` (`AccountSid`, `InitiatingProcessAccountSid`) or `upn` (`AccountUpn`, `InitiatingProcessAccountUpn`), or `name` with `nt_domain`, `dns_domain` or `upn_suffix`; `name` alone is weak | `microsoft_defender_impacted_asset_identifier` (warning) |
+| every other kind | any one of its fields | `microsoft_defender_entity_mapping` (error, when empty) |
+
+Graph checks the mappings when it creates a rule and each time it enables one, not on an update to a disabled rule (whether it checks a rule created disabled is not confirmed): a disabled rule with a bad mapping can fail on the deploy that enables it, so fix the error before then. The warning's columns are those Defender's wizard maps to an impacted asset, and the combinations are Sentinel's strong identifiers; nothing says Graph refuses a mapping without them.
+
 **Column names** (entity fields, action columns, `custom_details` values) are sent verbatim, in the case the query's output spells them (`DeviceId`). Validation only checks they are non-blank (`microsoft_defender_column`); Defender checks they exist at deploy, so project every one of them.
 
 ### `actions`
@@ -467,6 +479,7 @@ configurations:
 | `microsoft_defender_custom_details` | `alert.custom_details` not a map of non-blank names to strings |
 | `microsoft_defender_entity_kind` | an unknown kind under `entities` |
 | `microsoft_defender_entity_mapping` | a kind that is not a list, an empty mapping, or a field not of its kind |
+| `microsoft_defender_entity_identifier` | a mapping without an identifier Graph requires of its kind (a `registry_values` mapping without `key`) |
 | `microsoft_defender_action_kind` | an unknown action under `actions` |
 | `microsoft_defender_action_target` | an empty action list, an empty target, a field not of its action, or empty `device_groups` |
 | `microsoft_defender_isolation_type` | `isolation_type` not `full` or `selective` |
@@ -476,7 +489,7 @@ configurations:
 | `microsoft_defender_scope` | `scope` not a non-empty `device_groups` list |
 | `microsoft_defender_incident` | `incident` not `{exclude_from_correlation: <boolean>}` |
 
-`microsoft_defender_no_entities` and `microsoft_defender_column_type` (an entity mapped from a `dynamic`, `datetime`, `bool` or `timespan` column) are warnings and `microsoft_defender_unprojected_output` (the query returns columns the block does not use) a note: advisories, never rejections. `microsoft_defender_column_not_in_output` and `microsoft_defender_required_columns` are errors, new after opentide 1.0.0: `validate` can fail a rule that passed before. The output checks run offline, in `validate`, `lint` and the editor, and report nothing when the engine cannot infer the query's output (an unknown table or function, `evaluate`, `bag_unpack`). Run `opentide explain <code>` for any of them.
+`microsoft_defender_no_entities`, `microsoft_defender_impacted_asset_identifier` (a device or account mapping with no strong identifier) and `microsoft_defender_column_type` (an entity mapped from a `dynamic`, `datetime`, `bool` or `timespan` column) are warnings and `microsoft_defender_unprojected_output` (the query returns columns the block does not use) a note: advisories, never rejections. `validate --strict` fails on `microsoft_defender_no_entities`, not on `microsoft_defender_impacted_asset_identifier`; `lint --strict` fails on any warning. `microsoft_defender_column_not_in_output` and `microsoft_defender_required_columns` are errors, new in opentide 1.1.0: `validate` can fail a rule that passed before. The output checks run offline, in `validate`, `lint` and the editor, and report nothing when the engine cannot infer the query's output (an unknown table or function, `evaluate`, `bag_unpack`). Run `opentide explain <code>` for any of them.
 
 ### Deploy
 
