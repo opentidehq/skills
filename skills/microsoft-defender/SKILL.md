@@ -170,7 +170,7 @@ let lookback = ago(7d);
 
 ### Required output columns
 
-Custom detection rules in Defender XDR enforce specific columns. Missing required columns → rule creation fails (unlike hunting queries where output columns are flexible). `opentide validate` fails such a query offline when the query names its output columns (`microsoft_defender_required_columns`), and `opentide validate query --live` checks what the tenant returns.
+Custom detection rules in Defender XDR enforce specific columns. Missing required columns → rule creation fails (unlike hunting queries where output columns are flexible). `opentide validate` fails such a query offline when the query names its output columns and a Defender XDR table (`microsoft_defender_required_columns`, an error since the release after 1.0.0: a rule that passed before can fail now), and `opentide validate query --live` checks what the tenant returns.
 
 **Endpoint tables** (`DeviceProcessEvents`, `DeviceFileEvents`, `DeviceNetworkEvents`, `DeviceRegistryEvents`, etc.):
 
@@ -187,7 +187,7 @@ Custom detection rules in Defender XDR enforce specific columns. Missing require
 | `Timestamp` | YES | Alert timestamp |
 | `ReportId` | YES | Event deduplication |
 
-Detection rule queries MUST include these in `| project`, plus every column the block's `entities`, `actions`, `alert.custom_details` and alert `{{Column}}` placeholders name. Hunting queries don't — but detection rules enforce the schema. End the query with that `project` and nothing more: Defender derives extra entity mappings from every result column, which Graph can later refuse when the rule is enabled; `opentide lint` warns about a query that returns unused columns (`microsoft_defender_unprojected_output`) and suggests the `project`.
+Detection rule queries MUST include these in `| project`, plus every column the block's `entities`, `actions`, `alert.custom_details` and alert `{{Column}}` placeholders name. Hunting queries don't — but detection rules enforce the schema. End the query with that `project` and nothing more: Defender derives extra entity mappings from every result column, which Graph can later refuse when the rule is enabled; `opentide lint --verbose` shows a note on a query that returns unused columns (`microsoft_defender_unprojected_output`; a note never fails `--strict`) and suggests the `project`.
 
 ### Lookback is the engine's
 
@@ -476,7 +476,7 @@ configurations:
 | `microsoft_defender_scope` | `scope` not a non-empty `device_groups` list |
 | `microsoft_defender_incident` | `incident` not `{exclude_from_correlation: <boolean>}` |
 
-`microsoft_defender_no_entities` and `microsoft_defender_unprojected_output` (the query returns columns the block does not use) are advisories (warnings), never rejections. The output checks run offline, in `validate`, `lint` and the editor, and report nothing when the engine cannot infer the query's output (an unknown table or function, `evaluate`, `bag_unpack`). Run `opentide explain <code>` for any of them.
+`microsoft_defender_no_entities` and `microsoft_defender_column_type` (an entity mapped from a `dynamic`, `datetime`, `bool` or `timespan` column) are warnings and `microsoft_defender_unprojected_output` (the query returns columns the block does not use) a note: advisories, never rejections. `microsoft_defender_column_not_in_output` and `microsoft_defender_required_columns` are errors, new after opentide 1.0.0: `validate` can fail a rule that passed before. The output checks run offline, in `validate`, `lint` and the editor, and report nothing when the engine cannot infer the query's output (an unknown table or function, `evaluate`, `bag_unpack`). Run `opentide explain <code>` for any of them.
 
 ### Deploy
 
