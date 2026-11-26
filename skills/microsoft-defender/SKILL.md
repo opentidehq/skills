@@ -289,7 +289,7 @@ Drop the comment header for an NRT rule.
 - [ ] Every column named in `entities`, `actions` and `alert.custom_details` is projected, in the query's spelling.
 - [ ] At least one entity mapped (no `microsoft_defender_no_entities` advisory).
 - [ ] Automated actions proportionate to confidence; no allow and block of the same file.
-- [ ] `metadata.uuid` unchanged on an already-deployed rule (it is the Defender rule id).
+- [ ] `metadata.uuid` unchanged on an already-deployed rule (the Defender rule id is `opentide-<uuid>`).
 
 ---
 
@@ -478,19 +478,21 @@ configurations:
 
 ### Deploy
 
-The Defender rule id **is** the rule's `metadata.uuid` (lowercase, canonical): the create body's `id` and the `{id}` of every update and delete. There is **no deployment state** for this platform — nothing is read from or written to `.opentide` state, and no Defender id is stored anywhere. Never change a deployed rule's `metadata.uuid`: Defender would see a new rule.
+The Defender rule id **is** `opentide-` followed by the rule's `metadata.uuid` (lowercase, canonical), e.g. `opentide-8f3c4a7e-…`: the create body's `id` and the `{id}` of every update and delete. Graph refuses a rule id that begins with a digit, so opentide 1.0.0, which sent the bare uuid, could not deploy most rules ([opentide#1886](https://github.com/opentidehq/opentide/issues/1886)). There is **no deployment state** for this platform — nothing is read from or written to `.opentide` state, and no Defender id is stored anywhere. Never change a deployed rule's `metadata.uuid`: Defender would see a new rule.
 
 | Status strategy | Calls | Graph `status` |
 |---|---|---|
-| `PREVIEW`, `RELEASE`, `UNIVERSAL` | `PATCH {base}/{uuid}`; on `404`, `POST {base}` with `id`; if that `POST` answers `409` (created concurrently), one more `PATCH` — never a second `POST` | `enabled` |
-| `DISABLEMENT` | `PATCH {base}/{uuid}` with the status; on `404` nothing is created (`microsoft_defender_rule_absent`, skipped) | `disabled` |
-| `DELETION` | `DELETE {base}/{uuid}`; a `404` is skipped as already gone | — |
+| `PREVIEW`, `RELEASE`, `UNIVERSAL` | `PATCH {base}/opentide-<uuid>`; on `404`, `POST {base}` with `id`; if that `POST` answers `409`, one more `PATCH` — never a second `POST`: it updates a rule created concurrently, and when it answers `404` too, another rule most likely holds the display name or alert title (`microsoft_defender_rule_conflict`) | `enabled` |
+| `DISABLEMENT` | `PATCH {base}/opentide-<uuid>` with the status; on `404` nothing is created (`microsoft_defender_rule_absent`, skipped) | `disabled` |
+| `DELETION` | `DELETE {base}/opentide-<uuid>`; a `404` is skipped, `no rule opentide-<uuid> on the tenant` (a rule 1.0.0 deployed under the bare uuid may still run: delete it in the portal) | — |
 | `INERT` | none | — |
 
 - A `404` on `PATCH` is the only signal that the rule is absent: deploy never lists remote rules or matches display names.
 - Defender sets `autoDisabled` on a rule that keeps failing; the next deploy with an active status sends `enabled` again.
 - Any other non-2xx answer fails that rule on that tenant; deploy continues with the other tenants and rules and exits `1`.
-- `--prune` retires a rule removed from the repository by `DELETE {base}/{uuid}`.
+- `--prune` retires a rule removed from the repository by `DELETE {base}/opentide-<uuid>`: only rules opentide deployed.
+- `microsoft_defender_rule_conflict` (the row's `error` starts with the code): the create was refused (`409`), most likely because another rule has the same display name or alert title — usually one an earlier opentide release created (under the bare uuid in 1.0.0, or in 0.x), or one made by hand. Graph keeps a **disabled** rule's name and alert title reserved, and the alert title defaults to the name, so the fix is to **delete** that rule in the Defender portal (simplest), or rename **both** its name and its alert title; never just disable it or rename it. Deploy never touches rules under other ids, so the same applies when upgrading: delete the rules earlier releases created (or rename both their name and alert title) before the first deploy.
+- `generate extract defender` writes one file per uuid: a bare-uuid rule beside its `opentide-<uuid>` copy is skipped (`defender_import_rule_skipped`).
 - `opentide deploy --dry-run` makes no call and shows the first call it would make.
 
 Tenants live in `.opentide/configurations/platforms/microsoft_defender.toml`, with an Entra app registration's `tenant_id`, `client_id` and `client_secret` (client credentials for `https://graph.microsoft.com/.default`). Live query checks and `opentide query` run through Graph advanced hunting, which needs `ThreatHunting.Read.All`.
