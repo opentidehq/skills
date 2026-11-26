@@ -170,7 +170,7 @@ let lookback = ago(7d);
 
 ### Required output columns
 
-Custom detection rules in Defender XDR enforce specific columns. Missing required columns → rule creation fails (unlike hunting queries where output columns are flexible). `opentide validate --live` fails such a query before deploy.
+Custom detection rules in Defender XDR enforce specific columns. Missing required columns → rule creation fails (unlike hunting queries where output columns are flexible). `opentide validate` fails such a query offline when the query names its output columns (`microsoft_defender_required_columns`), and `opentide validate query --live` checks what the tenant returns.
 
 **Endpoint tables** (`DeviceProcessEvents`, `DeviceFileEvents`, `DeviceNetworkEvents`, `DeviceRegistryEvents`, etc.):
 
@@ -187,7 +187,7 @@ Custom detection rules in Defender XDR enforce specific columns. Missing require
 | `Timestamp` | YES | Alert timestamp |
 | `ReportId` | YES | Event deduplication |
 
-Detection rule queries MUST include these in `| project`, plus every column the block's `entities`, `actions` and `alert.custom_details` name. Hunting queries don't — but detection rules enforce the schema.
+Detection rule queries MUST include these in `| project`, plus every column the block's `entities`, `actions`, `alert.custom_details` and alert `{{Column}}` placeholders name. Hunting queries don't — but detection rules enforce the schema. End the query with that `project` and nothing more: Defender derives extra entity mappings from every result column, which Graph can later refuse when the rule is enabled; `opentide lint` warns about a query that returns unused columns (`microsoft_defender_unprojected_output`) and suggests the `project`.
 
 ### Lookback is the engine's
 
@@ -471,10 +471,12 @@ configurations:
 | `microsoft_defender_action_target` | an empty action list, an empty target, a field not of its action, or empty `device_groups` |
 | `microsoft_defender_isolation_type` | `isolation_type` not `full` or `selective` |
 | `microsoft_defender_column` | a blank column name |
+| `microsoft_defender_column_not_in_output` | a column the block names (entity field, action column, custom detail, alert `{{Column}}`) that the query's inferred output lacks — case-sensitive, with a suggestion |
+| `microsoft_defender_required_columns` | an output that lacks `Timestamp`, `DeviceId`, `ReportId` or another column a custom detection needs |
 | `microsoft_defender_scope` | `scope` not a non-empty `device_groups` list |
 | `microsoft_defender_incident` | `incident` not `{exclude_from_correlation: <boolean>}` |
 
-`microsoft_defender_no_entities` is an advisory (warning), never a rejection. Run `opentide explain <code>` for any of them.
+`microsoft_defender_no_entities` and `microsoft_defender_unprojected_output` (the query returns columns the block does not use) are advisories (warnings), never rejections. The output checks run offline, in `validate`, `lint` and the editor, and report nothing when the engine cannot infer the query's output (an unknown table or function, `evaluate`, `bag_unpack`). Run `opentide explain <code>` for any of them.
 
 ### Deploy
 
@@ -497,7 +499,7 @@ Tenants live in `.opentide/configurations/platforms/microsoft_defender.toml`, wi
 
 ### Query checks and hunting
 
-- `opentide validate` checks the KQL offline with Defender's table catalogue: an unknown table is an error (`kql_unknown_table`) under `microsoft_defender`. Declare a custom table as a log source with `system = "microsoft_defender"`.
+- `opentide validate` checks the KQL offline with Defender's table catalogue: an unknown table is an error (`kql_unknown_table`) under `microsoft_defender`. Declare a custom table as a log source with `system = "microsoft_defender"`. It also checks the block against the columns the query returns (see Validation codes).
 - `opentide validate query --platform microsoft_defender --live` runs the compiled query for one row over the last minute against the tenant's advanced hunting, and fails a query whose output lacks the columns a custom detection needs. It creates no rule.
 - `opentide query --platform microsoft_defender` runs a hunt.
 
