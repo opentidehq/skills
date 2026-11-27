@@ -41,6 +41,7 @@
         "graylog",
         "exabeam-siem",
         "google-secops",
+        "datadog-cloud-siem",
         "okta-identity",
         "amazon-web-services",
         "microsoft-azure",

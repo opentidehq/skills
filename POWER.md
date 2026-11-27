@@ -102,6 +102,7 @@ Load steering on demand — do not read everything upfront.
 | Graylog | `skills/graylog/SKILL.md` |
 | Exabeam | `skills/exabeam-siem/SKILL.md` |
 | Google SecOps / Chronicle / YARA-L | `skills/google-secops/SKILL.md` |
+| Datadog Cloud SIEM | `skills/datadog-cloud-siem/SKILL.md` |
 | Sysdig / Falco | `skills/sysdig-secure/SKILL.md` |
 | Bitdefender GravityZone | `skills/bitdefender-gravityzone/SKILL.md` |
 | ATT&CK mapping | `skills/mitre-attack/SKILL.md` |

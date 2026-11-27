@@ -39,6 +39,7 @@ All paths are relative to this repository root. Each skill is a `skills/<name>/S
 | `graylog` | Graylog event definitions, Graylog search |
 | `exabeam-siem` | Exabeam correlation rules, Exabeam Query Language |
 | `google-secops` | Google SecOps (Chronicle) YARA-L 2.0, UDM |
+| `datadog-cloud-siem` | Datadog Cloud SIEM detection rules, Datadog log search syntax |
 | `okta-identity` | Okta System Log, impersonation, session theft |
 | `amazon-web-services` | CloudTrail, IAM, GuardDuty |
 | `microsoft-azure` | Activity Log, ARM, RBAC, Key Vault |

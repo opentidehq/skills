@@ -15,7 +15,7 @@ Read **`skills/detection-engineering/SKILL.md`** — opentide threat → objecti
 | Microsoft KQL (any surface) | `skills/kusto-query-language/SKILL.md` + platform skill |
 | Splunk SPL | `skills/splunk-spl-processing/SKILL.md` |
 | Endpoint / XDR / runtime consoles | Vendor skill (`crowdstrike-falcon`, `sentinelone-singularity`, `carbon-black-cloud`, `harfanglab`, `bitdefender-gravityzone`, `sysdig-secure`) |
-| Other SIEMs | `elastic-security`, `graylog`, `exabeam-siem`, `google-secops` |
+| Other SIEMs | `elastic-security`, `graylog`, `exabeam-siem`, `google-secops`, `datadog-cloud-siem` |
 
 ## Platform pairing reminder
 
@@ -29,6 +29,7 @@ Read **`skills/detection-engineering/SKILL.md`** — opentide threat → objecti
 | Graylog | Graylog search | `graylog` |
 | Exabeam New-Scale SIEM | Exabeam Query Language | `exabeam-siem` |
 | Google Security Operations | YARA-L 2.0 | `google-secops` |
+| Datadog Cloud SIEM | Datadog log search syntax | `datadog-cloud-siem` |
 
 `opentide --json info` lists every platform key and what it can validate and query.
 Never invent vendor syntax — use skill references and in-repo samples.
