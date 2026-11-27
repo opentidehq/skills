@@ -79,6 +79,12 @@
       "can_deploy": true,
       "can_validate": true,
       "can_query": true
+    },
+    "datadog": {
+      "skills": ["datadog-cloud-siem"],
+      "can_deploy": true,
+      "can_validate": true,
+      "can_query": true
     }
   }
 }

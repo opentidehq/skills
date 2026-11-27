@@ -2,7 +2,7 @@
   "version": 1,
   "source": "OpenTideHQ/skills",
   "ref": "main",
-  "generated_at": "2026-11-26T09:50:32Z",
+  "generated_at": "2026-11-27T04:53:01Z",
   "skills": [
     {
       "slug": "active-directory",
@@ -28,6 +28,11 @@
       "slug": "crowdstrike-falcon",
       "name": "crowdstrike-falcon",
       "description": "CrowdStrike Falcon detection engineering — distinguishes Falcon Insight (Event Search / EAM) from Falcon Next-Gen SIEM (LogScale / CQL), covers Falcon Query Language idioms, Custom IOA / IOC discipline, Correlation Rules (detection-as-code), Falcon Fusion workflow automation, sensor coverage gaps across Windows / macOS / Linux, SIEM ingestion patterns, real-time response guardrails, and entity-identifier alignment for cross-platform correlation. Distilled from CrowdStrike/falconpy SDK samples and API documentation. Use when authoring or reviewing CrowdStrike-keyed configurations in opentide detection rules."
+    },
+    {
+      "slug": "datadog-cloud-siem",
+      "name": "datadog-cloud-siem",
+      "description": "Datadog Cloud SIEM detection engineering for opentide: real-time log detection rules as configurations.datadog blocks (queries, detection, cases, signal), the threshold, new value, anomaly and impossible travel methods, the case condition grammar and its undocumented precedence, the Datadog log search syntax and its silent traps (AND binds tighter than OR, lower-case and, curly quotes, wildcards inside quotes, the exclusion dash, @attributes versus bare tags), the engine's rule and search profiles, and how opentide deploys through the v2 Security Monitoring API (validation before every write, unchanged rules not sent, default rules never touched, PREVIEW without notifications), validate query --live through rules/validation and Logs Search, and opentide query. Use when authoring or reviewing Datadog-keyed detection rules, system datadog hunts or .datadog files, or translating a detection from KQL, SPL or Exabeam to Datadog."
     },
     {
       "slug": "detection-engineering",

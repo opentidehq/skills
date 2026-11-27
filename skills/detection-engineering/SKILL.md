@@ -7,7 +7,7 @@ description: Detection engineering lifecycle across the opentide threat → obje
 
 This skill governs **how** detection content moves through its lifecycle. It pairs opentide's object lineage (Threat Vector → Detection Objective → Detection Rule) with the practical mechanics of converting validated hunting queries into production-grade detection rules on the platforms opentide deploys to.
 
-> Always pair with: language skills (`kusto-query-language`, `splunk-spl-processing`), platform skills (`microsoft-sentinel`, `microsoft-defender`, `crowdstrike-falcon`, `carbon-black-cloud`, `sentinelone-singularity`, `harfanglab`, `elastic-security`, `sysdig-secure`, `bitdefender-gravityzone`, `graylog`, `exabeam-siem`, `google-secops`), and the opentide object skills (`opentide-threat`, `opentide-objective`, `opentide-rule`).
+> Always pair with: language skills (`kusto-query-language`, `splunk-spl-processing`), platform skills (`microsoft-sentinel`, `microsoft-defender`, `crowdstrike-falcon`, `carbon-black-cloud`, `sentinelone-singularity`, `harfanglab`, `elastic-security`, `sysdig-secure`, `bitdefender-gravityzone`, `graylog`, `exabeam-siem`, `google-secops`, `datadog-cloud-siem`), and the opentide object skills (`opentide-threat`, `opentide-objective`, `opentide-rule`).
 
 ---
 
@@ -36,6 +36,7 @@ opentide's configuration keys, one per platform it deploys to:
 | `graylog` | Graylog | `graylog` |
 | `exabeam` | Exabeam New-Scale SIEM | `exabeam-siem` |
 | `google_secops` | Google Security Operations | `google-secops` |
+| `datadog` | Datadog Cloud SIEM | `datadog-cloud-siem` |
 
 Always confirm the keys, and what each platform can do (deploy, `--live` validation, `opentide query`), with `opentide --json info` or the `opentide://platforms` MCP resource — keys and capabilities evolve with the engine.
 
@@ -93,6 +94,7 @@ A hunt may become a detection only after:
 | Graylog | Graylog search (Lucene dialect) | `graylog` |
 | Exabeam New-Scale SIEM | Exabeam Query Language (not Elastic EQL) | `exabeam-siem` |
 | Google Security Operations | YARA-L 2.0 over UDM | `google-secops` |
+| Datadog Cloud SIEM | Datadog log search syntax | `datadog-cloud-siem` |
 
 **Never invent vendor syntax.** If the relevant platform skill does not assert a fact, route to vendor documentation rather than fabricating syntax.
 
@@ -302,6 +304,7 @@ Different platforms expose different rule types, response mechanisms, and constr
 | Graylog | Event definition (Filter & Aggregation) | `graylog` |
 | Exabeam New-Scale SIEM | Correlation rule | `exabeam-siem` |
 | Google Security Operations | YARA-L 2.0 rule (single- or multi-event) | `google-secops` |
+| Datadog Cloud SIEM | Real-time log detection rule (threshold, new value, anomaly, impossible travel) | `datadog-cloud-siem` |
 
 ---
 

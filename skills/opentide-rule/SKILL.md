@@ -222,7 +222,7 @@ What this skill asserts is the part the schema does not:
   template `opentide new` starts from, as `application/yaml`; read it as YAML,
   not as a JSON string.
 - **The SDKs deploy to every platform.** The Python and Node SDKs and the Rust
-  `opentide` crate deploy to all thirteen built-in platforms
+  `opentide` crate deploy to all fourteen built-in platforms
   (`Connection.deploy`). A failed deploy always raises (or rejects) with
   `scope` (`rule`: the tenant's other rules can deploy; `tenant`: it can take
   none), `status` (the HTTP status, when there is one), `fields` (`platform`,
@@ -315,6 +315,7 @@ exclusions:
 | Graylog | `graylog` |
 | Exabeam New-Scale SIEM | `exabeam-siem` |
 | Google Security Operations | `google-secops` |
+| Datadog Cloud SIEM | `datadog-cloud-siem` |
 
 Every `configurations.<key>` the engine accepts has a skill; `coverage.json` at the root of the skills repository is the map.
 

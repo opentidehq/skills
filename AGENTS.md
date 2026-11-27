@@ -54,7 +54,7 @@ opentide structures the Detection Engineering lifecycle as as-code (YAML) object
 
 The structural revision (`metadata.schema`, e.g. `rule::1.1`) moves with the engine: resolve it from the opentide MCP resources (`opentide://schemas/<family>`, `opentide://templates/<family>`) or the generated `.opentide/schemas/` and `.opentide/templates/`, never from memory. A CoreTide-era corpus still uses `Objects/Threat Vectors/`, `Objects/Detection Objectives/` and `Objects/Detection Rules/`; opentide has no command that converts it (`migrate objects` was removed in 0.21.0), so moving it is the repository owner's decision, and `opentide validate` reports the keys it no longer accepts.
 
-opentide deploys to thirteen platforms, each a `configurations.<key>`: `sentinel`, `microsoft_defender`, `splunk`, `crowdstrike`, `carbon_black_cloud`, `sentinel_one`, `harfanglab`, `elastic`, `sysdig`, `bitdefender`, `graylog`, `exabeam`, `google_secops`. [`coverage.json`](coverage.json) maps each key to its skills; `opentide --json info` lists the platforms the installed engine knows and whether each can deploy, validate (`--live`) and query.
+opentide deploys to fourteen platforms, each a `configurations.<key>`: `sentinel`, `microsoft_defender`, `splunk`, `crowdstrike`, `carbon_black_cloud`, `sentinel_one`, `harfanglab`, `elastic`, `sysdig`, `bitdefender`, `graylog`, `exabeam`, `google_secops`, `datadog`. [`coverage.json`](coverage.json) maps each key to its skills; `opentide --json info` lists the platforms the installed engine knows and whether each can deploy, validate (`--live`) and query.
 
 ---
 
@@ -80,7 +80,7 @@ Avoid mixing heterogeneous object edits in one merge unless explicitly orchestra
 
 ## Query & platform skill routing
 
-Microsoft stacks share **KQL** idioms (**`kusto-query-language`**), diverging operationally (**`microsoft-sentinel`** vs **`microsoft-defender`**). Splunk adopts **SPL** (**`splunk-spl-processing`**). Other SIEMs each carry their own language skill: **`elastic-security`** (Kuery, Lucene, EQL, ES|QL), **`graylog`** (Graylog search), **`exabeam-siem`** (Exabeam Query Language — not Elastic's EQL) and **`google-secops`** (YARA-L 2.0). Endpoint / XDR / runtime integrations each carry authored guardrails (**`crowdstrike-falcon`**, **`sentinelone-singularity`**, **`carbon-black-cloud`**, **`harfanglab`**, **`bitdefender-gravityzone`**, **`sysdig-secure`**). Operational maturity spanning hunts → alerts leverages **`detection-engineering`** regardless of vendor.
+Microsoft stacks share **KQL** idioms (**`kusto-query-language`**), diverging operationally (**`microsoft-sentinel`** vs **`microsoft-defender`**). Splunk adopts **SPL** (**`splunk-spl-processing`**). Other SIEMs each carry their own language skill: **`elastic-security`** (Kuery, Lucene, EQL, ES|QL), **`graylog`** (Graylog search), **`exabeam-siem`** (Exabeam Query Language — not Elastic's EQL) and **`google-secops`** (YARA-L 2.0) and **`datadog-cloud-siem`** (Datadog log search syntax). Endpoint / XDR / runtime integrations each carry authored guardrails (**`crowdstrike-falcon`**, **`sentinelone-singularity`**, **`carbon-black-cloud`**, **`harfanglab`**, **`bitdefender-gravityzone`**, **`sysdig-secure`**). Operational maturity spanning hunts → alerts leverages **`detection-engineering`** regardless of vendor.
 
 | `configurations.<key>` | Skill(s) |
 |---|---|
@@ -97,6 +97,7 @@ Microsoft stacks share **KQL** idioms (**`kusto-query-language`**), diverging op
 | `graylog` | `graylog` |
 | `exabeam` | `exabeam-siem` |
 | `google_secops` | `google-secops` |
+| `datadog` | `datadog-cloud-siem` |
 
 Never invent vendor syntax — defer to sanctioned references or mirrored samples.
 
@@ -198,6 +199,7 @@ Unless explicitly commissioned:
 | `graylog` | Graylog event definitions — Filter & Aggregation, Graylog search syntax, streams, GIM fields, 6.3–7.2 differences |
 | `exabeam-siem` | Exabeam New-Scale SIEM correlation rules — Exabeam Query Language, sequences, CIM fields |
 | `google-secops` | Google Security Operations (Chronicle) — YARA-L 2.0 rules, UDM, match windows, outcomes, reference lists |
+| `datadog-cloud-siem` | Datadog Cloud SIEM — real-time log detection rules (threshold, new value, anomaly, impossible travel), Datadog log search syntax, cases and signals |
 | `okta-identity` | Okta System Log event schema, authentication flows, cross-tenant impersonation, session theft, admin API abuse |
 | `amazon-web-services` | CloudTrail events, IAM mechanics, GuardDuty findings, S3/EC2 exfiltration, cross-account access |
 | `microsoft-azure` | Activity Log, ARM operations, RBAC/PIM, managed identities, Key Vault, VM extensions |
